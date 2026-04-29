@@ -74,10 +74,8 @@
             background: #e5e7eb;
             transform: translateY(-1px);
         }
-        .nav-btn:active {
-            transform: translateY(1px);
-        }
 
+        /* 歡迎區塊 DIV結構 */
         .welcome-card {
             background: #f0fdf4;
             border-left: 6px solid #2b6e4f;
@@ -95,6 +93,7 @@
             margin-top: 0.3rem;
         }
 
+        /* 標題區塊  */
         .section-title {
             font-size: 1.6rem;
             font-weight: 600;
@@ -103,12 +102,14 @@
             border-bottom: 3px solid #d1d5db;
             display: inline-block;
         }
+        /* 雙欄格線 */
         .grid-2col {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin: 1rem 0 0.5rem 0;
         }
+        /* 資訊卡 */
         .info-card {
             background: #ffffff;
             border: 1px solid #eef2f6;
@@ -125,6 +126,7 @@
             align-items: center;
             gap: 8px;
         }
+        /* 徽章列表 */
         .badge-list {
             display: flex;
             flex-wrap: wrap;
@@ -139,6 +141,7 @@
             font-weight: 500;
             color: #1e3a8a;
         }
+        /* 遊戲/嗜好  */
         .game-list, .hobby-list {
             list-style: none;
             padding-left: 0;
@@ -163,72 +166,8 @@
             padding-top: 1rem;
             border-top: 1px solid #e9ecef;
         }
-        @media (max-width: 560px) {
-            .container {
-                padding: 1.5rem;
-            }
-            .name-area {
-                font-size: 1.5rem;
-            }
-            .section-title {
-                font-size: 1.4rem;
-            }
-        }
 
-        body.dark {
-            background-color: #121826;
-        }
-        .container.dark-theme {
-            background-color: #1e293b;
-            color: #e2e8f0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-        .container.dark-theme .info-card {
-            background-color: #2d3a4b;
-            border-color: #3f4e62;
-            color: #f1f5f9;
-        }
-        .container.dark-theme .welcome-card {
-            background-color: #1e2a2f;
-            border-left-color: #4ade80;
-        }
-        .container.dark-theme .welcome-card .intro-text,
-        .container.dark-theme .welcome-card .greeting {
-            color: #d1fae5;
-        }
-        .container.dark-theme .badge {
-            background-color: #3b4f63;
-            color: #e2f0ff;
-        }
-        .container.dark-theme .nav-btn {
-            background-color: #334155;
-            color: #f0f9ff;
-        }
-        .container.dark-theme .nav-btn:hover {
-            background-color: #475569;
-        }
-        .container.dark-theme .section-title {
-            border-bottom-color: #5b6e8c;
-            color: #b9e0ff;
-        }
-        .container.dark-theme .name-area {
-            background: linear-gradient(135deg, #a3e4c2, #6fcf97);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .container.dark-theme hr {
-            background: #334155;
-        }
-        .container.dark-theme footer {
-            color: #94a3b8;
-            border-top-color: #334155;
-        }
-        .container.dark-theme .top-bar {
-            border-bottom-color: #3f4e6b;
-        }
-
-        /* 留言板样式 - 整合并适配深色模式 */
+        /* 留言板區塊 */
         .message-board-section {
             margin-top: 3rem;
             border-top: 2px solid #e5e7eb;
@@ -264,10 +203,6 @@
             outline: none;
             border-color: #2b6e4f;
             box-shadow: 0 0 0 3px rgba(43,110,79,0.1);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
         }
         .submit-btn {
             background: #2b6e4f;
@@ -341,7 +276,71 @@
             color: #6c757d;
         }
 
-        /* 深色模式留言板样式 */
+        @media (max-width: 560px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .name-area {
+                font-size: 1.5rem;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        body.dark {
+            background-color: #121826;
+        }
+        .container.dark-theme {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .container.dark-theme .info-card {
+            background-color: #2d3a4b;
+            border-color: #3f4e62;
+            color: #f1f5f9;
+        }
+        .container.dark-theme .welcome-card {
+            background-color: #1e2a2f;
+            border-left-color: #4ade80;
+        }
+        .container.dark-theme .welcome-card .intro-text,
+        .container.dark-theme .welcome-card .greeting {
+            color: #d1fae5;
+        }
+        .container.dark-theme .badge {
+            background-color: #3b4f63;
+            color: #e2f0ff;
+        }
+        .container.dark-theme .nav-btn {
+            background-color: #334155;
+            color: #f0f9ff;
+        }
+        .container.dark-theme .nav-btn:hover {
+            background-color: #475569;
+        }
+        .container.dark-theme .section-title {
+            border-bottom-color: #5b6e8c;
+            color: #b9e0ff;
+        }
+        .container.dark-theme .name-area {
+            background: linear-gradient(135deg, #a3e4c2, #6fcf97);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .container.dark-theme hr {
+            background: #334155;
+        }
+        .container.dark-theme footer {
+            color: #94a3b8;
+            border-top-color: #334155;
+        }
+        .container.dark-theme .top-bar {
+            border-bottom-color: #3f4e6b;
+        }
+        /* 留言板 */
         .container.dark-theme .form-group input,
         .container.dark-theme .form-group textarea {
             background: #334155;
@@ -406,10 +405,9 @@
         <div class="info-card" style="margin-top: 0.8rem;" id="skillsCard">
             <h3 id="skillsTitle">⚙️ 目前接觸到的</h3>
             <div class="badge-list" id="skillsList">
-                <span class="badge">Python</span>
-                <span class="badge">C++</span>
-                <span class="badge">HTML</span>
-                <span class="badge">CSS</span>
+                <button class="nav-btn">Python</button>
+                <button class="nav-btn">HTML5</button>
+                <button class="nav-btn">CSS3</button>
             </div>
         </div>
 
@@ -431,7 +429,6 @@
             </div>
         </div>
 
-        <!-- 留言板區塊 -->
         <div class="message-board-section">
             <h2 class="message-board-title" id="messageBoardTitle">💬 留言板</h2>
             <div class="form">
@@ -455,7 +452,6 @@
     </div>
 
     <script>
-        // 中英文內容對照
         const content = {
             zh: {
                 topBarName: "08880 空八控控",
@@ -498,7 +494,7 @@
                 shortGoalTitle: "📌 Short-term Goal",
                 shortGoalText: "Learn HTML and become proficient in using it.",
                 longGoalTitle: "🚀 Long-term Goal",
-                longGoalText: "Learn more programming languages and improve my current understanding of the ones I already know.",
+                longGoalText: "Learn more programming languages and improve my current understanding.",
                 lifeGoalTitle: "💼 Life Goal",
                 lifeGoalText: "Apply my programming skills in the workplace.",
                 goalsTitle: "🎯 My Goals",
@@ -515,35 +511,23 @@
             }
         };
 
-        // 獲取 URL 參數
         const urlParams = new URLSearchParams(window.location.search);
         let currentLang = urlParams.get('lang') === 'en' ? 'en' : 'zh';
 
-        // 更新網頁內容的函式
         function updateContent() {
             const t = content[currentLang];
             document.getElementById('nameArea').textContent = t.topBarName;
             document.getElementById('greetingText').textContent = t.greeting;
             document.getElementById('introText').textContent = t.intro;
-            
-            // 更新遊戲、嗜好、技能的標題
             document.getElementById('gamesTitle').textContent = t.gamesTitle;
             document.getElementById('hobbyTitle').textContent = t.hobbyTitle;
             document.getElementById('skillsTitle').textContent = t.skillsTitle;
-
-            // 更新遊戲列表
             const gamesList = document.getElementById('gamesList');
             gamesList.innerHTML = t.games.map(game => `<li>🎮 ${game}</li>`).join('');
-            
-            // 更新嗜好列表
             const hobbyList = document.getElementById('hobbyList');
             hobbyList.innerHTML = t.hobbies.map(hobby => `<li>✨ ${hobby}</li>`).join('');
-            
-            // 更新技能
             const skillsList = document.getElementById('skillsList');
             skillsList.innerHTML = t.skills.map(skill => `<span class="badge">${skill}</span>`).join('');
-            
-            // 更新目標區塊標題
             document.getElementById('goalsTitle').textContent = t.goalsTitle;
             document.getElementById('shortGoalTitle').textContent = t.shortGoalTitle;
             document.getElementById('shortGoalText').textContent = t.shortGoalText;
@@ -551,44 +535,34 @@
             document.getElementById('longGoalText').textContent = t.longGoalText;
             document.getElementById('lifeGoalTitle').textContent = t.lifeGoalTitle;
             document.getElementById('lifeGoalText').textContent = t.lifeGoalText;
-            
-            // 更新頁尾
             document.getElementById('footerText').textContent = t.footer;
-            
-            // 更新按鈕文字
             document.getElementById('menuBtn').innerHTML = t.menuBtn;
             document.getElementById('langSwitchBtn').innerHTML = t.langBtn;
             document.getElementById('themeBtn').innerHTML = t.themeBtn;
-            
-            // 更新留言板文字
             document.getElementById('messageBoardTitle').textContent = t.messageBoardTitle;
-            document.getElementById('username').placeholder = t.usernamePlaceholder;
-            document.getElementById('message').placeholder = t.messagePlaceholder;
-            document.getElementById('submitBtn').innerHTML = t.submitBtn;
-            
-            // 更新空留言提示文字 (如果留言板为空)
+            const usernameInput = document.getElementById('username');
+            if(usernameInput) usernameInput.placeholder = t.usernamePlaceholder;
+            const msgInput = document.getElementById('message');
+            if(msgInput) msgInput.placeholder = t.messagePlaceholder;
+            const submitBtn = document.getElementById('submitBtn');
+            if(submitBtn) submitBtn.innerHTML = t.submitBtn;
             const emptyMsgDiv = document.getElementById('emptyMsg');
             const messageBoardDiv = document.getElementById('messageBoard');
             const messages = messageBoardDiv.querySelectorAll('.message-item:not(#emptyMsg)');
             if (messages.length === 0 && emptyMsgDiv) {
                 emptyMsgDiv.textContent = t.emptyMessage;
-            } else if (emptyMsgDiv) {
+            } else if (emptyMsgDiv && messages.length > 0) {
                 emptyMsgDiv.style.display = 'none';
             }
-            
-            // 更新所有已存在的留言中的時間前綴
             document.querySelectorAll('.message-time').forEach(timeSpan => {
                 const originalTime = timeSpan.getAttribute('data-original-time');
                 if (originalTime) {
                     timeSpan.textContent = `${t.postedPrefix} ${originalTime}`;
                 }
             });
-            
-            // 更新標題
-            document.title = currentLang === 'zh' ? '空巴 | 08880 的自介網站' : "Kongba | 08880's Personal Website";
+            document.title = currentLang === 'zh' ? '08880 Website' : "08 Website";
         }
 
-        // 獲取當前時間字串
         function getCurrentTime() {
             const now = new Date();
             const year = now.getFullYear();
@@ -600,23 +574,24 @@
             return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
         }
 
-        // 新增留言
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
         function addMessage(username, message, time) {
             const t = content[currentLang];
             const messageBoardDiv = document.getElementById('messageBoard');
-            const emptyMsgDiv = document.getElementById('emptyMsg');
-            
-            // 移除空提示
-            if (emptyMsgDiv) {
-                emptyMsgDiv.remove();
-            }
-            
+            let emptyMsgDiv = document.getElementById('emptyMsg');
+            if (emptyMsgDiv) emptyMsgDiv.remove();
+            const avatarLetter = username.charAt(0).toUpperCase();
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message-item');
-            
-            // 取得用戶頭像字母
-            const avatarLetter = username.charAt(0).toUpperCase();
-            
             messageDiv.innerHTML = `
                 <div class="message-header">
                     <div class="message-user">
@@ -627,29 +602,22 @@
                 </div>
                 <div class="message-content">${escapeHtml(message)}</div>
             `;
-            
-            // 插入到最上方
             if (messageBoardDiv.firstChild) {
                 messageBoardDiv.insertBefore(messageDiv, messageBoardDiv.firstChild);
             } else {
                 messageBoardDiv.appendChild(messageDiv);
             }
         }
-        
-        // 防止 XSS 攻擊
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-                return c;
-            });
+
+        function saveMessageToLocal(username, message, time) {
+            const saved = localStorage.getItem('guestbook_messages');
+            let messages = [];
+            if (saved) try { messages = JSON.parse(saved); } catch(e) {}
+            messages.push({ username, message, time });
+            if (messages.length > 50) messages = messages.slice(-50);
+            localStorage.setItem('guestbook_messages', JSON.stringify(messages));
         }
 
-        // 載入儲存的留言 (使用 localStorage)
         function loadMessages() {
             const saved = localStorage.getItem('guestbook_messages');
             if (saved) {
@@ -660,10 +628,9 @@
                     });
                 } catch(e) {}
             }
-            // 更新空提示顯示
             const messageBoardDiv = document.getElementById('messageBoard');
-            const existingMessages = messageBoardDiv.querySelectorAll('.message-item');
-            if (existingMessages.length === 0) {
+            const existing = messageBoardDiv.querySelectorAll('.message-item');
+            if (existing.length === 0) {
                 const t = content[currentLang];
                 const emptyDiv = document.createElement('div');
                 emptyDiv.id = 'emptyMsg';
@@ -672,36 +639,16 @@
                 messageBoardDiv.appendChild(emptyDiv);
             }
         }
-        
-        // 儲存留言到 localStorage
-        function saveMessage(username, message, time) {
-            const saved = localStorage.getItem('guestbook_messages');
-            let messages = [];
-            if (saved) {
-                try {
-                    messages = JSON.parse(saved);
-                } catch(e) {}
-            }
-            messages.push({ username, message, time });
-            // 只保留最近50筆
-            if (messages.length > 50) messages = messages.slice(-50);
-            localStorage.setItem('guestbook_messages', JSON.stringify(messages));
-        }
 
-        // 目錄按鈕：平滑滾動
         const menuBtn = document.getElementById('menuBtn');
-        if (menuBtn) {
+        if(menuBtn) {
             menuBtn.addEventListener('click', () => {
-                const welcomeCard = document.querySelector('.welcome-card');
-                if (welcomeCard) {
-                    welcomeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                const welcome = document.querySelector('.welcome-card');
+                if(welcome) welcome.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
-        
-        // 語言切換按鈕
         const langSwitchBtn = document.getElementById('langSwitchBtn');
-        if (langSwitchBtn) {
+        if(langSwitchBtn) {
             langSwitchBtn.addEventListener('click', () => {
                 const newLang = currentLang === 'zh' ? 'en' : 'zh';
                 const newUrl = new URL(window.location.href);
@@ -709,19 +656,15 @@
                 window.location.href = newUrl.toString();
             });
         }
-        
-        // 黑/白模式切換
         const themeBtn = document.getElementById('themeBtn');
         const containerDiv = document.getElementById('appContainer');
         const bodyEl = document.body;
-        
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             containerDiv.classList.add('dark-theme');
             bodyEl.classList.add('dark');
         }
-        
-        if (themeBtn) {
+        if(themeBtn) {
             themeBtn.addEventListener('click', () => {
                 if (containerDiv.classList.contains('dark-theme')) {
                     containerDiv.classList.remove('dark-theme');
@@ -734,39 +677,25 @@
                 }
             });
         }
-        
-        // 留言提交按鈕
         const submitBtn = document.getElementById('submitBtn');
-        if (submitBtn) {
+        if(submitBtn) {
             submitBtn.addEventListener('click', () => {
-                const usernameInput = document.getElementById('username');
-                const messageInput = document.getElementById('message');
-                let username = usernameInput.value.trim();
-                let message = messageInput.value.trim();
-                
+                let username = document.getElementById('username').value.trim();
+                let message = document.getElementById('message').value.trim();
                 if (message === '') {
-                    const t = content[currentLang];
                     alert(currentLang === 'zh' ? '請輸入留言內容' : 'Please enter a message');
                     return;
                 }
-                
-                if (username === '') {
-                    username = currentLang === 'zh' ? '匿名' : 'Anonymous';
-                }
-                
+                if (username === '') username = currentLang === 'zh' ? '匿名' : 'Anonymous';
                 const time = getCurrentTime();
                 addMessage(username, message, time);
-                saveMessage(username, message, time);
-                
-                // 清空輸入框
-                usernameInput.value = '';
-                messageInput.value = '';
+                saveMessageToLocal(username, message, time);
+                document.getElementById('username').value = '';
+                document.getElementById('message').value = '';
             });
         }
-        
-        // 初始化頁面內容
+
         updateContent();
-        // 載入已儲存的留言
         loadMessages();
     </script>
 </body>

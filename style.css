@@ -1,0 +1,2307 @@
+:root {
+    --bg: #b6d87f;
+    --bg2: #8cbe62;
+    --surface: #f4ecd4;
+    --surface-2: #e0d4b0;
+    --stone: #c7c7c7;
+    --stone-2: #9b9b9b;
+    --dirt: #8a5a32;
+    --dirt-2: #5f3b21;
+    --grass: #70b84f;
+    --grass-2: #4f8f35;
+    --sky: #d5f0ff;
+    --text: #1d1b18;
+    --text-soft: #4b443b;
+    --text-faint: #756b5c;
+    --line: #2d2317;
+    --panel-shadow: #2d2317;
+    --button-shadow: #2d2317;
+    --widget-bg: #1e1f22;
+    --white: #ffffff;
+    --max-width: 1120px;
+}
+
+body[data-theme="dark"] {
+    --bg: #21311e;
+    --bg2: #152115;
+    --surface: #2e2b24;
+    --surface-2: #423d31;
+    --stone: #6b6b6b;
+    --stone-2: #4b4b4b;
+    --dirt: #5a402d;
+    --dirt-2: #362318;
+    --grass: #4d8640;
+    --grass-2: #2f6124;
+    --sky: #1f2d35;
+    --text: #f3eedf;
+    --text-soft: #ddd2ba;
+    --text-faint: #baa98c;
+    --line: #11100d;
+    --panel-shadow: #11100d;
+    --button-shadow: #11100d;
+    --widget-bg: #1e1f22;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px;
+}
+
+body {
+    min-height: 100vh;
+    padding: 18px;
+    color: var(--text);
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    line-height: 1.75;
+    background:
+        linear-gradient(180deg, var(--sky) 0 26%, transparent 26%),
+        linear-gradient(180deg, var(--bg) 0 68%, var(--bg2) 100%);
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .18;
+    background-image:
+        linear-gradient(rgba(45, 35, 23, .16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 35, 23, .16) 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+a,
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, .55);
+    outline-offset: 3px;
+}
+
+::selection {
+    background: rgba(112, 184, 79, .35);
+}
+
+.pixel-cloud {
+    position: fixed;
+    z-index: 0;
+    width: 180px;
+    height: 60px;
+    background:
+        linear-gradient(90deg, transparent 0 12px, rgba(255,255,255,.9) 12px 48px, transparent 48px 60px, rgba(255,255,255,.9) 60px 108px, transparent 108px 120px, rgba(255,255,255,.9) 120px 168px, transparent 168px),
+        linear-gradient(90deg, transparent 0 24px, rgba(255,255,255,.9) 24px 156px, transparent 156px),
+        linear-gradient(90deg, transparent 0 36px, rgba(255,255,255,.9) 36px 144px, transparent 144px);
+    image-rendering: pixelated;
+    opacity: .65;
+}
+
+.cloud-one {
+    top: 72px;
+    left: 4%;
+}
+
+.cloud-two {
+    top: 138px;
+    right: 6%;
+}
+
+.site-shell {
+    position: relative;
+    z-index: 1;
+    width: min(100%, var(--max-width));
+    margin: 0 auto;
+}
+
+.topbar,
+.panel-block,
+.message-item,
+.back-to-top {
+    border: 4px solid var(--line);
+    box-shadow: 0 6px 0 var(--panel-shadow);
+}
+
+.topbar {
+    position: sticky;
+    top: 14px;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 14px;
+    background: var(--surface);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.brand-mark,
+.hero-avatar,
+.card-icon,
+.goal-icon,
+.server-logo,
+.avatar,
+.back-to-top,
+.icon-btn {
+    image-rendering: pixelated;
+}
+
+.brand-mark {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .8rem;
+    color: var(--white);
+    background: linear-gradient(180deg, var(--grass) 0 24%, var(--dirt) 24% 100%);
+    border: 4px solid var(--line);
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-name,
+.section-title,
+.hero-title,
+.info-card h3,
+.goal-card h3,
+.server-name,
+.widget-title,
+.message-board-title {
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+}
+
+.brand-name {
+    font-size: .85rem;
+}
+
+.brand-subtitle {
+    margin-top: 4px;
+    color: var(--text-soft);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.desktop-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.nav-link,
+.icon-btn,
+.primary-btn,
+.secondary-btn,
+.submit-btn,
+.back-to-top {
+    color: var(--text);
+    text-decoration: none;
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .7rem;
+}
+
+.nav-link {
+    padding: 10px 12px;
+    border: 3px solid transparent;
+}
+
+.nav-link:hover {
+    background: var(--surface-2);
+    border-color: var(--line);
+}
+
+.toolbar {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 10px;
+    border: 3px solid var(--line);
+    background: var(--surface-2);
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--button-shadow);
+}
+
+.icon-btn:hover,
+.primary-btn:hover,
+.secondary-btn:hover,
+.submit-btn:hover,
+.back-to-top:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--button-shadow);
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+    gap: 18px;
+    padding: 34px 0 28px;
+}
+
+.panel-block {
+    position: relative;
+    background: var(--surface);
+    padding: 24px;
+}
+
+.panel-grass {
+    background: linear-gradient(180deg, var(--surface) 0 88%, var(--grass) 88% 100%);
+}
+
+.panel-stone {
+    background: linear-gradient(180deg, var(--stone) 0%, var(--surface) 100%);
+}
+
+.panel-dirt {
+    background: linear-gradient(180deg, #b17a49 0, var(--dirt) 100%);
+    color: #fff7e7;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .62rem;
+    color: var(--grass-2);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: #7ef05f;
+    border: 2px solid var(--line);
+}
+
+.hero-title {
+    margin-top: 16px;
+    font-size: clamp(1.55rem, 4.6vw, 3rem);
+    line-height: 1.35;
+}
+
+.intro-text {
+    max-width: 650px;
+    margin-top: 18px;
+    color: var(--text-soft);
+    font-size: 1rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.primary-btn,
+.secondary-btn,
+.submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 10px 16px;
+    border: 3px solid var(--line);
+    box-shadow: 0 4px 0 var(--button-shadow);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.primary-btn,
+.submit-btn {
+    background: var(--grass);
+    color: var(--white);
+}
+
+.secondary-btn {
+    background: var(--surface-2);
+}
+
+.hero-panel {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-avatar {
+    display: grid;
+    width: 80px;
+    height: 80px;
+    place-items: center;
+    border: 4px solid var(--line);
+    background: linear-gradient(180deg, var(--grass) 0 24%, var(--dirt) 24% 100%);
+    color: var(--white);
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: 1rem;
+}
+
+.hero-panel-copy {
+    margin-top: 18px;
+}
+
+.hero-panel-label {
+    color: var(--grass-2);
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .56rem;
+}
+
+.hero-panel-title {
+    display: block;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.hero-panel-text {
+    margin-top: 8px;
+    color: var(--text-soft);
+}
+
+.terminal-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 12px 14px;
+    border: 3px solid var(--line);
+    background: rgba(0,0,0,.12);
+    color: var(--text);
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .58rem;
+}
+
+.terminal-line > span:first-child {
+    color: var(--grass-2);
+}
+
+.terminal-cursor {
+    width: 8px;
+    height: 14px;
+    background: var(--grass);
+    animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.section {
+    padding: 34px 0;
+}
+
+.section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin-top: 8px;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    line-height: 1.5;
+}
+
+.section-description {
+    max-width: 470px;
+    color: var(--text-soft);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.info-card,
+.goal-card,
+.message-form,
+.message-board,
+.server-widget-card,
+.server-intro-card,
+.server-meta-card {
+    transition: transform .14s ease, box-shadow .14s ease;
+}
+
+.info-card:hover,
+.goal-card:hover,
+.server-intro-card:hover,
+.server-widget-card:hover,
+.server-meta-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 var(--panel-shadow);
+}
+
+.info-card {
+    display: flex;
+    gap: 16px;
+    min-height: 210px;
+}
+
+.skills-card {
+    grid-column: 1 / -1;
+    min-height: auto;
+}
+
+.card-icon,
+.goal-icon,
+.server-logo,
+.avatar {
+    display: grid;
+    flex: 0 0 auto;
+    width: 52px;
+    height: 52px;
+    place-items: center;
+    border: 3px solid var(--line);
+    background: var(--grass);
+    color: var(--white);
+}
+
+.item-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+    list-style: none;
+}
+
+.item-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-soft);
+}
+
+.list-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--grass-2);
+    border: 2px solid var(--line);
+}
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.badge {
+    padding: 8px 10px;
+    border: 3px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .56rem;
+}
+
+.server-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+    gap: 16px;
+}
+
+.server-mini-label,
+.widget-label,
+.goal-number,
+.form-label {
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .56rem;
+}
+
+.server-mini-label,
+.widget-label {
+    color: var(--grass-2);
+}
+
+.server-name,
+.widget-title {
+    margin-top: 10px;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    line-height: 1.55;
+}
+
+.server-copy,
+.widget-copy {
+    margin-top: 12px;
+    color: var(--text-soft);
+}
+
+.server-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 14px;
+    margin-top: 20px;
+}
+
+.server-features > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-soft);
+    font-weight: 700;
+}
+
+.server-features i {
+    color: var(--grass-2);
+    font-size: .7rem;
+}
+
+.server-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.server-meta-card {
+    min-height: 112px;
+    padding: 18px;
+}
+
+.server-meta-wide {
+    grid-column: 1 / -1;
+}
+
+.server-meta-label {
+    display: block;
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .54rem;
+    color: rgba(255,247,231,.88);
+}
+
+.server-meta-value {
+    display: block;
+    margin-top: 10px;
+    font-size: .95rem;
+    line-height: 1.7;
+}
+
+.server-widget-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.widget-frame {
+    display: grid;
+    place-items: center;
+    min-height: 100%;
+    padding: 12px;
+    border: 3px dashed var(--line);
+    background: rgba(0,0,0,.07);
+}
+
+.widget-frame iframe {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    min-height: 500px;
+    border: 0;
+    background: var(--widget-bg);
+}
+
+.goal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.goal-card {
+    min-height: 270px;
+}
+
+.featured-goal {
+    background: linear-gradient(180deg, var(--surface) 0 70%, var(--grass) 70% 100%);
+}
+
+.goal-number {
+    display: inline-block;
+    color: var(--text-faint);
+}
+
+.goal-card .goal-icon {
+    margin: 20px 0 18px;
+}
+
+.goal-card p {
+    margin-top: 12px;
+    color: var(--text-soft);
+}
+
+.message-layout {
+    display: grid;
+    grid-template-columns: .82fr 1.18fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.message-form,
+.message-board {
+    min-height: 100%;
+}
+
+.message-form {
+    display: grid;
+    gap: 8px;
+}
+
+.form-label {
+    margin-top: 6px;
+    color: var(--text-soft);
+}
+
+.username-input,
+.message-input {
+    width: 100%;
+    border: 3px solid var(--line);
+    background: rgba(255,255,255,.45);
+    color: var(--text);
+    padding: 12px 14px;
+}
+
+.username-input {
+    min-height: 46px;
+}
+
+.message-input {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.username-input::placeholder,
+.message-input::placeholder {
+    color: var(--text-faint);
+}
+
+.message-board {
+    min-height: 290px;
+}
+
+.empty-message {
+    display: grid;
+    min-height: 235px;
+    place-items: center;
+    align-content: center;
+    gap: 8px;
+    text-align: center;
+    color: var(--text-soft);
+}
+
+.empty-message > i {
+    font-size: 1.5rem;
+    color: var(--grass-2);
+}
+
+.empty-message-title {
+    color: var(--text);
+}
+
+.message-item {
+    padding: 16px;
+    background: var(--surface);
+}
+
+.message-item + .message-item {
+    margin-top: 12px;
+}
+
+.message-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-size: .75rem;
+}
+
+.username {
+    display: block;
+    font-weight: 700;
+}
+
+.message-time {
+    margin-top: 2px;
+    color: var(--text-faint);
+    font-size: .78rem;
+}
+
+.message-content {
+    margin-top: 12px;
+    color: var(--text-soft);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 2px 8px;
+    color: var(--text-soft);
+}
+
+.back-to-top {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    background: var(--surface-2);
+}
+
+@media (max-width: 980px) {
+    .desktop-nav {
+        display: none;
+    }
+
+    .topbar {
+        grid-template-columns: 1fr auto;
+    }
+
+    .hero,
+    .server-layout,
+    .goal-grid,
+    .message-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-panel {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 720px) {
+    body {
+        padding: 10px;
+    }
+
+    html {
+        scroll-padding-top: 96px;
+    }
+
+    .cloud-one,
+    .cloud-two {
+        display: none;
+    }
+
+    .topbar {
+        top: 8px;
+        padding: 10px;
+    }
+
+    .brand-copy {
+        display: none;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn,
+    .submit-btn {
+        width: 100%;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-card {
+        grid-column: auto;
+    }
+
+    .server-meta-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .server-meta-wide {
+        grid-column: auto;
+    }
+
+    .widget-frame iframe {
+        max-width: none;
+    }
+
+    .section-title,
+    .hero-title,
+    .server-name,
+    .widget-title,
+    .message-board-title,
+    .info-card h3,
+    .goal-card h3,
+    .brand-name {
+        line-height: 1.75;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* Unified typography: the same font is used for both Chinese and English. */
+.brand-name,
+.section-title,
+.hero-title,
+.info-card h3,
+.goal-card h3,
+.server-name,
+.widget-title,
+.message-board-title,
+.nav-link,
+.icon-btn,
+.primary-btn,
+.secondary-btn,
+.submit-btn,
+.back-to-top,
+.eyebrow,
+.server-mini-label,
+.widget-label,
+.goal-number,
+.form-label,
+.badge,
+.server-meta-label,
+.hero-panel-label,
+.terminal-line,
+.avatar,
+.brand-mark {
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    font-weight: 900;
+}
+
+.brand-name,
+.section-title,
+.hero-title,
+.server-name,
+.widget-title,
+.message-board-title,
+.info-card h3,
+.goal-card h3 {
+    letter-spacing: .035em;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.10);
+}
+
+.discord-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border: 3px solid var(--line);
+    background: #5865f2;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 900;
+    box-shadow: 0 4px 0 var(--button-shadow);
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.discord-link-btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--button-shadow);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Interactive screenshot gallery */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.lightbox-image {
+    display: block;
+    max-width: min(1200px, 92vw);
+    max-height: 82vh;
+    border: 4px solid #f4ecd4;
+    box-shadow: 0 8px 0 #111;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border: 4px solid #f4ecd4;
+    background: #2d2317;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 0 #111;
+}
+
+.lightbox-index {
+    position: fixed;
+    bottom: 24px;
+    padding: 8px 12px;
+    border: 3px solid #f4ecd4;
+    background: #2d2317;
+    color: #fff;
+    font-weight: 900;
+}
+
+
+/* ===== Final layout refinements ===== */
+
+/* World layers: sky -> grass -> dirt -> stone -> deepslate. */
+body {
+    background: var(--sky);
+}
+
+body::before {
+    display: none;
+}
+
+.hero,
+.section,
+.site-footer {
+    position: relative;
+    isolation: isolate;
+}
+
+.hero::before,
+.section::before,
+.site-footer::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: 50%;
+    width: 100vw;
+    top: -18px;
+    bottom: -18px;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.hero::before {
+    background:
+        linear-gradient(180deg,
+            var(--sky) 0 76%,
+            #73b84c 76% 81%,
+            #8b5a35 81% 100%);
+}
+
+#about::before {
+    background:
+        linear-gradient(180deg,
+            #73b84c 0 9%,
+            #8b5a35 9% 72%,
+            #735038 72% 100%);
+    background-image:
+        linear-gradient(180deg, #73b84c 0 9%, transparent 9%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 22px, rgba(0,0,0,.025) 22px 44px),
+        linear-gradient(180deg, #8b5a35 0 72%, #735038 72% 100%);
+}
+
+#server::before {
+    background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 20px, rgba(0,0,0,.025) 20px 40px),
+        #735038;
+}
+
+#gallery::before {
+    background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 26px, rgba(0,0,0,.04) 26px 52px),
+        linear-gradient(180deg, #72767d 0, #555a60 100%);
+}
+
+#goals::before,
+.site-footer::before {
+    background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,.018) 0 18px, rgba(0,0,0,.025) 18px 36px),
+        #30343a;
+}
+
+#about .section-title,
+#about .section-description,
+#about .eyebrow,
+#server .section-title,
+#server .section-description,
+#server .eyebrow,
+#gallery .section-title,
+#gallery .section-description,
+#gallery .eyebrow,
+#goals .section-title,
+#goals .section-description,
+#goals .eyebrow,
+.site-footer {
+    color: #fff7e7;
+    text-shadow: 0 2px 0 rgba(0,0,0,.28);
+}
+
+#about .eyebrow,
+#server .eyebrow,
+#gallery .eyebrow,
+#goals .eyebrow {
+    color: #e8f7d8;
+}
+
+/* Discord widget: no thin/dashed frame around the iframe. */
+.widget-frame {
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.widget-frame iframe {
+    border: 0;
+    box-shadow: none;
+}
+
+/* Single-row, seamless, left-to-right screenshot carousel. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Remove all legacy image labels / overlays if cached CSS remains. */
+
+
+/* Guestbook removed: keep no leftover space. */
+.message-section,
+.message-layout,
+.message-form,
+.message-board {
+    display: none !important;
+}
+
+.site-footer {
+    margin-top: 0;
+    padding-top: 30px;
+    padding-bottom: 18px;
+}
+
+.site-footer .back-to-top {
+    color: var(--text);
+    text-shadow: none;
+}
+
+body[data-theme="dark"] .hero::before {
+    background:
+        linear-gradient(180deg,
+            #182a38 0 76%,
+            #416e37 76% 81%,
+            #503927 81% 100%);
+}
+
+body[data-theme="dark"] #about::before {
+    background:
+        linear-gradient(180deg, #416e37 0 9%, transparent 9%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 22px, rgba(0,0,0,.025) 22px 44px),
+        linear-gradient(180deg, #503927 0 72%, #3c3027 72% 100%);
+}
+
+body[data-theme="dark"] #server::before {
+    background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 20px, rgba(0,0,0,.025) 20px 40px),
+        #3c3027;
+}
+
+body[data-theme="dark"] #gallery::before {
+    background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 26px, rgba(0,0,0,.035) 26px 52px),
+        linear-gradient(180deg, #3d4248 0, #2c3035 100%);
+}
+
+body[data-theme="dark"] #goals::before,
+body[data-theme="dark"] .site-footer::before {
+    background: #1d2125;
+}
+
+
+
+
+
+
+/* ===== Refined top world + interactive screenshot strip ===== */
+
+/* Animated pixel clouds */
+.pixel-cloud {
+    position: absolute;
+    left: -240px;
+    will-change: transform;
+    animation: cloud-drift 48s linear infinite;
+}
+
+.cloud-one {
+    top: 82px;
+    left: -240px;
+    animation-duration: 48s;
+    animation-delay: -10s;
+}
+
+.cloud-two {
+    top: 178px;
+    left: -280px;
+    opacity: .46;
+    animation-duration: 66s;
+    animation-delay: -38s;
+}
+
+@keyframes cloud-drift {
+    from { transform: translateX(-260px); }
+    to { transform: translateX(calc(100vw + 520px)); }
+}
+
+/* Simpler top background: hero and About belong to the same sky scene. */
+.hero::before {
+    background: linear-gradient(180deg, var(--sky) 0%, #dcefd7 100%);
+}
+
+#about::before {
+    background:
+        linear-gradient(180deg,
+            #dcefd7 0%,
+            #d3eacb 76%,
+            #8ebf6a 100%);
+}
+
+/* Earth begins only at the server section. */
+#server::before {
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(255,255,255,.018) 0 28px,
+            rgba(0,0,0,.018) 28px 56px),
+        linear-gradient(180deg, #856044 0%, #735038 100%);
+}
+
+body[data-theme="dark"] .hero::before {
+    background: linear-gradient(180deg, #182a38 0%, #243a37 100%);
+}
+
+body[data-theme="dark"] #about::before {
+    background:
+        linear-gradient(180deg,
+            #243a37 0%,
+            #294236 76%,
+            #416e37 100%);
+}
+
+body[data-theme="dark"] #server::before {
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(255,255,255,.014) 0 28px,
+            rgba(0,0,0,.022) 28px 56px),
+        linear-gradient(180deg, #4a382b 0%, #3c3027 100%);
+}
+
+/* No line around the Discord widget. */
+.widget-frame {
+    border: 0 !important;
+    outline: 0 !important;
+    padding: 0;
+    background: transparent;
+}
+
+.widget-frame iframe {
+    border: 0 !important;
+    outline: 0 !important;
+}
+
+/* Right-to-left continuous screenshots. */
+
+
+
+
+
+
+
+
+/* Hover a screenshot to enlarge it and reveal manual navigation arrows. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Absolutely no captions or image text overlays. */
+
+
+@media (max-width: 720px) {
+    .pixel-cloud {
+        display: block;
+        opacity: .30;
+    }
+
+    
+
+    
+}
+
+
+
+
+/* ===== v2: whole-strip gallery controls, typewriter and Spotify toolbar ===== */
+
+/* Toolbar can host the Spotify group directly to the left of EN. */
+.toolbar {
+    position: relative;
+    align-items: center;
+}
+
+.spotify-shell {
+    position: relative;
+}
+
+.spotify-controls {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    border: 3px solid var(--line);
+    background: #191414;
+    box-shadow: 0 4px 0 var(--button-shadow);
+}
+
+.spotify-control-btn,
+.spotify-close-btn {
+    display: grid;
+    place-items: center;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+}
+
+.spotify-control-btn {
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    font-size: .8rem;
+}
+
+.spotify-control-btn:hover {
+    background: #1db954;
+}
+
+.spotify-play-btn {
+    background: #1db954;
+}
+
+.spotify-popover {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    z-index: 60;
+    width: min(390px, calc(100vw - 28px));
+    padding: 10px;
+    border: 4px solid var(--line);
+    background: #191414;
+    box-shadow: 0 8px 0 var(--panel-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-7px);
+    transition: opacity .16s ease, transform .16s ease, visibility .16s;
+}
+
+.spotify-popover.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.spotify-popover-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 800;
+}
+
+.spotify-popover-head .fa-spotify {
+    color: #1db954;
+    margin-right: 6px;
+}
+
+.spotify-close-btn {
+    width: 32px;
+    height: 32px;
+    background: #2b2b2b;
+}
+
+.spotify-close-btn:hover {
+    background: #3b3b3b;
+}
+
+#spotify-embed {
+    min-height: 352px;
+}
+
+#spotify-embed iframe {
+    display: block;
+    width: 100% !important;
+    border-radius: 12px;
+}
+
+.spotify-api-note {
+    margin: 8px 4px 2px;
+    color: #aaa;
+    font-size: .72rem;
+    text-align: center;
+}
+
+/* Terminal typewriter */
+.terminal-code {
+    min-width: 17ch;
+    white-space: pre;
+}
+
+/* Disable the old CSS transform animation; JS now scrolls the whole strip. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Arrows control the entire strip and stay on the outer edges. */
+
+
+
+
+
+
+
+
+
+
+/* Hide old per-card arrows if any cached markup survives. */
+
+
+@media (max-width: 900px) {
+    .spotify-controls {
+        gap: 2px;
+    }
+
+    .spotify-control-btn {
+        width: 31px;
+    }
+}
+
+@media (max-width: 680px) {
+    .topbar {
+        grid-template-columns: auto 1fr;
+    }
+
+    .toolbar {
+        justify-self: end;
+        gap: 5px;
+    }
+
+    .spotify-controls {
+        border-width: 2px;
+        box-shadow: 0 3px 0 var(--button-shadow);
+    }
+
+    .spotify-control-btn {
+        width: 29px;
+        height: 32px;
+        font-size: .72rem;
+    }
+
+    .lang-switch-btn {
+        padding: 0 7px;
+        min-width: 42px;
+    }
+
+    .theme-btn {
+        padding: 0;
+        min-width: 40px;
+    }
+
+    .spotify-popover {
+        position: fixed;
+        top: 82px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+    }
+
+    
+
+    
+}
+
+
+
+
+/* ===== Spotify compact now-playing + volume UI ===== */
+
+.spotify-controls {
+    max-width: min(620px, 56vw);
+    align-items: center;
+}
+
+.spotify-now-playing {
+    display: flex;
+    min-width: 0;
+    width: clamp(120px, 17vw, 220px);
+    height: 34px;
+    align-items: center;
+    gap: 7px;
+    padding: 0 8px;
+    color: #fff;
+    overflow: hidden;
+}
+
+.spotify-now-playing .fa-spotify {
+    flex: 0 0 auto;
+    color: #1db954;
+    font-size: 1rem;
+}
+
+.spotify-track-name {
+    min-width: 0;
+    overflow: hidden;
+    color: #f4f4f4;
+    font-size: .73rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spotify-volume-control {
+    display: flex;
+    min-width: 145px;
+    align-items: center;
+    gap: 6px;
+    padding: 0 7px;
+}
+
+.spotify-volume-btn {
+    display: grid;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 30px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.spotify-volume-slider {
+    width: 82px;
+    height: 4px;
+    accent-color: #1db954;
+    cursor: pointer;
+}
+
+.spotify-volume-slider:disabled {
+    cursor: not-allowed;
+    opacity: .48;
+}
+
+.spotify-volume-value {
+    min-width: 31px;
+    color: #aaa;
+    font-size: .62rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+@media (max-width: 1050px) {
+    .spotify-now-playing {
+        width: 125px;
+    }
+
+    .spotify-volume-control {
+        min-width: 112px;
+    }
+
+    .spotify-volume-slider {
+        width: 54px;
+    }
+
+    .spotify-volume-value {
+        display: none;
+    }
+}
+
+@media (max-width: 820px) {
+    .spotify-now-playing {
+        display: none;
+    }
+
+    .spotify-volume-control {
+        min-width: auto;
+        padding-inline: 2px;
+    }
+
+    .spotify-volume-slider,
+    .spotify-volume-value {
+        display: none;
+    }
+}
+
+
+/* ===== v4: fixed gallery arrows + resumable auto-scroll ===== */
+
+/* Outer shell does not scroll, so the left/right controls never move away. */
+
+
+/* Only this inner layer scrolls. */
+
+
+
+
+/* Ensure the JS-managed strip isn't clipped horizontally by old carousel rules. */
+
+
+/* Arrows are pinned to the outer gallery shell, not the moving strip. */
+
+
+
+
+
+
+/* As long as the pointer remains anywhere inside the whole gallery shell,
+   controls stay visible — including after pressing either arrow. */
+
+
+
+
+/* Image enlargement remains independent of the fixed controls. */
+
+
+/* Give enlarged screenshots enough vertical breathing room inside the viewport. */
+
+
+
+
+
+/* ===== v5: Minecraft-style opening background, no soft gradient ===== */
+
+/*
+   Keep the entire opening area as one flat Minecraft-like sky.
+   No soft sky -> green gradient between the hero and About section.
+*/
+body {
+    background: #8ecdf1;
+}
+
+.hero::before,
+#about::before {
+    background: #8ecdf1 !important;
+}
+
+/* Square Minecraft-style sun in the opening sky. */
+.hero::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 72px;
+    right: max(34px, calc((100vw - var(--max-width)) / 2 - 70px));
+    width: 72px;
+    height: 72px;
+    background: #fff3a4;
+    box-shadow:
+        0 0 0 8px rgba(255, 243, 164, .18),
+        0 0 0 16px rgba(255, 243, 164, .08);
+    image-rendering: pixelated;
+    pointer-events: none;
+}
+
+/*
+   The world changes from sky to land only when the Minecraft server
+   section begins. This produces one clear grass edge instead of several
+   blended layers.
+*/
+#server::before {
+    background: #765038 !important;
+}
+
+#server::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -18px;
+    left: 50%;
+    width: 100vw;
+    height: 22px;
+    transform: translateX(-50%);
+    background: #6eb44c;
+    box-shadow:
+        0 7px 0 #4f9136,
+        0 14px 0 #8a5b38;
+    pointer-events: none;
+}
+
+/* Make the first two cards feel more like blocks instead of soft gradients. */
+.hero .panel-grass {
+    background: var(--surface);
+    border-bottom: 10px solid var(--grass);
+}
+
+.hero .panel-stone {
+    background: var(--surface);
+    box-shadow:
+        inset 0 8px 0 rgba(120, 120, 120, .20),
+        0 6px 0 var(--panel-shadow);
+}
+
+/* Keep the pixel clouds readable over the flat sky. */
+.pixel-cloud {
+    filter: drop-shadow(4px 4px 0 rgba(100, 150, 180, .16));
+}
+
+/* Dark mode becomes a flat Minecraft night sky instead of another gradient. */
+body[data-theme="dark"] {
+    background: #172a3a;
+}
+
+body[data-theme="dark"] .hero::before,
+body[data-theme="dark"] #about::before {
+    background: #172a3a !important;
+}
+
+body[data-theme="dark"] .hero::after {
+    background: #e6e4cd;
+    box-shadow:
+        0 0 0 8px rgba(230, 228, 205, .10),
+        0 0 0 16px rgba(230, 228, 205, .045);
+}
+
+body[data-theme="dark"] #server::before {
+    background: #3c3027 !important;
+}
+
+body[data-theme="dark"] #server::after {
+    background: #416e37;
+    box-shadow:
+        0 7px 0 #2f5729,
+        0 14px 0 #503927;
+}
+
+/* No rounded/blurred atmospheric transition at the beginning. */
+.hero,
+#about {
+    background: transparent;
+}
+
+@media (max-width: 720px) {
+    .hero::after {
+        top: 88px;
+        right: 20px;
+        width: 52px;
+        height: 52px;
+    }
+}
+
+
+/* ===== v6: hover-only gallery controls ===== */
+
+/* Arrows are completely borderless. */
+
+
+/* Controls appear ONLY while the mouse is inside the carousel. */
+
+
+
+
+/* Clicking an arrow may leave the button focused, but focus must not keep it visible. */
+
+
+
+
+
+
+/* Keep enlarged image behavior only while actually hovered. */
+
+
+/* No CSS rule should pause the strip; JS mouseenter/mouseleave owns pause state. */
+
+
+
+/* ===== v7 Spotify: actual track title + embed always visible on play/pause ===== */
+
+.spotify-popover-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.spotify-connect-btn {
+    min-height: 30px;
+    padding: 0 9px;
+    border: 0;
+    background: #1db954;
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.spotify-connect-btn:disabled {
+    cursor: not-allowed;
+    opacity: .42;
+}
+
+.spotify-track-name {
+    max-width: 100%;
+}
+
+/* Keep enough room for the longer initial state without breaking the toolbar. */
+.spotify-now-playing {
+    width: clamp(150px, 20vw, 250px);
+}
+
+@media (max-width: 1050px) {
+    .spotify-now-playing {
+        width: 145px;
+    }
+}
+
+
+/* =================================================================
+   v10 FINAL — use the known-working CSS animation for screenshots
+   ================================================================= */
+
+/* ---------- Header: prevent Spotify from crushing the menu ---------- */
+
+.topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    gap: 12px !important;
+}
+
+.desktop-nav {
+    min-width: 0;
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+}
+
+.nav-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.toolbar {
+    min-width: 0;
+    flex: 0 1 auto;
+    align-items: center;
+    gap: 6px !important;
+}
+
+.spotify-shell {
+    min-width: 0;
+}
+
+.spotify-controls {
+    width: auto !important;
+    max-width: 390px !important;
+    min-width: 0;
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+}
+
+.spotify-now-playing {
+    width: 118px !important;
+    min-width: 0 !important;
+    flex: 0 1 118px;
+}
+
+.spotify-track-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.spotify-volume-control {
+    min-width: 98px !important;
+    flex: 0 1 108px;
+}
+
+.spotify-volume-slider {
+    width: 52px !important;
+}
+
+.spotify-volume-value {
+    display: none !important;
+}
+
+.lang-switch-btn,
+.theme-btn {
+    flex: 0 0 auto;
+}
+
+@media (max-width: 1120px) {
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .topbar {
+        grid-template-columns: minmax(0, 1fr) auto !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .spotify-now-playing,
+    .spotify-volume-slider {
+        display: none !important;
+    }
+
+    .spotify-volume-control {
+        min-width: auto !important;
+        flex: 0 0 auto;
+        padding-inline: 2px !important;
+    }
+
+    .spotify-controls {
+        max-width: none !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .brand-copy {
+        display: none !important;
+    }
+
+    .spotify-prev-btn,
+    .spotify-next-btn {
+        display: none !important;
+    }
+
+    .spotify-controls {
+        padding: 3px !important;
+    }
+
+    .toolbar {
+        gap: 4px !important;
+    }
+}
+
+
+/* ---------- Screenshots: reference version's working mechanism ---------- */
+
+
+
+/*
+   Important:
+   - carousel itself is the exact image row
+   - track is animated by CSS only
+   - hover pauses CSS animation
+*/
+
+
+/* This is the SAME movement method as the working refined version. */
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+   ONLY hovering this image row pauses the animation.
+   Once the mouse leaves, CSS automatically resumes at exactly the same position.
+*/
+
+
+/* Fixed whole-row arrows. They are NOT inside the animated track. */
+
+
+
+
+
+
+/* Arrows only exist visually while the mouse is over the image row. */
+
+
+
+
+/* No focus state may keep arrows visible after the mouse leaves. */
+
+
+/* Remove any old per-card arrows left by cached/older CSS. */
+
+
+/* No image labels/captions. */
+
+
+/* ================================================================
+   GAME SCREENSHOTS — single clean implementation
+   Automatic movement is CSS-only.
+   ================================================================ */
+
+.gallery-section {
+    overflow: visible;
+}
+
+.gallery-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 34px 0 40px;
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 4%,
+        #000 96%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        #000 4%,
+        #000 96%,
+        transparent 100%
+    );
+}
+
+/*
+   THIS is the automatic movement.
+   It runs continuously from RIGHT -> LEFT.
+*/
+.gallery-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation-name: gallery-flow-left;
+    animation-duration: 72s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+
+.gallery-sequence {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 16px;
+    padding-right: 16px;
+}
+
+@keyframes gallery-flow-left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.gallery-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: clamp(300px, 39vw, 520px);
+    aspect-ratio: 16 / 9;
+    z-index: 1;
+    transition:
+        transform .20s ease,
+        filter .20s ease;
+}
+
+.gallery-card:hover {
+    z-index: 10;
+    transform: scale(1.075);
+    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .28));
+}
+
+.gallery-slide {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 4px solid var(--line);
+    box-shadow: 0 6px 0 var(--panel-shadow);
+    background: var(--stone);
+}
+
+/*
+   ONLY the screenshot row hover pauses it.
+   Mouse leaves -> CSS resumes automatically from the same position.
+*/
+.gallery-carousel:hover .gallery-track {
+    animation-play-state: paused;
+}
+
+/* Whole-row arrows */
+.gallery-strip-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 50;
+    display: grid;
+    width: 48px;
+    height: 62px;
+    place-items: center;
+    transform: translateY(-50%);
+
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+
+    background: rgba(12, 12, 12, .72);
+    color: #fff;
+    cursor: pointer;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity .14s ease,
+        background .14s ease,
+        transform .14s ease;
+}
+
+.gallery-strip-arrow-left {
+    left: 12px;
+}
+
+.gallery-strip-arrow-right {
+    right: 12px;
+}
+
+.gallery-carousel:hover .gallery-strip-arrow {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gallery-strip-arrow:hover {
+    background: rgba(12, 12, 12, .94);
+    transform: translateY(-50%) scale(1.06);
+}
+
+/*
+   Clicking may leave keyboard focus on a button.
+   Focus alone must NOT keep arrows visible.
+*/
+.gallery-carousel:not(:hover) .gallery-strip-arrow {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* No captions / labels over screenshots. */
+.gallery-card::before,
+.gallery-card::after {
+    content: none !important;
+    display: none !important;
+}
+
+@media (max-width: 720px) {
+    .gallery-carousel {
+        padding: 24px 0 30px;
+    }
+
+    .gallery-track {
+        animation-duration: 58s;
+    }
+
+    .gallery-card {
+        width: min(78vw, 440px);
+    }
+
+    .gallery-strip-arrow {
+        width: 42px;
+        height: 54px;
+    }
+
+    .gallery-strip-arrow-left {
+        left: 6px;
+    }
+
+    .gallery-strip-arrow-right {
+        right: 6px;
+    }
+}
+
+/*
+   The user explicitly wants this carousel animated.
+   Do NOT disable it through prefers-reduced-motion.
+*/
+
+
+/* ===== v12: smooth manual gallery switching ===== */
+.gallery-strip-arrow {
+    transition:
+        opacity .16s ease,
+        background .16s ease,
+        transform .18s ease;
+}
+
+.gallery-card {
+    transition:
+        transform .24s cubic-bezier(.22, .61, .36, 1),
+        filter .24s ease;
+}
+
+
+/* ===== v14 Spotify OAuth / volume ===== */
+
+.spotify-connect-btn:not(:disabled) {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.spotify-connect-btn:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+
+.spotify-volume-slider:not(:disabled) {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.spotify-volume-slider:disabled {
+    cursor: not-allowed;
+    opacity: .38;
+}
+
+.spotify-api-note[data-state="connected"] {
+    opacity: .82;
+}
+
+.spotify-api-note[data-state="error"] {
+    font-weight: 700;
+}
+
+.spotify-api-note[data-state="loading"] {
+    opacity: .72;
+}
+
+@media (max-width: 820px) {
+    /* Keep the volume slider available on phones once OAuth is connected. */
+    .spotify-volume-control {
+        min-width: 92px;
+    }
+
+    .spotify-volume-slider {
+        display: block !important;
+        width: 48px !important;
+    }
+}
+
+@media (max-width: 560px) {
+    .spotify-volume-slider {
+        width: 42px !important;
+    }
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1db954">
+<title>Spotify 授權中 | 08880</title>
+<style>
+    :root {
+        color-scheme: dark;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: #121212;
+        color: #fff;
+    }
+
+    main {
+        width: min(520px, 100%);
+        padding: 26px;
+        border: 1px solid #333;
+        border-radius: 16px;
+        background: #181818;
+    }
+
+    h1 {
+        margin: 0 0 12px;
+        font-size: 1.35rem;
+    }
+
+    p {
+        margin: 0;
+        color: #b3b3b3;
+        line-height: 1.7;
+    }
+
+    .ok {
+        color: #1ed760;
+    }
+
+    .error {
+        color: #ff8e8e;
+    }
+
+    a {
+        color: #fff;
+    }
+</style>
+</head>
+<body>
+<main>
+    <h1 id="title">正在連結 Spotify…</h1>
+    <p id="status">正在驗證 Spotify OAuth，完成後會自動回到首頁。</p>
+</main>
+
+<script>
+const CLIENT_ID = '2b5e7a2a71be42159e61df9bed94667a';
+const REDIRECT_URI = 'https://08home.com/spotify-callback.html';
+const HOME_URL = 'https://08home.com/';
+
+const title = document.getElementById('title');
+const status = document.getElementById('status');
+
+function fail(message) {
+    title.textContent = 'Spotify 授權失敗';
+    title.className = 'error';
+    status.innerHTML = `${message}<br><br><a href="${HOME_URL}">回到首頁</a>`;
+}
+
+async function exchangeCode() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const returnedState = params.get('state');
+    const oauthError = params.get('error');
+
+    const expectedState = localStorage.getItem('spotify_oauth_state');
+    const verifier = localStorage.getItem('spotify_code_verifier');
+
+    if (oauthError) {
+        fail(`Spotify 回傳錯誤：${oauthError}`);
+        return;
+    }
+
+    if (!code) {
+        fail('Spotify 沒有回傳 authorization code。');
+        return;
+    }
+
+    if (!expectedState || returnedState !== expectedState) {
+        fail('OAuth state 驗證失敗，請回首頁重新連結。');
+        return;
+    }
+
+    if (!verifier) {
+        fail('找不到 PKCE code verifier，請回首頁重新連結。');
+        return;
+    }
+
+    try {
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                client_id: CLIENT_ID,
+                grant_type: 'authorization_code',
+                code,
+                redirect_uri: REDIRECT_URI,
+                code_verifier: verifier
+            })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.access_token) {
+            throw new Error(
+                data?.error_description ||
+                data?.error ||
+                `Token request failed (${response.status})`
+            );
+        }
+
+        localStorage.setItem('spotify_access_token', data.access_token);
+        localStorage.setItem(
+            'spotify_token_expires_at',
+            String(Date.now() + Number(data.expires_in || 3600) * 1000)
+        );
+
+        if (data.refresh_token) {
+            localStorage.setItem('spotify_refresh_token', data.refresh_token);
+        }
+
+        localStorage.removeItem('spotify_oauth_state');
+        localStorage.removeItem('spotify_code_verifier');
+
+        title.textContent = 'Spotify 已連結';
+        title.className = 'ok';
+        status.textContent = '正在回到 08880 的首頁…';
+
+        window.setTimeout(() => {
+            window.location.replace(HOME_URL);
+        }, 700);
+    } catch (error) {
+        fail(error?.message || '無法交換 Spotify access token。');
+    }
+}
+
+exchangeCode();
+</script>
+</body>
+</html>

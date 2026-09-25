@@ -2305,3 +2305,29 @@ body[data-theme="dark"] #server::after {
         width: 42px !important;
     }
 }
+
+
+/* ===== v15 Spotify Web Playback SDK ===== */
+
+.spotify-volume-slider:not(:disabled) {
+    opacity: 1;
+    cursor: ew-resize;
+}
+
+.spotify-volume-slider:not(:disabled):active {
+    cursor: grabbing;
+}
+
+.spotify-api-note {
+    min-height: 2.6em;
+}
+
+.spotify-api-note[data-state="connected"] {
+    opacity: .9;
+}
+
+.spotify-api-note[data-state="error"] {
+    opacity: 1;
+    font-weight: 700;
+}
+

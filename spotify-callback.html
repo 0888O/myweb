@@ -68,6 +68,7 @@
 const CLIENT_ID = '2b5e7a2a71be42159e61df9bed94667a';
 const REDIRECT_URI = 'https://08home.com/spotify-callback.html';
 const HOME_URL = 'https://08home.com/';
+const AUTH_VERSION = '15-web-playback';
 
 const title = document.getElementById('title');
 const status = document.getElementById('status');
@@ -141,6 +142,9 @@ async function exchangeCode() {
         if (data.refresh_token) {
             localStorage.setItem('spotify_refresh_token', data.refresh_token);
         }
+
+        localStorage.setItem('spotify_granted_scopes', data.scope || '');
+        localStorage.setItem('spotify_auth_version', AUTH_VERSION);
 
         localStorage.removeItem('spotify_oauth_state');
         localStorage.removeItem('spotify_code_verifier');

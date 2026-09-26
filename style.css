@@ -2331,3 +2331,1862 @@ body[data-theme="dark"] #server::after {
     font-weight: 700;
 }
 
+
+
+/* ===== v16 Discord privacy-safe stats ===== */
+
+.discord-stats-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.discord-stats-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    gap: 14px;
+}
+
+.discord-stat-box {
+    min-width: 0;
+    padding: 20px;
+}
+
+.discord-stat-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: .86rem;
+    font-weight: 800;
+    opacity: .72;
+}
+
+.discord-stat-value {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 900;
+    line-height: 1.25;
+}
+
+.discord-stat-unit {
+    font-size: .9rem;
+    font-weight: 700;
+    opacity: .72;
+}
+
+.discord-uptime-value {
+    display: block;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .015em;
+    word-break: keep-all;
+}
+
+.discord-stats-join-btn {
+    align-self: flex-start;
+}
+
+@media (max-width: 760px) {
+    .discord-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .discord-stat-value {
+        font-size: 1.45rem;
+    }
+
+    .discord-uptime-value {
+        font-size: 1.2rem;
+        line-height: 1.55;
+    }
+}
+
+
+/* ===== v18 Guestbook + Contact + server cleanup ===== */
+
+.discord-stats-card .widget-heading {
+    max-width: 560px;
+}
+
+.discord-stats-card .community-title {
+    margin-bottom: 8px;
+}
+
+.discord-stats-card .community-copy {
+    max-width: 46ch;
+}
+
+.guestbook-section {
+    position: relative;
+}
+
+.guestbook-layout {
+    display: grid;
+    grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.guestbook-form,
+.guestbook-board {
+    padding: 24px;
+}
+
+.guestbook-form-head,
+.guestbook-board-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.guestbook-form-head h3,
+.guestbook-board-head h3 {
+    margin: 4px 0 0;
+    font-size: 1.2rem;
+}
+
+.guestbook-form-head > i {
+    font-size: 1.65rem;
+    opacity: .68;
+}
+
+.guestbook-mini-label {
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    opacity: .56;
+}
+
+.guestbook-field {
+    display: block;
+    position: relative;
+    margin-top: 16px;
+}
+
+.guestbook-field > span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: .88rem;
+    font-weight: 800;
+}
+
+.guestbook-field input,
+.guestbook-field textarea {
+    width: 100%;
+    border: 2px solid rgba(48, 39, 27, .35);
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, .58);
+    color: inherit;
+    font: inherit;
+    outline: none;
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.guestbook-field textarea {
+    min-height: 138px;
+    resize: vertical;
+    line-height: 1.65;
+}
+
+.guestbook-field input:focus,
+.guestbook-field textarea:focus {
+    border-color: rgba(88, 131, 66, .78);
+    box-shadow: 0 0 0 3px rgba(88, 131, 66, .14);
+    background: rgba(255, 255, 255, .78);
+}
+
+.guestbook-field small {
+    display: block;
+    margin-top: 6px;
+    text-align: right;
+    font-size: .72rem;
+    opacity: .58;
+}
+
+.guestbook-submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.guestbook-status {
+    min-height: 1.4em;
+    margin: 0;
+    font-size: .82rem;
+    opacity: .72;
+}
+
+.guestbook-status[data-state="success"],
+.guestbook-status[data-state="error"] {
+    font-weight: 800;
+}
+
+.guestbook-submit-btn:disabled,
+.guestbook-refresh-btn:disabled {
+    cursor: wait;
+    opacity: .6;
+}
+
+.guestbook-refresh-btn {
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, .46);
+    color: inherit;
+    cursor: pointer;
+    transition: transform .16s ease, background .16s ease;
+}
+
+.guestbook-refresh-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, .7);
+}
+
+.guestbook-refresh-btn.is-loading i {
+    animation: guestbook-spin .8s linear infinite;
+}
+
+@keyframes guestbook-spin {
+    to { transform: rotate(360deg); }
+}
+
+.guestbook-list {
+    display: grid;
+    gap: 12px;
+    max-height: 560px;
+    overflow: auto;
+    padding-right: 4px;
+}
+
+.guestbook-comment {
+    padding: 16px;
+    border: 2px solid rgba(58, 47, 34, .23);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .38);
+}
+
+.guestbook-comment-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 11px;
+}
+
+.guestbook-comment-identity {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.guestbook-comment-avatar {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    background: rgba(95, 130, 69, .22);
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.guestbook-comment-identity strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.guestbook-comment time {
+    flex: 0 0 auto;
+    font-size: .72rem;
+    opacity: .56;
+    font-variant-numeric: tabular-nums;
+}
+
+.guestbook-comment p {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.7;
+}
+
+.guestbook-loading,
+.guestbook-empty,
+.guestbook-error {
+    min-height: 160px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 12px;
+    padding: 30px;
+    text-align: center;
+    opacity: .68;
+}
+
+.guestbook-loading i,
+.guestbook-empty i,
+.guestbook-error i {
+    font-size: 1.45rem;
+}
+
+.contact-section {
+    padding: 28px clamp(18px, 4vw, 44px) 42px;
+}
+
+.contact-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 26px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: center;
+    border-top: 2px solid rgba(57, 47, 35, .2);
+}
+
+.contact-copy h2 {
+    margin: 5px 0 7px;
+    font-size: clamp(1.55rem, 3vw, 2.2rem);
+}
+
+.contact-copy p {
+    margin: 0;
+    opacity: .68;
+}
+
+.contact-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.contact-link {
+    min-width: 210px;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    border: 2px solid rgba(57, 47, 35, .22);
+    border-radius: 9px;
+    color: inherit;
+    text-decoration: none;
+    background: rgba(255, 255, 255, .36);
+    transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.contact-link:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, .56);
+    border-color: rgba(88, 131, 66, .5);
+}
+
+.contact-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    background: rgba(95, 130, 69, .19);
+    font-size: 1.2rem;
+}
+
+.contact-link-copy {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.contact-link-copy strong {
+    font-size: .9rem;
+}
+
+.contact-link-copy small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: .65;
+}
+
+.contact-link > i {
+    font-size: .76rem;
+    opacity: .5;
+}
+
+html[data-theme="dark"] .guestbook-field input,
+html[data-theme="dark"] .guestbook-field textarea,
+html[data-theme="dark"] .guestbook-comment,
+html[data-theme="dark"] .guestbook-refresh-btn,
+html[data-theme="dark"] .contact-link {
+    background: rgba(18, 22, 19, .38);
+}
+
+@media (max-width: 920px) {
+    .guestbook-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .guestbook-list {
+        max-height: 520px;
+    }
+
+    .contact-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-links {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 620px) {
+    .guestbook-form,
+    .guestbook-board {
+        padding: 18px;
+    }
+
+    .guestbook-submit-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .guestbook-submit-btn {
+        justify-content: center;
+    }
+
+    .guestbook-comment-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .contact-inner {
+        padding: 22px 0;
+    }
+
+    .contact-links {
+        display: grid;
+        width: 100%;
+    }
+
+    .contact-link {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+
+/* ===== v19 compact contact footer ===== */
+
+.contact-section {
+    display: none !important;
+}
+
+.site-footer.contact-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 22px clamp(18px, 4vw, 44px);
+}
+
+.contact-footer-copy {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.contact-footer-copy .contact-eyebrow {
+    flex: 0 0 auto;
+}
+
+.contact-footer-copy > div {
+    min-width: 0;
+}
+
+.contact-footer-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 900;
+}
+
+.contact-footer-copy p {
+    margin: 3px 0 0;
+    font-size: .78rem;
+    opacity: .62;
+}
+
+.contact-footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+}
+
+.footer-contact-btn {
+    height: 40px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 2px solid rgba(57, 47, 35, .22);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .34);
+    color: inherit;
+    text-decoration: none;
+    font-size: .8rem;
+    font-weight: 800;
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        border-color .18s ease;
+}
+
+.footer-contact-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, .56);
+    border-color: rgba(88, 131, 66, .5);
+}
+
+.footer-contact-btn i {
+    font-size: 1rem;
+}
+
+html[data-theme="dark"] .footer-contact-btn {
+    background: rgba(18, 22, 19, .38);
+}
+
+@media (max-width: 700px) {
+    .site-footer.contact-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .contact-footer-copy {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .contact-footer-actions {
+        width: 100%;
+    }
+
+    .footer-contact-btn {
+        flex: 1 1 0;
+    }
+
+    .contact-footer-actions .back-to-top {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 430px) {
+    .footer-contact-btn span {
+        display: none;
+    }
+
+    .footer-contact-btn {
+        flex: 0 0 42px;
+        width: 42px;
+        padding: 0;
+    }
+}
+
+
+/* ===== v20 unified server/community card ===== */
+
+.server-layout-unified {
+    display: block;
+}
+
+.server-unified-card {
+    padding: 26px;
+}
+
+.server-unified-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.server-intro-copy {
+    min-width: 0;
+}
+
+.server-unified-status {
+    min-width: 0;
+    padding: 20px;
+    border: 2px solid rgba(58, 47, 34, .22);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .2);
+}
+
+.server-unified-status .community-title {
+    margin: 6px 0 8px;
+}
+
+.server-unified-status .community-copy {
+    margin-bottom: 16px;
+}
+
+.server-unified-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(58, 47, 34, .18);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: center;
+}
+
+.server-meta-grid-compact {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.server-discord-single-btn {
+    white-space: nowrap;
+    align-self: center;
+}
+
+html[data-theme="dark"] .server-unified-status {
+    background: rgba(20, 23, 19, .22);
+}
+
+@media (max-width: 980px) {
+    .server-unified-main {
+        grid-template-columns: 1fr;
+    }
+
+    .server-unified-footer {
+        grid-template-columns: 1fr;
+    }
+
+    .server-discord-single-btn {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 640px) {
+    .server-unified-card {
+        padding: 18px;
+    }
+
+    .server-meta-grid-compact {
+        grid-template-columns: 1fr;
+    }
+
+    .server-discord-single-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+/* ===== v21 server stats at bottom + simplified contact footer ===== */
+
+.server-unified-main-single {
+    display: block;
+}
+
+.server-unified-status {
+    display: none !important;
+}
+
+.server-unified-footer-v21 {
+    margin-top: 24px;
+}
+
+.server-bottom-stats {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 2px solid rgba(58, 47, 34, .18);
+    display: grid;
+    grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+    gap: 12px;
+}
+
+.server-bottom-stats .discord-stat-box {
+    min-width: 0;
+}
+
+.contact-footer-copy {
+    gap: 0;
+}
+
+.contact-footer-copy .contact-eyebrow {
+    display: none !important;
+}
+
+@media (max-width: 760px) {
+    .server-bottom-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ===== v22 server showcase polish ===== */
+
+/* Main server identity area */
+.server-showcase {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 22px;
+    align-items: center;
+    padding: 4px 2px 2px;
+}
+
+.server-showcase-logo {
+    width: 112px;
+    min-height: 112px;
+    padding: 14px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 9px;
+    border: 3px solid rgba(61, 49, 35, .28);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .22);
+    box-shadow:
+        inset 0 -5px 0 rgba(61, 49, 35, .08),
+        5px 5px 0 rgba(61, 49, 35, .10);
+}
+
+.server-showcase-logo .server-logo {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.server-showcase-logo > span {
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: .15em;
+    opacity: .55;
+}
+
+.server-showcase-content {
+    min-width: 0;
+}
+
+.server-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+.server-title-row .server-name {
+    margin: 0;
+    font-size: clamp(1.55rem, 3.2vw, 2.15rem);
+    line-height: 1.25;
+}
+
+.server-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border: 2px solid rgba(67, 94, 52, .28);
+    border-radius: 6px;
+    background: rgba(109, 151, 81, .13);
+    font-size: .72rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.server-status-badge i {
+    font-size: .45rem;
+    color: var(--grass-2);
+}
+
+.server-showcase .server-copy {
+    max-width: 64ch;
+    margin-top: 11px;
+    font-size: .94rem;
+    line-height: 1.8;
+}
+
+/* Feature labels become small game-mechanic cards */
+.server-feature-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(110px, 1fr));
+    gap: 9px;
+    margin-top: 18px;
+}
+
+.server-feature-cards > span {
+    min-width: 0;
+    padding: 9px 10px;
+    border: 2px solid rgba(58, 47, 34, .18);
+    border-radius: 7px;
+    justify-content: flex-start;
+    background: rgba(255, 255, 255, .18);
+    font-size: .82rem;
+}
+
+.server-feature-cards > span i {
+    width: 18px;
+    text-align: center;
+    font-size: .82rem;
+    color: var(--grass-2);
+}
+
+/* Make server name/version cards visually smaller */
+.server-meta-grid-compact {
+    width: fit-content;
+    grid-template-columns: repeat(2, minmax(155px, 205px));
+    gap: 10px;
+    margin-top: 0;
+}
+
+.server-meta-grid-compact .server-meta-card {
+    min-height: 0;
+    padding: 11px 14px 12px;
+}
+
+.server-meta-grid-compact .server-meta-label {
+    font-size: .72rem;
+    line-height: 1.35;
+    font-weight: 900;
+    letter-spacing: .025em;
+}
+
+.server-meta-grid-compact .server-meta-value {
+    margin-top: 4px;
+    font-size: .9rem;
+    line-height: 1.4;
+}
+
+.server-unified-footer-v21 {
+    margin-top: 22px;
+    padding-top: 17px;
+}
+
+.server-bottom-stats {
+    margin-top: 14px;
+    padding-top: 16px;
+}
+
+html[data-theme="dark"] .server-showcase-logo,
+html[data-theme="dark"] .server-feature-cards > span {
+    background: rgba(18, 22, 19, .22);
+}
+
+/* Tablet */
+@media (max-width: 920px) {
+    .server-feature-cards {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .server-showcase {
+        grid-template-columns: 76px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+    }
+
+    .server-showcase-logo {
+        width: 76px;
+        min-height: 76px;
+        padding: 9px;
+        gap: 5px;
+    }
+
+    .server-showcase-logo .server-logo {
+        font-size: 1.45rem;
+    }
+
+    .server-showcase-logo > span {
+        font-size: .6rem;
+    }
+
+    .server-title-row {
+        gap: 8px;
+    }
+
+    .server-title-row .server-name {
+        font-size: 1.45rem;
+    }
+
+    .server-status-badge {
+        padding: 4px 7px;
+        font-size: .65rem;
+    }
+
+    .server-showcase .server-copy {
+        grid-column: 1 / -1;
+    }
+
+    .server-feature-cards {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .server-meta-grid-compact {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 430px) {
+    .server-showcase {
+        grid-template-columns: 1fr;
+    }
+
+    .server-showcase-logo {
+        width: 70px;
+        min-height: 70px;
+    }
+
+    .server-feature-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .server-meta-grid-compact {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* ===== v23 server section visual consistency ===== */
+
+/* Remove the showcase treatment introduced in v22. */
+.server-showcase-logo,
+.server-status-badge {
+    display: none !important;
+}
+
+.server-simple-card {
+    display: block;
+    padding: 0;
+}
+
+.server-showcase {
+    display: block;
+    padding: 0;
+}
+
+.server-showcase-content {
+    display: block;
+}
+
+.server-title-row {
+    display: block;
+    margin-top: 4px;
+}
+
+.server-title-row .server-name,
+.server-simple-card .server-name {
+    margin: 5px 0 0;
+    font-size: clamp(1.35rem, 2.3vw, 1.7rem);
+    line-height: 1.35;
+}
+
+.server-simple-card .server-copy {
+    max-width: 66ch;
+    margin: 10px 0 0;
+    font-size: .92rem;
+    line-height: 1.75;
+}
+
+/* Match the small chip treatment used elsewhere instead of special game cards. */
+.server-feature-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.server-feature-cards > span {
+    width: auto;
+    min-width: 0;
+    padding: 7px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 2px solid rgba(58, 47, 34, .16);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, .16);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.server-feature-cards > span i {
+    width: auto;
+    font-size: .42rem;
+    color: inherit;
+    opacity: .58;
+}
+
+/* Keep the whole server card on the same visual level as the other information cards. */
+.server-unified-card {
+    padding: 22px;
+    box-shadow: none;
+}
+
+.server-unified-main {
+    display: block;
+}
+
+.server-unified-footer-v21 {
+    margin-top: 18px;
+    padding-top: 15px;
+}
+
+.server-meta-grid-compact {
+    width: auto;
+    grid-template-columns: repeat(2, minmax(140px, 190px));
+}
+
+.server-bottom-stats {
+    margin-top: 12px;
+    padding-top: 14px;
+}
+
+.server-bottom-stats .discord-stat-box {
+    padding: 14px 16px;
+}
+
+.server-bottom-stats .discord-stat-label {
+    font-size: .8rem;
+}
+
+.server-bottom-stats .discord-stat-value {
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+
+html[data-theme="dark"] .server-feature-cards > span {
+    background: rgba(18, 22, 19, .2);
+}
+
+@media (max-width: 640px) {
+    .server-unified-card {
+        padding: 18px;
+    }
+
+    .server-feature-cards {
+        gap: 7px;
+    }
+
+    .server-feature-cards > span {
+        padding: 6px 9px;
+    }
+
+    .server-meta-grid-compact {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   v25 — three continuous world backgrounds
+   ========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* Disable older per-section scenery. The zone wrappers now own it. */
+body::before,
+.hero::before,
+.section::before,
+.site-footer::before {
+    opacity: 0 !important;
+    background: none !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+.world-zone {
+    --zone-full-width: 100vw;
+    position: relative;
+    isolation: isolate;
+}
+
+.world-zone::before {
+    content: "";
+    position: absolute;
+    z-index: -3;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--zone-full-width);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.world-zone::after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: var(--zone-full-width);
+    transform: translateX(-50%);
+    pointer-events: none;
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.055) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.055) 1px,
+            transparent 1px
+        );
+    background-size: 24px 24px;
+    opacity: .28;
+}
+
+.world-zone > .hero,
+.world-zone > .section {
+    position: relative;
+    z-index: 3;
+}
+
+/* ---------- first zone: blue sky ---------- */
+
+.sky-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #83c9f0 0%,
+            #92d1f2 58%,
+            #9bd6f2 100%
+        );
+}
+
+.sky-world {
+    min-height: 940px;
+}
+
+.sky-cloud-layer {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.pixel-cloud {
+    --cloud-scale: 1;
+    --cloud-opacity: .88;
+    position: absolute;
+    width: 84px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(255,255,255,var(--cloud-opacity));
+    box-shadow:
+        16px -16px 0 rgba(255,255,255,var(--cloud-opacity)),
+        40px -16px 0 rgba(255,255,255,var(--cloud-opacity)),
+        56px -8px 0 rgba(255,255,255,var(--cloud-opacity)),
+        80px 0 0 rgba(255,255,255,var(--cloud-opacity)),
+        24px 16px 0 rgba(255,255,255,var(--cloud-opacity)),
+        56px 16px 0 rgba(255,255,255,var(--cloud-opacity));
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: .9;
+    appearance: none;
+    filter: drop-shadow(0 5px 0 rgba(74,120,151,.10));
+    will-change: transform, opacity;
+}
+
+.pixel-cloud::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 16px;
+    left: -12px;
+    top: 7px;
+    background: rgba(255,255,255,var(--cloud-opacity));
+}
+
+.pixel-cloud:hover {
+    filter:
+        brightness(1.06)
+        drop-shadow(0 5px 0 rgba(74,120,151,.12));
+}
+
+.pixel-cloud.is-cloud-popped {
+    animation:
+        cloud-pop .18s steps(3, end)
+        forwards !important;
+}
+
+@keyframes cloud-pop {
+    0% {
+        opacity: 1;
+        filter: none;
+    }
+
+    55% {
+        opacity: .75;
+        transform:
+            scale(calc(var(--cloud-scale) * 1.15));
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            scale(calc(var(--cloud-scale) * .6));
+    }
+}
+
+/* ---------- second zone: sky + grass ---------- */
+
+.grass-world {
+    --grass-wind: 0deg;
+    --grass-horizon-y: 23%;
+}
+
+.grass-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #92d1f2 0%,
+            #92d1f2 var(--grass-horizon-y),
+            #75b64d var(--grass-horizon-y),
+            #69aa45 58%,
+            #5f9a3f 100%
+        );
+}
+
+.grass-world::after {
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 38px,
+            rgba(45,92,42,.08) 38px 42px
+        );
+}
+
+.grass-horizon-decoration {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: var(--grass-horizon-y);
+    width: 100vw;
+    height: 58px;
+    transform: translate(-50%, -84%);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.horizon-grass-blade {
+    position: absolute;
+    left: var(--grass-x);
+    bottom: 0;
+    width: 5px;
+    height: var(--grass-height);
+    transform-origin: 50% 100%;
+    transform:
+        rotate(
+            calc(
+                var(--grass-lean) +
+                var(--local-wind, 0deg)
+            )
+        );
+    transition:
+        transform .19s ease-out
+        var(--grass-delay);
+    background:
+        linear-gradient(
+            90deg,
+            #477f36 0 46%,
+            #67a849 46% 100%
+        );
+    box-shadow:
+        5px 5px 0 rgba(59,113,47,.55);
+}
+
+.horizon-grass-blade:nth-child(3n) {
+    width: 4px;
+    background: #57933f;
+}
+
+.horizon-grass-blade:nth-child(5n) {
+    filter: brightness(1.08);
+}
+
+.horizon-grass-blade.has-grass-flower::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -7px;
+    width: 7px;
+    height: 7px;
+    transform: translateX(-50%);
+    background: #f1d56b;
+    box-shadow:
+        -5px 0 0 #f4eff0,
+        5px 0 0 #f4eff0,
+        0 -5px 0 #f4eff0,
+        0 5px 0 #f4eff0;
+}
+
+/* ---------- third zone: coffee-brown dirt ---------- */
+
+.dirt-world {
+    min-height: 620px;
+}
+
+.dirt-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #81583c 0%,
+            #765038 38%,
+            #694631 100%
+        );
+}
+
+.dirt-world::after {
+    opacity: .42;
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(70,43,28,.18) 0 8px,
+            transparent 8px 44px
+        ),
+        linear-gradient(
+            rgba(113,77,52,.16) 0 7px,
+            transparent 7px 37px
+        ),
+        radial-gradient(
+            circle at center,
+            rgba(50,31,21,.15),
+            transparent 70%
+        );
+    background-size:
+        52px 46px,
+        63px 41px,
+        72px 72px;
+}
+
+/* ---------- normal-scroll reveal retained from v24 ---------- */
+
+.scroll-reveal-section > .scroll-reveal-item {
+    opacity: 0;
+    transform:
+        translate3d(0, 24px, 0);
+    transition:
+        opacity .58s
+            cubic-bezier(.22,.61,.36,1),
+        transform .68s
+            cubic-bezier(.22,.61,.36,1);
+    transition-delay:
+        var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+
+.scroll-reveal-section.is-reveal-visible >
+.scroll-reveal-item {
+    opacity: 1;
+    transform:
+        translate3d(0, 0, 0);
+}
+
+/* ---------- bottom contact becomes a long gray-black bar ---------- */
+
+.site-footer.contact-footer {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    max-width: none;
+    margin: 0 !important;
+    transform: translateX(-50%);
+    padding:
+        22px
+        max(
+            24px,
+            calc(
+                (100vw - var(--max-width)) / 2 +
+                24px
+            )
+        ) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background:
+        linear-gradient(
+            180deg,
+            #30353a 0%,
+            #24282d 100%
+        ) !important;
+    color: #f4f6f7;
+    box-shadow:
+        inset 0 4px 0 rgba(255,255,255,.035);
+}
+
+.site-footer.contact-footer::before,
+.site-footer.contact-footer::after {
+    display: none !important;
+}
+
+.site-footer.contact-footer .contact-footer-copy p {
+    color: rgba(244,246,247,.68);
+}
+
+.site-footer.contact-footer .footer-contact-btn {
+    color: #f4f6f7;
+    border-color:
+        rgba(255,255,255,.16);
+    background:
+        rgba(255,255,255,.07);
+}
+
+.site-footer.contact-footer .footer-contact-btn:hover {
+    border-color:
+        rgba(255,255,255,.28);
+    background:
+        rgba(255,255,255,.12);
+}
+
+.site-footer.contact-footer .back-to-top {
+    color: #f4f6f7;
+}
+
+/* Keep content readable on colorful zones. */
+.sky-world .panel-block,
+.grass-world .panel-block,
+.dirt-world .panel-block {
+    position: relative;
+}
+
+/* Dark theme keeps the same three-world idea. */
+body[data-theme="dark"] .sky-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #173147 0%,
+            #1f3c51 58%,
+            #29485a 100%
+        );
+}
+
+body[data-theme="dark"] .pixel-cloud {
+    --cloud-opacity: .52;
+    filter:
+        brightness(.8)
+        drop-shadow(
+            0 5px 0 rgba(0,0,0,.12)
+        );
+}
+
+body[data-theme="dark"] .grass-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #24475b 0%,
+            #24475b var(--grass-horizon-y),
+            #416d39 var(--grass-horizon-y),
+            #365f33 58%,
+            #2e512d 100%
+        );
+}
+
+body[data-theme="dark"] .dirt-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #4c382c 0%,
+            #403027 38%,
+            #342820 100%
+        );
+}
+
+/* Mobile remains normal touch scrolling. */
+@media (max-width: 760px) {
+    .pixel-cloud {
+        opacity: .72;
+    }
+
+    .grass-world {
+        --grass-horizon-y: 18%;
+    }
+
+    .grass-horizon-decoration {
+        height: 46px;
+    }
+.site-footer.contact-footer {
+        padding:
+            20px 18px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-reveal-section >
+    .scroll-reveal-item {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .horizon-grass-blade {
+        transition: none !important;
+    }
+}
+
+
+/* =========================================================
+   v26 — cleaner sky / grass / dirt transitions
+   ========================================================= */
+
+/*
+   Remove the old v5 server grass+dirt separator.
+   It was the small green + brown strip between About and Server.
+*/
+#server::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+/*
+   Minecraft Server and everything in the second world begins
+   directly on green terrain. There is no sky portion inside
+   the grass-world anymore.
+*/
+.grass-world {
+    --grass-wind: 0deg;
+    --grass-horizon-y: 0px;
+}
+
+.grass-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #79b953 0%,
+            #70b04c 42%,
+            #66a445 100%
+        ) !important;
+}
+
+/*
+   The decorative grass grows out of the TOP edge of the green
+   world so it sits immediately above the Minecraft Server area.
+*/
+.grass-horizon-decoration {
+    top: 0 !important;
+    height: 68px !important;
+    transform:
+        translate(-50%, -82%) !important;
+    overflow: visible !important;
+}
+
+/* Slightly denser / softer grass response. */
+.horizon-grass-blade {
+    transition:
+        transform .26s
+        cubic-bezier(.2,.75,.3,1)
+        var(--grass-delay) !important;
+}
+
+/*
+   The page body used to keep 18px padding on the bottom,
+   exposing the blue body background under the dark footer.
+*/
+body {
+    padding-bottom: 0 !important;
+}
+
+/* Make the physical page bottom match the footer as a fallback. */
+html {
+    background: #24282d;
+}
+
+.site-footer.contact-footer {
+    margin-bottom: 0 !important;
+}
+
+/* Dark theme: same rule, second world is entirely green terrain. */
+body[data-theme="dark"] .grass-world::before {
+    background:
+        linear-gradient(
+            180deg,
+            #416f3c 0%,
+            #376337 48%,
+            #2e552f 100%
+        ) !important;
+}
+
+/* Mobile still starts the grass world immediately at its top edge. */
+@media (max-width: 760px) {
+    .grass-world {
+        --grass-horizon-y: 0px;
+    }
+
+    .grass-horizon-decoration {
+        top: 0 !important;
+        height: 56px !important;
+        transform:
+            translate(-50%, -78%) !important;
+    }
+}
+
+
+/* =========================================================
+   v27 — forgiving cloud hit detection
+   ========================================================= */
+
+/*
+   The old white cloud was drawn directly on the button, while most
+   of the visible pixels were box-shadows outside its actual 84x24
+   clickable box.  The button is now a 164x92 transparent hitbox.
+*/
+.pixel-cloud {
+    width: 164px !important;
+    height: 92px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    overflow: visible;
+}
+
+/* Actual visible cloud body */
+.pixel-cloud::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 28px !important;
+    top: 34px !important;
+    width: 84px !important;
+    height: 24px !important;
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            var(--cloud-opacity)
+        ) !important;
+    box-shadow:
+        16px -16px 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ),
+        40px -16px 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ),
+        56px -8px 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ),
+        80px 0 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ),
+        24px 16px 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ),
+        56px 16px 0
+            rgba(
+                255,
+                255,
+                255,
+                var(--cloud-opacity)
+            ) !important;
+    pointer-events: none;
+    filter:
+        drop-shadow(
+            0 5px 0
+            rgba(74,120,151,.10)
+        );
+}
+
+/* Small leading pixel from the old cloud shape */
+.pixel-cloud::after {
+    content: "" !important;
+    position: absolute;
+    left: 16px;
+    top: 41px;
+    width: 20px;
+    height: 16px;
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            var(--cloud-opacity)
+        );
+    pointer-events: none;
+}
+
+/*
+   Optional subtle cursor hint over the forgiving transparent edge.
+   No visible rectangle is drawn.
+*/
+.pixel-cloud:hover::before {
+    filter:
+        brightness(1.06)
+        drop-shadow(
+            0 5px 0
+            rgba(74,120,151,.12)
+        );
+}
+
+/*
+   Keep background layers clickable.  Individual cloud buttons
+   remain above them; ordinary page content still sits above the
+   cloud layer through the existing z-index hierarchy.
+*/
+.sky-world,
+.sky-world > .hero,
+.sky-world > .section {
+    pointer-events: auto;
+}
+
+.sky-cloud-layer {
+    pointer-events: none;
+}
+
+.sky-cloud-layer .pixel-cloud {
+    pointer-events: auto;
+}
+
+/* Dark mode affects only the drawn cloud, not its transparent hitbox. */
+body[data-theme="dark"] .pixel-cloud {
+    filter: none !important;
+}
+
+body[data-theme="dark"] .pixel-cloud::before {
+    filter:
+        brightness(.8)
+        drop-shadow(
+            0 5px 0
+            rgba(0,0,0,.12)
+        );
+}
+
+/* Cloud pop continues to animate the whole clickable cloud object. */
+.pixel-cloud.is-cloud-popped {
+    pointer-events: none !important;
+}
+
+@media (max-width: 760px) {
+    .pixel-cloud {
+        width: 148px !important;
+        height: 84px !important;
+    }
+
+    .pixel-cloud::before {
+        transform: scale(.9);
+        transform-origin: center;
+    }
+
+    .pixel-cloud::after {
+        transform: scale(.9);
+        transform-origin: center;
+    }
+}
+
+
+/* =========================================================
+   v28 — local cursor grass wind
+   ========================================================= */
+
+/*
+   Wind is now stored per blade instead of one value for the
+   entire grass strip. Only blades near the cursor move.
+*/
+.grass-world {
+    --grass-wind: 0deg;
+}
+
+.horizon-grass-blade {
+    --local-wind: 0deg;
+    transition:
+        transform .22s
+        cubic-bezier(.2,.72,.3,1)
+        var(--grass-delay) !important;
+}
+
+/*
+   The horizon layer itself never captures the pointer.
+   Detection is done from document coordinates, so an empty class
+   or decorative element over the grass area cannot block it.
+*/
+.grass-horizon-decoration {
+    pointer-events: none !important;
+}
+
+/* Keep the local response compact on smaller screens. */
+@media (max-width: 760px) {
+    .horizon-grass-blade {
+        transition-duration:
+            .2s !important;
+    }
+}
+
+
+/* =========================================================
+   v29 — wider local grass interaction zone
+   ========================================================= */
+
+/*
+   The grass still reacts locally, but the pointer may now trigger it
+   from the skills card / the area immediately above the green world.
+   Detection is JavaScript coordinate-based, so this does not change
+   layout or pointer behavior of the card itself.
+*/
+.info-card.panel-block.panel-stone.skills-card {
+    position: relative;
+    z-index: 4;
+}

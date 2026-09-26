@@ -4618,3 +4618,21 @@ body[data-theme="dark"] .pixel-cloud::before {
         display: none !important;
     }
 }
+
+
+/* =========================================================
+   v33 — Spotify play/pause only
+   ========================================================= */
+
+.spotify-prev-btn,
+.spotify-next-btn {
+    display: none !important;
+}
+
+.spotify-controls {
+    max-width:
+        min(
+            360px,
+            40vw
+        );
+}

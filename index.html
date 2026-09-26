@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=32" rel="stylesheet"/>
+<link href="style.css?v=33" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="pixel-cloud cloud-one"></div>
@@ -41,16 +41,8 @@
 <span class="spotify-track-name">我的歌單</span>
 </button>
 
-<button class="spotify-control-btn spotify-prev-btn" type="button" aria-label="上一首" title="上一首">
-<i class="fa-solid fa-backward-step"></i>
-</button>
-
 <button class="spotify-control-btn spotify-play-btn" type="button" aria-label="播放或暫停歌單" title="播放 / 暫停">
 <i class="fa-solid fa-play"></i>
-</button>
-
-<button class="spotify-control-btn spotify-next-btn" type="button" aria-label="下一首" title="下一首">
-<i class="fa-solid fa-forward-step"></i>
 </button>
 
 <button class="spotify-control-btn spotify-list-btn" type="button" aria-label="開啟歌單播放器" title="開啟歌單播放器">
@@ -969,73 +961,6 @@ async function updateSpotifyTrackFromURI(
     }
 }
 
-
-function callSpotifyControllerMethod(
-    methodNames
-) {
-    if (!spotifyController) {
-        return false;
-    }
-
-    for (const methodName of methodNames) {
-        const method =
-            spotifyController?.[
-                methodName
-            ];
-
-        if (
-            typeof method ===
-            'function'
-        ) {
-            method.call(
-                spotifyController
-            );
-
-            return true;
-        }
-    }
-
-    return false;
-}
-
-function spotifyPreviousTrack() {
-    const handled =
-        callSpotifyControllerMethod([
-            'previous',
-            'prev',
-            'skipPrevious',
-            'skipToPrevious'
-        ]);
-
-    if (!handled) {
-        setSpotifyPopover(true);
-    }
-}
-
-function spotifyNextTrack() {
-    const handled =
-        callSpotifyControllerMethod([
-            'next',
-            'skipNext',
-            'skipToNext'
-        ]);
-
-    if (!handled) {
-        setSpotifyPopover(true);
-    }
-}
-
-spotifyPrevBtn
-    ?.addEventListener(
-        'click',
-        spotifyPreviousTrack
-    );
-
-spotifyNextBtn
-    ?.addEventListener(
-        'click',
-        spotifyNextTrack
-    );
 
 spotifyOpenBtn
     ?.addEventListener(

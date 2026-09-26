@@ -61,14 +61,14 @@
 <body>
 <main>
     <h1 id="title">正在連結 Spotify…</h1>
-    <p id="status">正在驗證 Spotify OAuth，完成後會自動回到首頁。</p>
+    <p id="status">正在驗證 Spotify 歌單管理授權，完成後會自動回到首頁。</p>
 </main>
 
 <script>
 const CLIENT_ID = '2b5e7a2a71be42159e61df9bed94667a';
 const REDIRECT_URI = 'https://08home.com/spotify-callback.html';
 const HOME_URL = 'https://08home.com/';
-const AUTH_VERSION = '15-web-playback';
+const AUTH_VERSION = '30-playlist-only';
 
 const title = document.getElementById('title');
 const status = document.getElementById('status');
@@ -149,7 +149,7 @@ async function exchangeCode() {
         localStorage.removeItem('spotify_oauth_state');
         localStorage.removeItem('spotify_code_verifier');
 
-        title.textContent = 'Spotify 已連結';
+        title.textContent = 'Spotify 歌單已授權';
         title.className = 'ok';
         status.textContent = '正在回到 08880 的首頁…';
 

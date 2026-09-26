@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=31" rel="stylesheet"/>
+<link href="style.css?v=32" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="pixel-cloud cloud-one"></div>
@@ -38,11 +38,19 @@
 <div class="spotify-controls" aria-label="Spotify 歌單播放器">
 <button class="spotify-now-playing spotify-open-btn" type="button" title="開啟 Spotify 歌單播放器">
 <i class="fa-brands fa-spotify"></i>
-<span class="spotify-track-name">Spotify 歌單</span>
+<span class="spotify-track-name">我的歌單</span>
+</button>
+
+<button class="spotify-control-btn spotify-prev-btn" type="button" aria-label="上一首" title="上一首">
+<i class="fa-solid fa-backward-step"></i>
 </button>
 
 <button class="spotify-control-btn spotify-play-btn" type="button" aria-label="播放或暫停歌單" title="播放 / 暫停">
 <i class="fa-solid fa-play"></i>
+</button>
+
+<button class="spotify-control-btn spotify-next-btn" type="button" aria-label="下一首" title="下一首">
+<i class="fa-solid fa-forward-step"></i>
 </button>
 
 <button class="spotify-control-btn spotify-list-btn" type="button" aria-label="開啟歌單播放器" title="開啟歌單播放器">
@@ -52,7 +60,7 @@
 
 <div class="spotify-popover" id="spotify-popover" aria-hidden="true">
 <div class="spotify-popover-head">
-<span><i class="fa-brands fa-spotify"></i> 茶咖歌單</span>
+<span><i class="fa-brands fa-spotify"></i> 我的歌單</span>
 <button class="spotify-close-btn" type="button" aria-label="關閉 Spotify 播放器">
 <i class="fa-solid fa-xmark"></i>
 </button>
@@ -61,10 +69,6 @@
 <div class="spotify-embed-frame-wrap">
 <div id="spotify-embed"></div>
 </div>
-
-<p class="spotify-api-note" id="spotify-api-note">
-固定播放你提供的 Spotify 歌單。網站上的播放 / 暫停會直接控制這個播放器，音量請使用 Spotify 播放器內的音量控制。
-</p>
 </div>
 </div>
 <button aria-label="切換語言" class="icon-btn lang-switch-btn" title="切換語言" type="button">
@@ -777,6 +781,16 @@ const spotifyPlayBtn =
         '.spotify-play-btn'
     );
 
+const spotifyPrevBtn =
+    document.querySelector(
+        '.spotify-prev-btn'
+    );
+
+const spotifyNextBtn =
+    document.querySelector(
+        '.spotify-next-btn'
+    );
+
 const spotifyOpenBtn =
     document.querySelector(
         '.spotify-open-btn'
@@ -896,8 +910,8 @@ async function updateSpotifyTrackFromURI(
 
     if (!openURL) {
         setSpotifyTrackLabel(
-            '歌單播放中',
-            '正在播放指定 Spotify 歌單'
+            '我的歌單',
+            '我的 Spotify 歌單'
         );
         return;
     }
@@ -938,8 +952,8 @@ async function updateSpotifyTrackFromURI(
             );
         } else {
             setSpotifyTrackLabel(
-                '歌單播放中',
-                '正在播放指定 Spotify 歌單'
+                '我的歌單',
+                '我的 Spotify 歌單'
             );
         }
     } catch (error) {
@@ -949,11 +963,79 @@ async function updateSpotifyTrackFromURI(
         );
 
         setSpotifyTrackLabel(
-            '歌單播放中',
-            '正在播放指定 Spotify 歌單'
+            '我的歌單',
+            '我的 Spotify 歌單'
         );
     }
 }
+
+
+function callSpotifyControllerMethod(
+    methodNames
+) {
+    if (!spotifyController) {
+        return false;
+    }
+
+    for (const methodName of methodNames) {
+        const method =
+            spotifyController?.[
+                methodName
+            ];
+
+        if (
+            typeof method ===
+            'function'
+        ) {
+            method.call(
+                spotifyController
+            );
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function spotifyPreviousTrack() {
+    const handled =
+        callSpotifyControllerMethod([
+            'previous',
+            'prev',
+            'skipPrevious',
+            'skipToPrevious'
+        ]);
+
+    if (!handled) {
+        setSpotifyPopover(true);
+    }
+}
+
+function spotifyNextTrack() {
+    const handled =
+        callSpotifyControllerMethod([
+            'next',
+            'skipNext',
+            'skipToNext'
+        ]);
+
+    if (!handled) {
+        setSpotifyPopover(true);
+    }
+}
+
+spotifyPrevBtn
+    ?.addEventListener(
+        'click',
+        spotifyPreviousTrack
+    );
+
+spotifyNextBtn
+    ?.addEventListener(
+        'click',
+        spotifyNextTrack
+    );
 
 spotifyOpenBtn
     ?.addEventListener(
@@ -1062,6 +1144,10 @@ window.onSpotifyIframeApiReady =
                                 false;
 
                             updateSpotifyPlayIcon();
+setSpotifyTrackLabel(
+    '我的歌單',
+    '我的 Spotify 歌單'
+);
 
                             const playingURI =
                                 event
@@ -1096,17 +1182,6 @@ window.onSpotifyIframeApiReady =
                                 updateSpotifyTrackFromURI(
                                     data.playingURI
                                 );
-                            }
-                        }
-                    );
-
-                EmbedController
-                    .addListener(
-                        'ready',
-                        () => {
-                            if (spotifyApiNote) {
-                                spotifyApiNote.textContent =
-                                    '固定播放你提供的 Spotify 歌單。網站上的播放 / 暫停會直接控制這個播放器，音量請使用 Spotify 播放器內的音量控制。';
                             }
                         }
                     );

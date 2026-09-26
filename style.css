@@ -4583,3 +4583,38 @@ body[data-theme="dark"] .pixel-cloud::before {
         min-height: 352px !important;
     }
 }
+
+
+/* =========================================================
+   v32 — Spotify compact controls
+   ========================================================= */
+
+.spotify-api-note {
+    display: none !important;
+}
+
+.spotify-controls {
+    max-width:
+        min(
+            430px,
+            45vw
+        );
+}
+
+.spotify-prev-btn,
+.spotify-next-btn {
+    display: inline-grid !important;
+}
+
+@media (max-width: 920px) {
+    .spotify-controls {
+        max-width: 265px;
+    }
+}
+
+@media (max-width: 700px) {
+    .spotify-prev-btn,
+    .spotify-next-btn {
+        display: none !important;
+    }
+}

@@ -4486,3 +4486,100 @@ body[data-theme="dark"] .pixel-cloud::before {
         max-height: 220px;
     }
 }
+
+
+/* =========================================================
+   v31 — Spotify fixed Embed only
+   ========================================================= */
+
+.spotify-popover {
+    width:
+        min(
+            430px,
+            calc(100vw - 28px)
+        );
+    max-height:
+        min(
+            570px,
+            calc(100vh - 100px)
+        );
+    overflow-y: auto;
+}
+
+.spotify-popover-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spotify-popover-actions,
+.spotify-connect-btn,
+.spotify-playlist-manager,
+.spotify-add-form,
+.spotify-playlist-items,
+.spotify-refresh-btn,
+.spotify-remove-btn,
+.spotify-add-btn,
+.spotify-add-input {
+    display: none !important;
+}
+
+.spotify-embed-frame-wrap {
+    margin-top: 8px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #121212;
+}
+
+#spotify-embed {
+    min-height: 352px;
+}
+
+#spotify-embed iframe {
+    display: block;
+    width: 100% !important;
+    min-height: 352px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+}
+
+.spotify-api-note {
+    margin: 10px 2px 0;
+    font-size: .7rem;
+    line-height: 1.55;
+    opacity: .66;
+}
+
+.spotify-controls {
+    max-width:
+        min(
+            390px,
+            42vw
+        );
+}
+
+.spotify-now-playing.spotify-open-btn {
+    min-width: 0;
+    cursor: pointer;
+}
+
+@media (max-width: 820px) {
+    .spotify-controls {
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 560px) {
+    .spotify-popover {
+        width:
+            min(
+                calc(100vw - 18px),
+                430px
+            );
+    }
+
+    #spotify-embed,
+    #spotify-embed iframe {
+        min-height: 352px !important;
+    }
+}

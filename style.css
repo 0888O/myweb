@@ -6600,3 +6600,36 @@ html[data-theme="dark"]
         align-items: center;
     }
 }
+
+
+/* =========================================================
+   v45 — floating topbar / hero collision guard
+   ========================================================= */
+
+/*
+   The floating desktop topbar is removed from normal document flow.
+   Reserve its measured height above the first hero so the reveal
+   animation and hero content can never sit behind the topbar.
+*/
+@media (hover: hover) and (pointer: fine) {
+    .sky-world > .hero {
+        padding-top:
+            var(
+                --floating-topbar-safe-space,
+                116px
+            ) !important;
+
+        transition:
+            padding-top .22s ease;
+    }
+}
+
+/*
+   Touch devices still use the sticky topbar, which remains in
+   document flow, so the hero keeps its normal spacing.
+*/
+@media (hover: none), (pointer: coarse) {
+    .sky-world > .hero {
+        padding-top: 34px !important;
+    }
+}

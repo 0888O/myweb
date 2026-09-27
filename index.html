@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=43" rel="stylesheet"/>
+<link href="style.css?v=44" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -377,10 +377,27 @@
 
 <div class="game-profile-summary">
 <span>您的資訊</span>
-<strong id="game-profile-display-name">--</strong>
+
+<div class="game-profile-name-edit" id="game-profile-name-edit">
+<strong id="game-profile-display-name" tabindex="0" aria-label="修改暱稱">--</strong>
+
+<div class="game-profile-name-editor">
+<div class="game-nickname-field">
+<input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="輸入暱稱" aria-label="修改暱稱">
+<span class="game-nickname-count" id="game-nickname-count">0/10</span>
+</div>
+
+<button class="game-profile-save" id="game-profile-save" type="button" title="儲存暱稱">
+<i class="fa-solid fa-check"></i>
+<span>儲存</span>
+</button>
+</div>
+
+<p id="game-profile-status" aria-live="polite"></p>
+</div>
 
 <div class="game-profile-chips">
-<span>我的籌碼</span>
+<span>籌碼數量</span>
 <strong><i class="fa-solid fa-coins"></i> <span id="game-profile-chips">0</span> 點</strong>
 </div>
 
@@ -400,32 +417,17 @@
 </div>
 </div>
 
-<div class="game-profile-form">
-<label>
-<span>暱稱</span>
-<div class="game-nickname-field">
-<input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="輸入暱稱">
-<span class="game-nickname-count" id="game-nickname-count">0/10</span>
-</div>
-</label>
-
-<div class="game-profile-form-actions">
-<p id="game-profile-status" aria-live="polite"></p>
-
-<button class="game-profile-save" id="game-profile-save" type="button">
-<i class="fa-solid fa-floppy-disk"></i>
-<span>儲存設定</span>
-</button>
-</div>
-</div>
-
 <div class="game-bindings-panel">
 <div class="game-bindings-head">
 <div>
 <span>ACCOUNT LINKS</span>
 <strong>帳號綁定</strong>
 </div>
-<small>至少保留一種登入方式</small>
+
+<button class="game-logout-btn" id="game-logout-btn" type="button">
+<i class="fa-solid fa-right-from-bracket"></i>
+<span>登出</span>
+</button>
 </div>
 
 <div class="game-binding-row" data-binding-provider="google">
@@ -457,10 +459,7 @@
 </div>
 </div>
 
-<button class="game-logout-btn" id="game-logout-btn" type="button">
-<i class="fa-solid fa-right-from-bracket"></i>
-<span>登出遊戲帳號</span>
-</button>
+
 </div>
 
 
@@ -3262,6 +3261,41 @@ gameProfileNickname
     ?.addEventListener(
         'input',
         updateGameNicknameCount
+    );
+
+gameProfileNickname
+    ?.addEventListener(
+        'keydown',
+        event => {
+            if (
+                event.key ===
+                'Enter'
+            ) {
+                event.preventDefault();
+                saveGameProfile();
+                return;
+            }
+
+            if (
+                event.key ===
+                'Escape'
+            ) {
+                event.preventDefault();
+
+                gameProfileNickname.value =
+                    '';
+
+                gameProfileNickname.placeholder =
+                    currentGameProfile
+                        ?.nickname ||
+                    '輸入暱稱';
+
+                updateGameNicknameCount();
+
+                gameProfileDisplayName
+                    ?.focus();
+            }
+        }
     );
 
 gameProfileSave

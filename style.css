@@ -6806,3 +6806,80 @@ input:focus {
             ) !important;
     }
 }
+
+
+/* =========================================================
+   v47 — nickname editor cleanup
+   ========================================================= */
+
+/* No visible field title above the nickname input. */
+.game-profile-nickname-field > span {
+    display: none !important;
+}
+
+/* Remove the extra top alignment that was only needed for the v46 field label. */
+.game-profile-name-actions {
+    padding-top: 0 !important;
+    align-items: center !important;
+}
+
+/* Restore the compact save button style from the previous version. */
+.game-profile-name-editor
+.game-profile-save {
+    flex: 0 0 auto;
+    min-height: 38px !important;
+    height: 38px;
+    padding: 0 11px !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    color: inherit !important;
+    background:
+        rgba(95,163,77,.14) !important;
+    font: inherit;
+    font-size: .7rem !important;
+    font-weight: 900 !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: none !important;
+    white-space: nowrap;
+}
+
+.game-profile-name-editor
+.game-profile-save:hover,
+.game-profile-name-editor
+.game-profile-save:focus-visible {
+    background:
+        rgba(95,163,77,.22) !important;
+    color: inherit !important;
+    transform: none !important;
+    outline: none;
+}
+
+/* With the label gone, keep input and save button vertically aligned. */
+.game-profile-name-editor {
+    align-items: flex-start !important;
+}
+
+.game-profile-name-editor
+.game-profile-save {
+    margin-top: 0;
+}
+
+/* Keep the 0/10 counter under the input. */
+.game-profile-nickname-field small {
+    margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+    .game-profile-name-actions {
+        padding-top: 0 !important;
+    }
+
+    .game-profile-name-editor
+    .game-profile-save {
+        width: 100%;
+    }
+}

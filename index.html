@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=45" rel="stylesheet"/>
+<link href="style.css?v=46" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -382,15 +382,18 @@
 <strong id="game-profile-display-name" tabindex="0" aria-label="修改暱稱">--</strong>
 
 <div class="game-profile-name-editor">
-<div class="game-nickname-field">
+<label class="game-profile-nickname-field guestbook-field">
+<span>修改暱稱</span>
 <input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="輸入暱稱" aria-label="修改暱稱">
-<span class="game-nickname-count" id="game-nickname-count">0/10</span>
-</div>
+<small><span id="game-nickname-count">0</span>/10</small>
+</label>
 
-<button class="game-profile-save" id="game-profile-save" type="button" title="儲存暱稱">
+<div class="game-profile-name-actions">
+<button class="game-profile-save primary-btn" id="game-profile-save" type="button" title="儲存暱稱">
 <i class="fa-solid fa-check"></i>
 <span>儲存</span>
 </button>
+</div>
 </div>
 
 <p id="game-profile-status" aria-live="polite"></p>
@@ -2085,12 +2088,20 @@ function updateGameNicknameCount() {
         ).length;
 
     gameNicknameCount.textContent =
-        `${Math.min(length, 10)}/10`;
+        String(
+            Math.min(
+                length,
+                10
+            )
+        );
 
-    gameNicknameCount.classList.toggle(
-        'is-full',
-        length >= 10
-    );
+    gameNicknameCount
+        .parentElement
+        ?.classList
+        .toggle(
+            'is-full',
+            length >= 10
+        );
 }
 
 function renderGameProfile(

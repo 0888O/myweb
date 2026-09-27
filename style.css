@@ -6633,3 +6633,176 @@ html[data-theme="dark"]
         padding-top: 34px !important;
     }
 }
+
+
+/* =========================================================
+   v46 — game nickname editor matches guestbook nickname field
+   ========================================================= */
+
+.game-profile-name-editor {
+    width:
+        min(
+            320px,
+            calc(100vw - 80px)
+        ) !important;
+    align-items:
+        stretch !important;
+    gap: 8px !important;
+}
+
+.game-profile-nickname-field {
+    flex:
+        1 1 auto;
+    min-width: 0;
+    margin-top:
+        0 !important;
+}
+
+/* Match .guestbook-field label */
+.game-profile-nickname-field
+> span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: .88rem;
+    font-weight: 800;
+}
+
+/* Match #guestbook-nickname visual treatment */
+.game-profile-nickname-field
+input {
+    width: 100%;
+    height: auto !important;
+    border:
+        2px solid
+        rgba(48,39,27,.35) !important;
+    border-radius:
+        8px !important;
+    padding:
+        12px 44px
+        12px 14px !important;
+    background:
+        rgba(255,255,255,.58) !important;
+    color: inherit;
+    font: inherit;
+    outline: none;
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease !important;
+}
+
+.game-profile-nickname-field
+input:focus {
+    border-color:
+        rgba(88,131,66,.78) !important;
+    box-shadow:
+        0 0 0 3px
+        rgba(88,131,66,.14) !important;
+    background:
+        rgba(255,255,255,.78) !important;
+}
+
+/* Match guestbook nickname 0/20 counter positioning */
+.game-profile-nickname-field
+small {
+    display: block;
+    margin-top: 6px;
+    text-align: right;
+    font-size: .72rem;
+    opacity: .58;
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.game-profile-nickname-field
+small.is-full {
+    opacity: .9;
+    font-weight: 800;
+}
+
+/* Generic clear-X still works, but keep it inside the field */
+.game-profile-nickname-field
+.clearable-field > input {
+    padding-right:
+        44px !important;
+}
+
+.game-profile-nickname-field
+.clearable-field-button {
+    right:
+        10px !important;
+}
+
+/* Put save underneath like the guestbook submit area instead of cramming it into input */
+.game-profile-name-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-top: 27px;
+}
+
+.game-profile-name-editor
+.game-profile-save {
+    min-height: 42px !important;
+    padding:
+        0 13px !important;
+    border-radius:
+        8px !important;
+    font-size:
+        .72rem !important;
+    white-space: nowrap;
+}
+
+/* Status follows the compact guestbook-like editor */
+.game-profile-name-edit
+#game-profile-status {
+    top:
+        calc(
+            100% + 48px
+        ) !important;
+}
+
+/* Dark mode mirrors guestbook dark input behavior */
+html[data-theme="dark"]
+.game-profile-nickname-field
+input {
+    background:
+        rgba(18,22,19,.38) !important;
+}
+
+html[data-theme="dark"]
+.game-profile-nickname-field
+input:focus {
+    background:
+        rgba(18,22,19,.56) !important;
+}
+
+@media (max-width: 600px) {
+    .game-profile-name-editor {
+        width:
+            min(
+                300px,
+                calc(100vw - 48px)
+            ) !important;
+        flex-direction:
+            column;
+    }
+
+    .game-profile-name-actions {
+        padding-top: 0;
+    }
+
+    .game-profile-name-editor
+    .game-profile-save {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .game-profile-name-edit
+    #game-profile-status {
+        top:
+            calc(
+                100% + 96px
+            ) !important;
+    }
+}

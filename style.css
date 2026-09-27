@@ -5834,3 +5834,422 @@ html[data-theme="dark"]
         grid-column: auto;
     }
 }
+
+
+/* =========================================================
+   v41 — game account modal polish
+   ========================================================= */
+
+/* Hide topbar while account dialog is open */
+body.is-game-modal-open .topbar {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(-115%) !important;
+}
+
+/* Larger modal with smoother motion */
+.game-account-modal {
+    padding: 28px !important;
+    background:
+        rgba(10, 13, 15, .72) !important;
+    backdrop-filter:
+        blur(12px)
+        saturate(.92) !important;
+    -webkit-backdrop-filter:
+        blur(12px)
+        saturate(.92) !important;
+    transition:
+        opacity .32s ease,
+        visibility .32s ease !important;
+}
+
+.game-account-dialog {
+    width:
+        min(
+            880px,
+            calc(100vw - 44px)
+        ) !important;
+    max-height:
+        min(
+            820px,
+            calc(100vh - 56px)
+        ) !important;
+    padding: 30px 32px !important;
+
+    opacity: 0;
+    transform:
+        translateY(28px)
+        scale(.955) !important;
+
+    filter:
+        blur(2px);
+
+    transition:
+        transform .46s
+            cubic-bezier(
+                .16,
+                1,
+                .3,
+                1
+            ),
+        opacity .32s ease,
+        filter .32s ease !important;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+.game-account-modal.is-open
+.game-account-dialog {
+    opacity: 1;
+    transform:
+        translateY(0)
+        scale(1) !important;
+
+    filter:
+        blur(0);
+}
+
+/* Profile row */
+.game-profile-overview {
+    grid-template-columns:
+        132px
+        minmax(150px, 1fr)
+        minmax(280px, 340px) !important;
+
+    gap: 22px !important;
+    align-items: center !important;
+}
+
+.game-profile-summary {
+    max-width: 190px !important;
+}
+
+/* Avatar is the edit button */
+.game-profile-avatar-wrap {
+    gap: 0 !important;
+}
+
+.game-profile-avatar {
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.game-profile-avatar-edit {
+    position: relative;
+    width: 118px !important;
+    height: 118px !important;
+    overflow: hidden;
+    border:
+        2px solid
+        rgba(55,44,31,.18) !important;
+    border-radius: 14px !important;
+    background:
+        rgba(255,255,255,.22);
+    color: inherit;
+    font: inherit;
+}
+
+.game-avatar-edit-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    border-radius: inherit;
+    background:
+        rgba(15,18,17,.48);
+    color: #fff;
+    font-size: 1.15rem;
+    opacity: 0;
+    transform: scale(.94);
+    transition:
+        opacity .2s ease,
+        transform .24s
+            cubic-bezier(.16,1,.3,1);
+}
+
+.game-profile-avatar-edit:hover
+.game-avatar-edit-overlay,
+.game-profile-avatar-edit:focus-visible
+.game-avatar-edit-overlay {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-profile-avatar-edit:focus-visible {
+    outline:
+        3px solid
+        rgba(95,163,77,.3);
+    outline-offset: 3px;
+}
+
+/* Radar: only SVG, no panel/card */
+.game-radar-only {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    place-items: center;
+}
+
+.game-radar-only
+#game-radar-svg {
+    width:
+        min(
+            330px,
+            100%
+        ) !important;
+    max-height: none !important;
+    overflow: visible;
+}
+
+/* Nickname placeholder + counter */
+.game-nickname-field {
+    position: relative;
+    width: 100%;
+}
+
+.game-nickname-field
+#game-profile-nickname {
+    width: 100%;
+    padding-right: 58px !important;
+}
+
+.game-nickname-count {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    transform:
+        translateY(-50%);
+    font-size: .66rem;
+    font-weight: 800;
+    opacity: .46;
+    pointer-events: none;
+    font-variant-numeric:
+        tabular-nums;
+}
+
+.game-nickname-count.is-full {
+    opacity: .82;
+}
+
+/* The generic X button and nickname counter share the right side */
+.game-nickname-field
+.clearable-field {
+    width: 100%;
+}
+
+.game-nickname-field
+.clearable-field > input {
+    padding-right: 84px !important;
+}
+
+.game-nickname-field
+.clearable-field-button {
+    right: 48px !important;
+}
+
+/* Remove obsolete avatar button styles */
+.game-avatar-change,
+.game-avatar-reset,
+.game-radar-panel {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .game-profile-overview {
+        grid-template-columns:
+            120px
+            minmax(0, 1fr) !important;
+    }
+
+    .game-radar-only {
+        grid-column:
+            1 / -1;
+        margin-top: 4px;
+    }
+
+    .game-radar-only
+    #game-radar-svg {
+        width:
+            min(
+                360px,
+                100%
+            ) !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .game-account-modal {
+        padding: 12px !important;
+    }
+
+    .game-account-dialog {
+        width:
+            calc(
+                100vw - 24px
+            ) !important;
+        max-height:
+            calc(
+                100vh - 24px
+            ) !important;
+        padding:
+            22px 18px !important;
+    }
+
+    .game-profile-overview {
+        grid-template-columns:
+            1fr !important;
+    }
+
+    .game-profile-summary {
+        max-width:
+            100% !important;
+        justify-items:
+            center;
+        text-align:
+            center;
+    }
+
+    .game-profile-avatar-edit {
+        width:
+            112px !important;
+        height:
+            112px !important;
+    }
+
+    .game-radar-only {
+        grid-column:
+            auto;
+    }
+}
+
+
+/* =========================================================
+   v42 — topbar only appears when pointer reaches the top edge
+   ========================================================= */
+
+.topbar-reveal-zone {
+    position: fixed;
+    z-index: 48;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: transparent;
+    pointer-events: auto;
+}
+
+/*
+   Desktop / mouse:
+   Topbar is no longer sticky in the document.
+   It floats above the page and stays hidden until the pointer
+   reaches the very top edge.
+*/
+@media (hover: hover) and (pointer: fine) {
+    .topbar {
+        position: fixed !important;
+        z-index: 47 !important;
+        top: 12px !important;
+        left: 50% !important;
+        width:
+            min(
+                calc(100vw - 28px),
+                var(--max-width)
+            ) !important;
+        margin: 0 !important;
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        transform:
+            translate(
+                -50%,
+                calc(-100% - 30px)
+            )
+            scale(.985);
+
+        transition:
+            transform .34s
+                cubic-bezier(
+                    .16,
+                    1,
+                    .3,
+                    1
+                ),
+            opacity .22s ease,
+            visibility .22s ease !important;
+
+        will-change:
+            transform,
+            opacity;
+    }
+
+    body.is-topbar-visible
+    .topbar,
+    .topbar:hover,
+    .topbar:focus-within {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+
+        transform:
+            translate(
+                -50%,
+                0
+            )
+            scale(1);
+    }
+
+    body.is-game-modal-open
+    .topbar {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+
+        transform:
+            translate(
+                -50%,
+                calc(-100% - 30px)
+            )
+            scale(.985) !important;
+    }
+
+    body.is-game-modal-open
+    .topbar-reveal-zone {
+        pointer-events: none;
+    }
+}
+
+/*
+   Touch devices do not have a reliable hover edge,
+   so keep the existing accessible topbar behavior there.
+*/
+@media (hover: none), (pointer: coarse) {
+    .topbar-reveal-zone {
+        display: none;
+    }
+
+    .topbar {
+        position: sticky !important;
+        top: 14px !important;
+        left: auto !important;
+        width: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+    }
+
+    body.is-game-modal-open
+    .topbar {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform:
+            translateY(-115%) !important;
+    }
+}

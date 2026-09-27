@@ -11,9 +11,10 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=40" rel="stylesheet"/>
+<link href="style.css?v=42" rel="stylesheet"/>
 </head>
 <body>
+<div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
 <div aria-hidden="true" class="pixel-cloud cloud-one"></div>
 <div aria-hidden="true" class="pixel-cloud cloud-two"></div>
 <main class="site-shell">
@@ -363,21 +364,15 @@
 <div class="game-profile-main">
 <div class="game-profile-overview">
 <div class="game-profile-avatar-wrap">
-<div class="game-profile-avatar" id="game-profile-avatar">
+<button class="game-profile-avatar game-profile-avatar-edit" id="game-profile-avatar" type="button" aria-label="更換玩家頭像" title="點擊更換頭像">
 <span id="game-profile-avatar-fallback">?</span>
 <img id="game-profile-avatar-image" alt="玩家頭像" hidden>
-</div>
+<span class="game-avatar-edit-overlay" aria-hidden="true">
+<i class="fa-solid fa-pen"></i>
+</span>
+</button>
 
 <input id="game-avatar-file" type="file" accept="image/png,image/jpeg,image/webp" hidden>
-
-<button class="game-avatar-change" id="game-avatar-change" type="button">
-<i class="fa-solid fa-camera"></i>
-<span>更改頭像</span>
-</button>
-
-<button class="game-avatar-reset" id="game-avatar-reset" type="button">
-使用帳號頭像
-</button>
 </div>
 
 <div class="game-profile-summary">
@@ -395,13 +390,7 @@
 </button>
 </div>
 
-<aside class="game-radar-panel">
-<div class="game-radar-head">
-<span>PLAY STYLE</span>
-<strong>遊戲紀錄</strong>
-</div>
-
-<div class="game-radar-chart">
+<div class="game-radar-only">
 <svg id="game-radar-svg" viewBox="0 0 260 250" role="img" aria-label="玩家五項遊戲風格雷達圖">
 <g class="game-radar-grid"></g>
 <polygon id="game-radar-value" class="game-radar-value" points=""></polygon>
@@ -409,23 +398,15 @@
 <g class="game-radar-labels"></g>
 </svg>
 </div>
-
-<div class="game-radar-values">
-<span>進攻 <strong data-radar-value="aggression">0</strong></span>
-<span>膽識 <strong data-radar-value="courage">0</strong></span>
-<span>多變 <strong data-radar-value="versatility">0</strong></span>
-<span>精準 <strong data-radar-value="precision">0</strong></span>
-<span>沉穩 <strong data-radar-value="composure">0</strong></span>
-</div>
-
-<p class="game-radar-note">數值會依之後的牌局紀錄逐步更新。</p>
-</aside>
 </div>
 
 <div class="game-profile-form">
 <label>
 <span>暱稱</span>
-<input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="2 - 10 個字">
+<div class="game-nickname-field">
+<input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="輸入暱稱">
+<span class="game-nickname-count" id="game-nickname-count">0/10</span>
+</div>
 </label>
 
 <div class="game-profile-form-actions">
@@ -1517,6 +1498,16 @@ const gameAvatarFile =
         'game-avatar-file'
     );
 
+const gameProfileAvatarButton =
+    document.getElementById(
+        'game-profile-avatar'
+    );
+
+const gameNicknameCount =
+    document.getElementById(
+        'game-nickname-count'
+    );
+
 const gameAvatarChange =
     document.getElementById(
         'game-avatar-change'
@@ -2079,6 +2070,30 @@ function updateGameBindings(
         });
 }
 
+
+function updateGameNicknameCount() {
+    if (
+        !gameProfileNickname ||
+        !gameNicknameCount
+    ) {
+        return;
+    }
+
+    const length =
+        Array.from(
+            gameProfileNickname.value ||
+            ''
+        ).length;
+
+    gameNicknameCount.textContent =
+        `${Math.min(length, 10)}/10`;
+
+    gameNicknameCount.classList.toggle(
+        'is-full',
+        length >= 10
+    );
+}
+
 function renderGameProfile(
     profile
 ) {
@@ -2173,7 +2188,12 @@ function renderGameProfile(
 
     if (gameProfileNickname) {
         gameProfileNickname.value =
+            '';
+
+        gameProfileNickname.placeholder =
             nickname;
+
+        updateGameNicknameCount();
     }
 
     setAvatarElements(
@@ -2854,10 +2874,18 @@ async function saveGameProfile() {
         return;
     }
 
-    const nickname =
+    const typedNickname =
         String(
             gameProfileNickname
                 ?.value ||
+            ''
+        ).trim();
+
+    const nickname =
+        typedNickname ||
+        String(
+            currentGameProfile
+                ?.nickname ||
             ''
         ).trim();
 
@@ -3140,7 +3168,7 @@ gameDailyBtn
         claimGameDaily
     );
 
-gameAvatarChange
+gameProfileAvatarButton
     ?.addEventListener(
         'click',
         () =>
@@ -3228,6 +3256,12 @@ gameAvatarReset
                 'success'
             );
         }
+    );
+
+gameProfileNickname
+    ?.addEventListener(
+        'input',
+        updateGameNicknameCount
     );
 
 gameProfileSave
@@ -4499,6 +4533,137 @@ function initializeClearableFields() {
 }
 
 initializeClearableFields();
+
+
+/* ===== v42 topbar reveal on top-edge hover ===== */
+const topbarElement =
+    document.querySelector(
+        '.topbar'
+    );
+
+const topbarRevealZone =
+    document.getElementById(
+        'topbar-reveal-zone'
+    );
+
+let topbarHideTimer = null;
+
+function showTopbar() {
+    if (
+        document.body.classList.contains(
+            'is-game-modal-open'
+        )
+    ) {
+        return;
+    }
+
+    window.clearTimeout(
+        topbarHideTimer
+    );
+
+    document.body.classList.add(
+        'is-topbar-visible'
+    );
+}
+
+function hideTopbarSoon(
+    delay = 180
+) {
+    window.clearTimeout(
+        topbarHideTimer
+    );
+
+    topbarHideTimer =
+        window.setTimeout(
+            () => {
+                if (
+                    topbarElement
+                        ?.matches(
+                            ':hover'
+                        ) ||
+                    topbarRevealZone
+                        ?.matches(
+                            ':hover'
+                        )
+                ) {
+                    return;
+                }
+
+                document.body.classList.remove(
+                    'is-topbar-visible'
+                );
+            },
+            delay
+        );
+}
+
+topbarRevealZone
+    ?.addEventListener(
+        'mouseenter',
+        showTopbar
+    );
+
+topbarRevealZone
+    ?.addEventListener(
+        'mouseleave',
+        () =>
+            hideTopbarSoon(
+                150
+            )
+    );
+
+topbarElement
+    ?.addEventListener(
+        'mouseenter',
+        showTopbar
+    );
+
+topbarElement
+    ?.addEventListener(
+        'mouseleave',
+        () =>
+            hideTopbarSoon(
+                220
+            )
+    );
+
+topbarElement
+    ?.addEventListener(
+        'focusin',
+        showTopbar
+    );
+
+topbarElement
+    ?.addEventListener(
+        'focusout',
+        event => {
+            if (
+                !topbarElement.contains(
+                    event.relatedTarget
+                )
+            ) {
+                hideTopbarSoon(
+                    120
+                );
+            }
+        }
+    );
+
+document.addEventListener(
+    'pointermove',
+    event => {
+        if (
+            event.pointerType ===
+            'mouse' &&
+            event.clientY <= 14
+        ) {
+            showTopbar();
+        }
+    },
+    {
+        passive: true
+    }
+);
 
 const savedTheme = localStorage.getItem('theme');
 const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

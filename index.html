@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=37" rel="stylesheet"/>
+<link href="style.css?v=40" rel="stylesheet"/>
 </head>
 <body>
 <div aria-hidden="true" class="pixel-cloud cloud-one"></div>
@@ -241,7 +241,7 @@
 <span class="eyebrow goals-eyebrow">MINI GAMES</span>
 <h2 class="section-title goals-title">開發中的小遊戲</h2>
 </div>
-<p class="section-description goals-description">這裡會放我正在製作的網頁小遊戲，完成後可以直接在網站上玩。</p>
+<p class="section-description goals-description">這是我製作的網頁小遊戲</p>
 </div>
 
 <div class="game-wallet-bar panel-block panel-stone" id="game-wallet-bar">
@@ -251,7 +251,7 @@
 <img id="game-wallet-avatar-image" alt="" hidden>
 </div>
 <div>
-<span class="game-wallet-label">共用遊戲帳號</span>
+<span class="game-wallet-label">我的帳號</span>
 <strong id="game-wallet-name">尚未連結</strong>
 </div>
 </div>
@@ -262,10 +262,6 @@
 </div>
 
 <div class="game-wallet-actions">
-<button class="game-wallet-daily" id="game-wallet-daily" type="button" disabled>
-<i class="fa-solid fa-gift"></i>
-<span>每日 1000 點</span>
-</button>
 <button class="game-wallet-account" id="game-wallet-account" type="button">
 <i class="fa-solid fa-user"></i>
 <span>遊戲帳號</span>
@@ -279,13 +275,16 @@
 <span class="game-icon" aria-hidden="true">
 <i class="fa-solid fa-clover"></i>
 </span>
-<span class="game-status game-status-one">開發中</span>
 </div>
 
 <div class="game-card-copy">
 <span class="game-kicker">CARD GAME</span>
 <h3 class="blackjack-title">Blackjack</h3>
-<p class="blackjack-text">21點，AI莊家、多人連線</p>
+<p class="blackjack-text">二十一點、AI莊家、多人連線</p>
+<p class="game-online-count" data-game-online="blackjack">
+<span class="game-online-dot"></span>
+目前有 <strong>0</strong> 位玩家遊玩中
+</p>
 </div>
 
 <div class="game-card-footer">
@@ -299,13 +298,16 @@
 <span class="game-icon" aria-hidden="true">
 <i class="fa-solid fa-diamond"></i>
 </span>
-<span class="game-status game-status-two">開發中</span>
 </div>
 
 <div class="game-card-copy">
 <span class="game-kicker">POKER</span>
-<h3 class="texas-title">德州撲克</h3>
-<p class="texas-text">Texas Hold'em，AI莊家、多人連線、組合最佳牌型</p>
+<h3 class="texas-title">Texas Hold&apos;em</h3>
+<p class="texas-text">德州撲克、AI莊家、多人連線</p>
+<p class="game-online-count" data-game-online="texas">
+<span class="game-online-dot"></span>
+目前有 <strong>0</strong> 位玩家遊玩中
+</p>
 </div>
 
 <div class="game-card-footer">
@@ -331,7 +333,6 @@
 <div class="game-account-head">
 <span class="eyebrow">GAME ACCOUNT</span>
 <h2 id="game-account-title">遊戲帳號</h2>
-<p id="game-account-subtitle">進行帳號綁定即可開始遊玩</p>
 </div>
 
 <div class="game-auth-view" id="game-auth-view">
@@ -339,7 +340,6 @@
 <i class="fa-solid fa-coins"></i>
 <div>
 <strong>首次連結獲得 3000 點</strong>
-<span>之後每天可以再領取 1000 點</span>
 </div>
 </div>
 
@@ -355,10 +355,12 @@
 </button>
 </div>
 
-<p class="game-auth-note">連結後，Blackjack 與德州撲克會共用同一個玩家帳號與籌碼。</p>
+<p class="game-auth-note">進行帳號綁定以儲存您的資訊</p>
 </div>
 
 <div class="game-profile-view" id="game-profile-view" hidden>
+<div class="game-profile-layout">
+<div class="game-profile-main">
 <div class="game-profile-overview">
 <div class="game-profile-avatar-wrap">
 <div class="game-profile-avatar" id="game-profile-avatar">
@@ -379,7 +381,7 @@
 </div>
 
 <div class="game-profile-summary">
-<span>目前玩家</span>
+<span>您的資訊</span>
 <strong id="game-profile-display-name">--</strong>
 
 <div class="game-profile-chips">
@@ -392,12 +394,38 @@
 <span>領取每日 1000 點</span>
 </button>
 </div>
+
+<aside class="game-radar-panel">
+<div class="game-radar-head">
+<span>PLAY STYLE</span>
+<strong>遊戲紀錄</strong>
+</div>
+
+<div class="game-radar-chart">
+<svg id="game-radar-svg" viewBox="0 0 260 250" role="img" aria-label="玩家五項遊戲風格雷達圖">
+<g class="game-radar-grid"></g>
+<polygon id="game-radar-value" class="game-radar-value" points=""></polygon>
+<g class="game-radar-axes"></g>
+<g class="game-radar-labels"></g>
+</svg>
+</div>
+
+<div class="game-radar-values">
+<span>進攻 <strong data-radar-value="aggression">0</strong></span>
+<span>膽識 <strong data-radar-value="courage">0</strong></span>
+<span>多變 <strong data-radar-value="versatility">0</strong></span>
+<span>精準 <strong data-radar-value="precision">0</strong></span>
+<span>沉穩 <strong data-radar-value="composure">0</strong></span>
+</div>
+
+<p class="game-radar-note">數值會依之後的牌局紀錄逐步更新。</p>
+</aside>
 </div>
 
 <div class="game-profile-form">
 <label>
 <span>暱稱</span>
-<input id="game-profile-nickname" type="text" maxlength="20" autocomplete="nickname" placeholder="2 - 20 個字">
+<input id="game-profile-nickname" type="text" maxlength="10" autocomplete="nickname" placeholder="2 - 10 個字">
 </label>
 
 <div class="game-profile-form-actions">
@@ -410,21 +438,52 @@
 </div>
 </div>
 
-<div class="game-launch-panel">
+<div class="game-bindings-panel">
+<div class="game-bindings-head">
 <div>
-<span>目前選擇</span>
-<strong id="game-selected-name">Blackjack</strong>
+<span>ACCOUNT LINKS</span>
+<strong>帳號綁定</strong>
 </div>
-<button class="game-launch-btn" id="game-launch-btn" type="button" disabled>
-<i class="fa-solid fa-gamepad"></i>
-<span>遊戲本體開發中</span>
-</button>
+<small>至少保留一種登入方式</small>
+</div>
+
+<div class="game-binding-row" data-binding-provider="google">
+<div class="game-binding-provider">
+<i class="fa-brands fa-google"></i>
+<div>
+<strong>Google</strong>
+<span class="game-binding-status">尚未綁定</span>
+</div>
+</div>
+<div class="game-binding-actions">
+<button class="game-binding-primary" data-binding-action="google" type="button">綁定</button>
+<button class="game-binding-unlink" data-unlink-provider="google" type="button">解除綁定</button>
+</div>
+</div>
+
+<div class="game-binding-row" data-binding-provider="discord">
+<div class="game-binding-provider">
+<i class="fa-brands fa-discord"></i>
+<div>
+<strong>Discord</strong>
+<span class="game-binding-status">尚未綁定</span>
+</div>
+</div>
+<div class="game-binding-actions">
+<button class="game-binding-primary" data-binding-action="discord" type="button">綁定</button>
+<button class="game-binding-unlink" data-unlink-provider="discord" type="button">解除綁定</button>
+</div>
+</div>
 </div>
 
 <button class="game-logout-btn" id="game-logout-btn" type="button">
 <i class="fa-solid fa-right-from-bracket"></i>
 <span>登出遊戲帳號</span>
 </button>
+</div>
+
+
+</div>
 </div>
 </div>
 </div>
@@ -590,11 +649,11 @@ const content = {
         galleryDescription: "來自茶咖暖居的遊戲內實景。",
         goalsEyebrow: "MINI GAMES",
         goalsTitle: "開發中的小遊戲",
-        goalsDescription: "這裡會放我正在製作的網頁小遊戲，完成後可以直接在網站上玩。",
+        goalsDescription: "這是我製作的網頁小遊戲",
         blackjackTitle: "Blackjack",
-        blackjackText: "21點，AI莊家、多人連線",
-        texasTitle: "德州撲克",
-        texasText: "Texas Hold'em。預計加入公共牌、籌碼下注、牌型判斷與對手邏輯。",
+        blackjackText: "二十一點、AI莊家、多人連線",
+        texasTitle: "Texas Hold\'em",
+        texasText: "德州撲克、AI莊家、多人連線",
         gameStatus: "開發中",
         gameUnavailable: "進入遊戲",
         shortGoalTitle: "短期目標",
@@ -652,11 +711,11 @@ const content = {
         galleryDescription: "In-game scenes from 茶咖暖居.",
         goalsEyebrow: "MINI GAMES",
         goalsTitle: "Mini games in development",
-        goalsDescription: "Web mini games I am currently building. Once finished, they will be playable directly on this site.",
+        goalsDescription: "These are the web mini games I made.",
         blackjackTitle: "Blackjack",
         blackjackText: "Blackjack with an AI dealer and multiplayer support.",
         texasTitle: "Texas Hold'em",
-        texasText: "Texas Hold\'em with an AI dealer, multiplayer, and best-hand combination logic.",
+        texasText: "Texas Hold\'em with an AI dealer and multiplayer support.",
         gameStatus: "In development",
         gameUnavailable: "Enter game",
         shortGoalTitle: "Short-term",
@@ -746,8 +805,6 @@ function updateContent() {
     setText('.blackjack-text', t.blackjackText);
     setText('.texas-title', t.texasTitle);
     setText('.texas-text', t.texasText);
-    setText('.game-status-one', t.gameStatus);
-    setText('.game-status-two', t.gameStatus);
     setText('.game-dev-one', t.gameUnavailable);
     setText('.game-dev-two', t.gameUnavailable);
     setText('.short-goal-title', t.shortGoalTitle);
@@ -1381,7 +1438,7 @@ window.setInterval(updateServerUptime, 1000);
 
 
 /* =========================================================
-   v35 game account + shared chip wallet
+   v38 game account / bindings / stats / presence
    ========================================================= */
 
 const GAME_API_BASE =
@@ -1391,82 +1448,141 @@ const GAME_SESSION_KEY =
     '08home_game_session';
 
 const gameAccountModal =
-    document.getElementById('game-account-modal');
+    document.getElementById(
+        'game-account-modal'
+    );
 
 const gameAccountClose =
-    document.getElementById('game-account-close');
+    document.getElementById(
+        'game-account-close'
+    );
 
 const gameAuthView =
-    document.getElementById('game-auth-view');
+    document.getElementById(
+        'game-auth-view'
+    );
 
 const gameProfileView =
-    document.getElementById('game-profile-view');
+    document.getElementById(
+        'game-profile-view'
+    );
 
 const gameAuthGoogle =
-    document.getElementById('game-auth-google');
+    document.getElementById(
+        'game-auth-google'
+    );
 
 const gameAuthDiscord =
-    document.getElementById('game-auth-discord');
+    document.getElementById(
+        'game-auth-discord'
+    );
 
 const gameWalletAvatarImage =
-    document.getElementById('game-wallet-avatar-image');
+    document.getElementById(
+        'game-wallet-avatar-image'
+    );
 
 const gameWalletAvatarFallback =
-    document.getElementById('game-wallet-avatar-fallback');
+    document.getElementById(
+        'game-wallet-avatar-fallback'
+    );
 
 const gameWalletName =
-    document.getElementById('game-wallet-name');
+    document.getElementById(
+        'game-wallet-name'
+    );
 
 const gameWalletChips =
-    document.getElementById('game-wallet-chips');
-
-const gameWalletDaily =
-    document.getElementById('game-wallet-daily');
+    document.getElementById(
+        'game-wallet-chips'
+    );
 
 const gameWalletAccount =
-    document.getElementById('game-wallet-account');
+    document.getElementById(
+        'game-wallet-account'
+    );
 
 const gameProfileAvatarImage =
-    document.getElementById('game-profile-avatar-image');
+    document.getElementById(
+        'game-profile-avatar-image'
+    );
 
 const gameProfileAvatarFallback =
-    document.getElementById('game-profile-avatar-fallback');
+    document.getElementById(
+        'game-profile-avatar-fallback'
+    );
 
 const gameAvatarFile =
-    document.getElementById('game-avatar-file');
+    document.getElementById(
+        'game-avatar-file'
+    );
 
 const gameAvatarChange =
-    document.getElementById('game-avatar-change');
+    document.getElementById(
+        'game-avatar-change'
+    );
 
 const gameAvatarReset =
-    document.getElementById('game-avatar-reset');
+    document.getElementById(
+        'game-avatar-reset'
+    );
 
 const gameProfileDisplayName =
-    document.getElementById('game-profile-display-name');
+    document.getElementById(
+        'game-profile-display-name'
+    );
 
 const gameProfileChips =
-    document.getElementById('game-profile-chips');
+    document.getElementById(
+        'game-profile-chips'
+    );
 
 const gameDailyBtn =
-    document.getElementById('game-daily-btn');
+    document.getElementById(
+        'game-daily-btn'
+    );
 
 const gameProfileNickname =
-    document.getElementById('game-profile-nickname');
+    document.getElementById(
+        'game-profile-nickname'
+    );
 
 const gameProfileStatus =
-    document.getElementById('game-profile-status');
+    document.getElementById(
+        'game-profile-status'
+    );
 
 const gameProfileSave =
-    document.getElementById('game-profile-save');
-
-const gameSelectedName =
-    document.getElementById('game-selected-name');
+    document.getElementById(
+        'game-profile-save'
+    );
 
 const gameLogoutBtn =
-    document.getElementById('game-logout-btn');
+    document.getElementById(
+        'game-logout-btn'
+    );
+
+const gameRadarValue =
+    document.getElementById(
+        'game-radar-value'
+    );
+
+const gameRadarGrid =
+    document.querySelector(
+        '.game-radar-grid'
+    );
+
+const gameRadarAxes =
+    document.querySelector(
+        '.game-radar-axes'
+    );
+
+const gameRadarLabels =
+    document.querySelector(
+        '.game-radar-labels'
+    );
 
 let currentGameProfile = null;
-let currentGameType = 'blackjack';
 let pendingAvatarData = undefined;
 
 function getGameSessionToken() {
@@ -1488,30 +1604,10 @@ function setGameSessionToken(token) {
     }
 }
 
-function getGameDisplayName(game) {
-    return game === 'texas'
-        ? '德州撲克'
-        : 'Blackjack';
-}
-
-function setSelectedGame(game) {
-    currentGameType =
-        game === 'texas'
-            ? 'texas'
-            : 'blackjack';
-
-    if (gameSelectedName) {
-        gameSelectedName.textContent =
-            getGameDisplayName(
-                currentGameType
-            );
+function openGameAccount() {
+    if (!gameAccountModal) {
+        return;
     }
-}
-
-function openGameAccount(game = currentGameType) {
-    setSelectedGame(game);
-
-    if (!gameAccountModal) return;
 
     gameAccountModal.classList.add(
         'is-open'
@@ -1528,7 +1624,9 @@ function openGameAccount(game = currentGameType) {
 }
 
 function closeGameAccount() {
-    if (!gameAccountModal) return;
+    if (!gameAccountModal) {
+        return;
+    }
 
     gameAccountModal.classList.remove(
         'is-open'
@@ -1546,10 +1644,13 @@ function closeGameAccount() {
 
 function getInitial(value) {
     const text =
-        String(value || '?').trim();
+        String(
+            value || '?'
+        ).trim();
 
     return (
-        text.slice(0, 1)
+        text
+            .slice(0, 1)
             .toUpperCase() ||
         '?'
     );
@@ -1589,7 +1690,9 @@ function setAvatarElements(
             false;
 
         fallbackElement.textContent =
-            getInitial(nickname);
+            getInitial(
+                nickname
+            );
     }
 }
 
@@ -1597,7 +1700,9 @@ function setGameProfileStatus(
     text,
     state = ''
 ) {
-    if (!gameProfileStatus) return;
+    if (!gameProfileStatus) {
+        return;
+    }
 
     gameProfileStatus.textContent =
         text;
@@ -1612,38 +1717,378 @@ function updateDailyButtons(profile) {
             profile?.can_claim_daily
         );
 
-    const buttons = [
-        gameDailyBtn,
-        gameWalletDaily
-    ].filter(Boolean);
+    [
+        gameDailyBtn
+    ]
+        .filter(Boolean)
+        .forEach(button => {
+            button.disabled =
+                !profile ||
+                !canClaim;
 
-    buttons.forEach(button => {
-        button.disabled =
-            !profile ||
-            !canClaim;
+            const label =
+                button.querySelector(
+                    'span'
+                );
 
-        const label =
-            button.querySelector('span');
-
-        if (label) {
-            label.textContent =
-                profile
-                    ? (
-                        canClaim
-                            ? '領取每日 1000 點'
-                            : '今日已領取'
-                    )
-                    : '每日 1000 點';
-        }
-    });
+            if (label) {
+                label.textContent =
+                    profile
+                        ? (
+                            canClaim
+                                ? '領取每日 1000 點'
+                                : '今日已領取'
+                        )
+                        : '每日 1000 點';
+            }
+        });
 }
 
-function renderGameProfile(profile) {
+const GAME_RADAR_KEYS = [
+    ['aggression', '進攻'],
+    ['courage', '膽識'],
+    ['versatility', '多變'],
+    ['precision', '精準'],
+    ['composure', '沉穩']
+];
+
+function getRadarPoints(
+    values,
+    maxRadius = 82
+) {
+    const centerX = 130;
+    const centerY = 120;
+
+    return values
+        .map(
+            (
+                value,
+                index
+            ) => {
+                const angle =
+                    -Math.PI / 2 +
+                    index *
+                    Math.PI *
+                    2 / 5;
+
+                const radius =
+                    maxRadius *
+                    Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            Number(
+                                value
+                            ) || 0
+                        )
+                    ) /
+                    100;
+
+                return (
+                    `${(
+                        centerX +
+                        Math.cos(
+                            angle
+                        ) *
+                        radius
+                    ).toFixed(2)},${(
+                        centerY +
+                        Math.sin(
+                            angle
+                        ) *
+                        radius
+                    ).toFixed(2)}`
+                );
+            }
+        )
+        .join(' ');
+}
+
+function initializeGameRadar() {
+    if (
+        !gameRadarGrid ||
+        !gameRadarAxes ||
+        !gameRadarLabels
+    ) {
+        return;
+    }
+
+    [25, 50, 75, 100]
+        .forEach(level => {
+            const polygon =
+                document.createElementNS(
+                    'http://www.w3.org/2000/svg',
+                    'polygon'
+                );
+
+            polygon.setAttribute(
+                'points',
+                getRadarPoints([
+                    level,
+                    level,
+                    level,
+                    level,
+                    level
+                ])
+            );
+
+            polygon.setAttribute(
+                'class',
+                'game-radar-ring'
+            );
+
+            gameRadarGrid
+                .appendChild(
+                    polygon
+                );
+        });
+
+    GAME_RADAR_KEYS
+        .forEach(
+            (
+                [, label],
+                index
+            ) => {
+                const angle =
+                    -Math.PI / 2 +
+                    index *
+                    Math.PI *
+                    2 / 5;
+
+                const x =
+                    130 +
+                    Math.cos(
+                        angle
+                    ) * 82;
+
+                const y =
+                    120 +
+                    Math.sin(
+                        angle
+                    ) * 82;
+
+                const line =
+                    document.createElementNS(
+                        'http://www.w3.org/2000/svg',
+                        'line'
+                    );
+
+                line.setAttribute(
+                    'x1',
+                    '130'
+                );
+                line.setAttribute(
+                    'y1',
+                    '120'
+                );
+                line.setAttribute(
+                    'x2',
+                    x.toFixed(2)
+                );
+                line.setAttribute(
+                    'y2',
+                    y.toFixed(2)
+                );
+                line.setAttribute(
+                    'class',
+                    'game-radar-axis'
+                );
+
+                gameRadarAxes
+                    .appendChild(
+                        line
+                    );
+
+                const text =
+                    document.createElementNS(
+                        'http://www.w3.org/2000/svg',
+                        'text'
+                    );
+
+                text.setAttribute(
+                    'x',
+                    (
+                        130 +
+                        Math.cos(
+                            angle
+                        ) *
+                        105
+                    ).toFixed(2)
+                );
+
+                text.setAttribute(
+                    'y',
+                    (
+                        120 +
+                        Math.sin(
+                            angle
+                        ) *
+                        105
+                    ).toFixed(2)
+                );
+
+                text.setAttribute(
+                    'class',
+                    'game-radar-label'
+                );
+
+                text.textContent =
+                    label;
+
+                gameRadarLabels
+                    .appendChild(
+                        text
+                    );
+            }
+        );
+}
+
+function updateGameRadar(
+    stats = {}
+) {
+    const values =
+        GAME_RADAR_KEYS
+            .map(
+                ([key]) =>
+                    Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            Number(
+                                stats?.[
+                                    key
+                                ] || 0
+                            )
+                        )
+                    )
+            );
+
+    if (gameRadarValue) {
+        gameRadarValue.setAttribute(
+            'points',
+            getRadarPoints(
+                values
+            )
+        );
+    }
+
+    GAME_RADAR_KEYS
+        .forEach(
+            (
+                [key],
+                index
+            ) => {
+                const target =
+                    document.querySelector(
+                        `[data-radar-value="${key}"]`
+                    );
+
+                if (target) {
+                    target.textContent =
+                        String(
+                            values[
+                                index
+                            ]
+                        );
+                }
+            }
+        );
+}
+
+function updateGameBindings(
+    profile
+) {
+    const providers =
+        new Set(
+            Array.isArray(
+                profile?.providers
+            )
+                ? profile.providers
+                : []
+        );
+
+    const providerCount =
+        providers.size;
+
+    document
+        .querySelectorAll(
+            '[data-binding-provider]'
+        )
+        .forEach(row => {
+            const provider =
+                row.dataset
+                    .bindingProvider;
+
+            const bound =
+                providers.has(
+                    provider
+                );
+
+            const status =
+                row.querySelector(
+                    '.game-binding-status'
+                );
+
+            const primary =
+                row.querySelector(
+                    '[data-binding-action]'
+                );
+
+            const unlink =
+                row.querySelector(
+                    '[data-unlink-provider]'
+                );
+
+            row.classList.toggle(
+                'is-bound',
+                bound
+            );
+
+            if (status) {
+                status.textContent =
+                    bound
+                        ? '已綁定'
+                        : '尚未綁定';
+            }
+
+            if (primary) {
+                primary.textContent =
+                    bound
+                        ? '更換綁定'
+                        : '綁定';
+
+                primary.dataset.mode =
+                    bound
+                        ? 'replace'
+                        : 'link';
+            }
+
+            if (unlink) {
+                unlink.hidden =
+                    !bound;
+
+                unlink.disabled =
+                    bound &&
+                    providerCount <= 1;
+
+                unlink.title =
+                    providerCount <= 1
+                        ? '至少需要保留一種登入方式'
+                        : '解除這個登入方式';
+            }
+        });
+}
+
+function renderGameProfile(
+    profile
+) {
     currentGameProfile =
         profile || null;
 
     const loggedIn =
-        Boolean(profile);
+        Boolean(
+            profile
+        );
 
     if (gameAuthView) {
         gameAuthView.hidden =
@@ -1673,7 +2118,18 @@ function renderGameProfile(profile) {
             '?'
         );
 
-        updateDailyButtons(null);
+        updateDailyButtons(
+            null
+        );
+
+        updateGameBindings(
+            null
+        );
+
+        updateGameRadar(
+            {}
+        );
+
         return;
     }
 
@@ -1682,10 +2138,14 @@ function renderGameProfile(profile) {
         '玩家';
 
     const avatar =
-        profile.avatar || '';
+        profile.avatar ||
+        '';
 
     const chips =
-        Number(profile.chips || 0);
+        Number(
+            profile.chips ||
+            0
+        );
 
     if (gameWalletName) {
         gameWalletName.textContent =
@@ -1733,6 +2193,15 @@ function renderGameProfile(profile) {
     updateDailyButtons(
         profile
     );
+
+    updateGameBindings(
+        profile
+    );
+
+    updateGameRadar(
+        profile.stats ||
+        {}
+    );
 }
 
 async function gameApi(
@@ -1745,14 +2214,19 @@ async function gameApi(
     const headers = {
         Accept:
             'application/json',
-        ...(options.headers || {})
+        ...(options.headers ||
+            {})
     };
 
     if (
         options.body &&
-        !headers['Content-Type']
+        !headers[
+            'Content-Type'
+        ]
     ) {
-        headers['Content-Type'] =
+        headers[
+            'Content-Type'
+        ] =
             'application/json';
     }
 
@@ -1767,7 +2241,8 @@ async function gameApi(
             {
                 ...options,
                 headers,
-                cache: 'no-store'
+                cache:
+                    'no-store'
             }
         );
 
@@ -1779,10 +2254,16 @@ async function gameApi(
             );
 
     if (
-        response.status === 401
+        response.status ===
+        401
     ) {
-        setGameSessionToken('');
-        renderGameProfile(null);
+        setGameSessionToken(
+            ''
+        );
+
+        renderGameProfile(
+            null
+        );
     }
 
     return {
@@ -1798,8 +2279,12 @@ async function loadGameProfile(
         quiet = false
     } = options;
 
-    if (!getGameSessionToken()) {
-        renderGameProfile(null);
+    if (
+        !getGameSessionToken()
+    ) {
+        renderGameProfile(
+            null
+        );
         return null;
     }
 
@@ -1859,15 +2344,148 @@ async function loadGameProfile(
     }
 }
 
-function beginGameOAuth(provider) {
+function beginGameOAuth(
+    provider
+) {
     const safeProvider =
-        provider === 'discord'
+        provider ===
+        'discord'
             ? 'discord'
             : 'google';
 
     window.location.assign(
         `${GAME_API_BASE}/auth/${safeProvider}/start`
     );
+}
+
+async function beginLinkedProviderFlow(
+    provider,
+    mode
+) {
+    if (!currentGameProfile) {
+        beginGameOAuth(
+            provider
+        );
+        return;
+    }
+
+    setGameProfileStatus(
+        mode === 'replace'
+            ? '正在準備更換綁定…'
+            : '正在準備帳號綁定…',
+        'loading'
+    );
+
+    try {
+        const {
+            response,
+            data
+        } =
+            await gameApi(
+                '/auth/link/start',
+                {
+                    method:
+                        'POST',
+                    body:
+                        JSON.stringify({
+                            provider,
+                            mode
+                        })
+                }
+            );
+
+        if (
+            !response.ok ||
+            !data?.success ||
+            !data?.authorize_url
+        ) {
+            throw new Error(
+                data?.error ||
+                '無法開始帳號綁定'
+            );
+        }
+
+        window.location.assign(
+            data.authorize_url
+        );
+    } catch (error) {
+        setGameProfileStatus(
+            error?.message ||
+            '無法開始帳號綁定',
+            'error'
+        );
+    }
+}
+
+async function unlinkGameProvider(
+    provider
+) {
+    if (
+        !currentGameProfile
+    ) {
+        return;
+    }
+
+    const providerName =
+        provider === 'google'
+            ? 'Google'
+            : 'Discord';
+
+    if (
+        !window.confirm(
+            `確定要解除 ${providerName} 綁定嗎？`
+        )
+    ) {
+        return;
+    }
+
+    setGameProfileStatus(
+        `正在解除 ${providerName} 綁定…`,
+        'loading'
+    );
+
+    try {
+        const {
+            response,
+            data
+        } =
+            await gameApi(
+                '/auth/unlink',
+                {
+                    method:
+                        'POST',
+                    body:
+                        JSON.stringify({
+                            provider
+                        })
+                }
+            );
+
+        if (
+            !response.ok ||
+            !data?.success
+        ) {
+            throw new Error(
+                data?.error ||
+                '解除綁定失敗'
+            );
+        }
+
+        renderGameProfile(
+            data.profile
+        );
+
+        setGameProfileStatus(
+            `${providerName} 綁定已解除。`,
+            'success'
+        );
+    } catch (error) {
+        setGameProfileStatus(
+            error?.message ||
+            '解除綁定失敗',
+            'error'
+        );
+    }
 }
 
 async function exchangeGameAuthCode() {
@@ -1886,6 +2504,10 @@ async function exchangeGameAuthCode() {
             'game_auth_error'
         );
 
+    url.searchParams.delete(
+        'account_settings'
+    );
+
     if (error) {
         url.searchParams.delete(
             'game_auth_error'
@@ -1900,7 +2522,9 @@ async function exchangeGameAuthCode() {
         openGameAccount();
 
         setGameProfileStatus(
-            decodeURIComponent(error),
+            decodeURIComponent(
+                error
+            ),
             'error'
         );
 
@@ -1933,7 +2557,8 @@ async function exchangeGameAuthCode() {
             await fetch(
                 `${GAME_API_BASE}/auth/exchange`,
                 {
-                    method: 'POST',
+                    method:
+                        'POST',
                     headers: {
                         'Content-Type':
                             'application/json',
@@ -1976,10 +2601,12 @@ async function exchangeGameAuthCode() {
         setGameProfileStatus(
             data.created
                 ? '帳號建立成功，已獲得首次 3000 點。'
-                : '登入成功。',
+                : '帳號綁定完成。',
             'success'
         );
-    } catch (authError) {
+    } catch (
+        authError
+    ) {
         console.error(
             'Game auth exchange failed',
             authError
@@ -1994,7 +2621,9 @@ async function exchangeGameAuthCode() {
 }
 
 async function claimGameDaily() {
-    if (!currentGameProfile) {
+    if (
+        !currentGameProfile
+    ) {
         openGameAccount();
         return;
     }
@@ -2004,16 +2633,6 @@ async function claimGameDaily() {
             .can_claim_daily
     ) {
         return;
-    }
-
-    if (gameDailyBtn) {
-        gameDailyBtn.disabled =
-            true;
-    }
-
-    if (gameWalletDaily) {
-        gameWalletDaily.disabled =
-            true;
     }
 
     setGameProfileStatus(
@@ -2029,7 +2648,8 @@ async function claimGameDaily() {
             await gameApi(
                 '/game/daily',
                 {
-                    method: 'POST'
+                    method:
+                        'POST'
                 }
             );
 
@@ -2052,11 +2672,6 @@ async function claimGameDaily() {
             'success'
         );
     } catch (error) {
-        console.error(
-            'Daily reward failed',
-            error
-        );
-
         setGameProfileStatus(
             error?.message ||
             '每日獎勵領取失敗',
@@ -2064,7 +2679,8 @@ async function claimGameDaily() {
         );
 
         await loadGameProfile({
-            quiet: true
+            quiet:
+                true
         });
     }
 }
@@ -2073,7 +2689,10 @@ function readImageFileAsDataURL(
     file
 ) {
     return new Promise(
-        (resolve, reject) => {
+        (
+            resolve,
+            reject
+        ) => {
             const reader =
                 new FileReader();
 
@@ -2102,7 +2721,9 @@ async function compressGameAvatar(
     if (
         !file ||
         !file.type
-            .startsWith('image/')
+            .startsWith(
+                'image/'
+            )
     ) {
         throw new Error(
             '請選擇圖片檔案。'
@@ -2111,7 +2732,9 @@ async function compressGameAvatar(
 
     if (
         file.size >
-        6 * 1024 * 1024
+        6 *
+        1024 *
+        1024
     ) {
         throw new Error(
             '原始圖片請小於 6 MB。'
@@ -2127,7 +2750,10 @@ async function compressGameAvatar(
         new Image();
 
     await new Promise(
-        (resolve, reject) => {
+        (
+            resolve,
+            reject
+        ) => {
             image.onload =
                 resolve;
 
@@ -2144,16 +2770,16 @@ async function compressGameAvatar(
             'canvas'
         );
 
-    const size = 128;
-
     canvas.width =
-        size;
+        128;
 
     canvas.height =
-        size;
+        128;
 
     const context =
-        canvas.getContext('2d');
+        canvas.getContext(
+            '2d'
+        );
 
     if (!context) {
         throw new Error(
@@ -2187,8 +2813,8 @@ async function compressGameAvatar(
         sourceSize,
         0,
         0,
-        size,
-        size
+        128,
+        128
     );
 
     let compressed =
@@ -2222,22 +2848,25 @@ async function compressGameAvatar(
 }
 
 async function saveGameProfile() {
-    if (!currentGameProfile) {
+    if (
+        !currentGameProfile
+    ) {
         return;
     }
 
     const nickname =
         String(
             gameProfileNickname
-                ?.value || ''
+                ?.value ||
+            ''
         ).trim();
 
     if (
         nickname.length < 2 ||
-        nickname.length > 20
+        nickname.length > 10
     ) {
         setGameProfileStatus(
-            '暱稱請輸入 2 - 20 個字。',
+            '暱稱請輸入 2 - 10 個字。',
             'error'
         );
 
@@ -2274,7 +2903,8 @@ async function saveGameProfile() {
             await gameApi(
                 '/game/profile',
                 {
-                    method: 'PATCH',
+                    method:
+                        'PATCH',
                     body:
                         JSON.stringify(
                             body
@@ -2304,18 +2934,15 @@ async function saveGameProfile() {
             'success'
         );
     } catch (error) {
-        console.error(
-            'Game profile save failed',
-            error
-        );
-
         setGameProfileStatus(
             error?.message ||
             '玩家資料儲存失敗',
             'error'
         );
     } finally {
-        if (gameProfileSave) {
+        if (
+            gameProfileSave
+        ) {
             gameProfileSave.disabled =
                 false;
         }
@@ -2330,19 +2957,23 @@ async function logoutGameAccount() {
             await gameApi(
                 '/auth/logout',
                 {
-                    method: 'POST'
+                    method:
+                        'POST'
                 }
             );
         }
-    } catch {
-        // Local logout still proceeds.
-    }
+    } catch {}
 
-    setGameSessionToken('');
+    setGameSessionToken(
+        ''
+    );
+
     pendingAvatarData =
         undefined;
 
-    renderGameProfile(null);
+    renderGameProfile(
+        null
+    );
 
     setGameProfileStatus(
         '已登出遊戲帳號。',
@@ -2350,43 +2981,103 @@ async function logoutGameAccount() {
     );
 }
 
+async function loadGameOnlineCounts() {
+    try {
+        const response =
+            await fetch(
+                `${GAME_API_BASE}/game/presence/counts`,
+                {
+                    cache:
+                        'no-store'
+                }
+            );
+
+        const data =
+            await response
+                .json()
+                .catch(
+                    () => ({})
+                );
+
+        if (
+            !response.ok ||
+            !data?.success
+        ) {
+            return;
+        }
+
+        document
+            .querySelectorAll(
+                '[data-game-online]'
+            )
+            .forEach(
+                element => {
+                    const game =
+                        element.dataset
+                            .gameOnline;
+
+                    const count =
+                        Number(
+                            data.counts?.[
+                                game
+                            ] || 0
+                        );
+
+                    const target =
+                        element.querySelector(
+                            'strong'
+                        );
+
+                    if (target) {
+                        target.textContent =
+                            String(
+                                count
+                            );
+                    }
+                }
+            );
+    } catch {}
+}
+
 document
     .querySelectorAll(
         '.game-enter-btn'
     )
-    .forEach(button => {
-        button.addEventListener(
-            'click',
-            () => {
-                openGameAccount(
-                    button.dataset.game
-                );
-            }
-        );
-    });
+    .forEach(
+        button => {
+            button.addEventListener(
+                'click',
+                () => {
+                    const game =
+                        button.dataset
+                            .game ===
+                        'texas'
+                            ? 'texas'
+                            : 'blackjack';
 
-document
-    .querySelectorAll(
-        '[data-game-card]'
-    )
-    .forEach(card => {
-        card.addEventListener(
-            'dblclick',
-            () => {
-                openGameAccount(
-                    card.dataset
-                        .gameCard
-                );
-            }
-        );
-    });
+                    if (
+                        currentGameProfile &&
+                        getGameSessionToken()
+                    ) {
+                        window.location.href =
+                            game ===
+                            'texas'
+                                ? '/games/poker/'
+                                : '/games/blackjack/';
+
+                        return;
+                    }
+
+                    openGameAccount();
+                }
+            );
+        }
+    );
 
 gameWalletAccount
     ?.addEventListener(
         'click',
-        () => {
-            openGameAccount();
-        }
+        openGameAccount
     );
 
 gameAccountClose
@@ -2412,10 +3103,13 @@ document.addEventListener(
     'keydown',
     event => {
         if (
-            event.key === 'Escape' &&
+            event.key ===
+                'Escape' &&
             gameAccountModal
                 ?.classList
-                .contains('is-open')
+                .contains(
+                    'is-open'
+                )
         ) {
             closeGameAccount();
         }
@@ -2425,21 +3119,19 @@ document.addEventListener(
 gameAuthGoogle
     ?.addEventListener(
         'click',
-        () => {
+        () =>
             beginGameOAuth(
                 'google'
-            );
-        }
+            )
     );
 
 gameAuthDiscord
     ?.addEventListener(
         'click',
-        () => {
+        () =>
             beginGameOAuth(
                 'discord'
-            );
-        }
+            )
     );
 
 gameDailyBtn
@@ -2448,27 +3140,12 @@ gameDailyBtn
         claimGameDaily
     );
 
-gameWalletDaily
-    ?.addEventListener(
-        'click',
-        () => {
-            if (
-                !currentGameProfile
-            ) {
-                openGameAccount();
-                return;
-            }
-
-            claimGameDaily();
-        }
-    );
-
 gameAvatarChange
     ?.addEventListener(
         'click',
-        () => {
-            gameAvatarFile?.click();
-        }
+        () =>
+            gameAvatarFile
+                ?.click()
     );
 
 gameAvatarFile
@@ -2525,7 +3202,9 @@ gameAvatarReset
     ?.addEventListener(
         'click',
         () => {
-            if (!currentGameProfile) {
+            if (
+                !currentGameProfile
+            ) {
                 return;
             }
 
@@ -2540,8 +3219,8 @@ gameAvatarReset
                 '',
                 gameProfileNickname
                     ?.value ||
-                    currentGameProfile
-                        .nickname
+                currentGameProfile
+                    .nickname
             );
 
             setGameProfileStatus(
@@ -2557,25 +3236,85 @@ gameProfileSave
         saveGameProfile
     );
 
+document
+    .querySelectorAll(
+        '[data-binding-action]'
+    )
+    .forEach(
+        button => {
+            button.addEventListener(
+                'click',
+                () =>
+                    beginLinkedProviderFlow(
+                        button.dataset
+                            .bindingAction,
+                        button.dataset
+                            .mode ||
+                        'link'
+                    )
+            );
+        }
+    );
+
+document
+    .querySelectorAll(
+        '[data-unlink-provider]'
+    )
+    .forEach(
+        button => {
+            button.addEventListener(
+                'click',
+                () =>
+                    unlinkGameProvider(
+                        button.dataset
+                            .unlinkProvider
+                    )
+            );
+        }
+    );
+
 gameLogoutBtn
     ?.addEventListener(
         'click',
         logoutGameAccount
     );
 
-renderGameProfile(null);
+initializeGameRadar();
+loadGameOnlineCounts();
 
-exchangeGameAuthCode()
-    .then(() => {
-        if (
-            getGameSessionToken() &&
-            !currentGameProfile
-        ) {
-            loadGameProfile({
-                quiet: true
-            });
-        }
+window.setInterval(
+    loadGameOnlineCounts,
+    30000
+);
+
+const gameAuthURL =
+    new URL(
+        window.location.href
+    );
+
+const hasGameAuthReturn =
+    gameAuthURL.searchParams.has(
+        'game_auth'
+    ) ||
+    gameAuthURL.searchParams.has(
+        'game_auth_error'
+    );
+
+if (hasGameAuthReturn) {
+    exchangeGameAuthCode();
+} else if (
+    getGameSessionToken()
+) {
+    loadGameProfile({
+        quiet:
+            true
     });
+} else {
+    renderGameProfile(
+        null
+    );
+}
+
 
 /* Guestbook */
 const GUESTBOOK_API = 'https://api.08home.com/comments';
@@ -3631,6 +4370,135 @@ document.addEventListener(
         }
     }
 );
+
+
+/* ===== v39 clearable text fields ===== */
+function initializeClearableFields() {
+    const fields =
+        Array.from(
+            document.querySelectorAll(
+                'input:not([type="file"]):not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]), textarea'
+            )
+        );
+
+    fields.forEach(field => {
+        if (
+            field.closest(
+                '.clearable-field'
+            )
+        ) {
+            return;
+        }
+
+        const wrapper =
+            document.createElement(
+                'span'
+            );
+
+        wrapper.className =
+            'clearable-field';
+
+        field.parentNode.insertBefore(
+            wrapper,
+            field
+        );
+
+        wrapper.appendChild(
+            field
+        );
+
+        const clearButton =
+            document.createElement(
+                'button'
+            );
+
+        clearButton.type =
+            'button';
+
+        clearButton.className =
+            'clearable-field-button';
+
+        clearButton.setAttribute(
+            'aria-label',
+            '清除輸入內容'
+        );
+
+        clearButton.title =
+            '清除';
+
+        clearButton.innerHTML =
+            '<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
+
+        wrapper.appendChild(
+            clearButton
+        );
+
+        const updateClearButton =
+            () => {
+                const hasText =
+                    String(
+                        field.value || ''
+                    ).length > 0;
+
+                clearButton.classList.toggle(
+                    'is-visible',
+                    hasText
+                );
+
+                clearButton.tabIndex =
+                    hasText
+                        ? 0
+                        : -1;
+
+                clearButton.setAttribute(
+                    'aria-hidden',
+                    String(!hasText)
+                );
+            };
+
+        field.addEventListener(
+            'input',
+            updateClearButton
+        );
+
+        field.addEventListener(
+            'change',
+            updateClearButton
+        );
+
+        clearButton.addEventListener(
+            'click',
+            () => {
+                field.value = '';
+
+                field.dispatchEvent(
+                    new Event(
+                        'input',
+                        {
+                            bubbles: true
+                        }
+                    )
+                );
+
+                field.dispatchEvent(
+                    new Event(
+                        'change',
+                        {
+                            bubbles: true
+                        }
+                    )
+                );
+
+                field.focus();
+                updateClearButton();
+            }
+        );
+
+        updateClearButton();
+    });
+}
+
+initializeClearableFields();
 
 const savedTheme = localStorage.getItem('theme');
 const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

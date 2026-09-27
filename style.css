@@ -4680,14 +4680,6 @@ body[data-theme="dark"] .pixel-cloud::before {
     font-size: 1.15rem;
 }
 
-.game-status {
-    padding: 5px 9px;
-    border: 2px solid rgba(74, 104, 57, .22);
-    border-radius: 6px;
-    background: rgba(111, 151, 82, .12);
-    font-size: .7rem;
-    font-weight: 900;
-}
 
 .game-card-copy {
     flex: 1;
@@ -4955,7 +4947,6 @@ body.is-lightbox-open {
     gap: 8px;
 }
 
-.game-wallet-daily,
 .game-wallet-account,
 .game-profile-save,
 .game-daily-btn,
@@ -4969,7 +4960,6 @@ body.is-lightbox-open {
     cursor: pointer;
 }
 
-.game-wallet-daily,
 .game-wallet-account {
     min-height: 36px;
     padding: 0 10px;
@@ -4982,20 +4972,12 @@ body.is-lightbox-open {
     font-weight: 900;
 }
 
-.game-wallet-daily {
-    background: rgba(116,153,82,.16);
-    color: inherit;
-}
 
 .game-wallet-account {
     background: rgba(55,44,31,.1);
     color: inherit;
 }
 
-.game-wallet-daily:disabled {
-    opacity: .48;
-    cursor: not-allowed;
-}
 
 .game-enter-btn {
     opacity: 1 !important;
@@ -5405,5 +5387,450 @@ html[data-theme="dark"] .game-profile-form input {
     .game-profile-save,
     .game-launch-btn {
         justify-content: center;
+    }
+}
+
+
+/* =========================================================
+   v38 — game account / radar / bindings / online
+   ========================================================= */
+
+.game-online-count {
+    margin-top: 10px !important;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .72rem;
+    font-weight: 800;
+    opacity: .68 !important;
+}
+
+.game-online-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #5fa34d;
+    box-shadow:
+        0 0 0 3px
+        rgba(95,163,77,.13);
+}
+
+.game-profile-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0,1fr)
+        250px;
+    gap: 20px;
+    align-items: start;
+}
+
+.game-profile-main {
+    min-width: 0;
+}
+
+.game-radar-panel {
+    min-width: 0;
+    padding: 15px;
+    border: 2px solid
+        rgba(55,44,31,.12);
+    border-radius: 10px;
+    background:
+        rgba(255,255,255,.14);
+}
+
+.game-radar-head {
+    display: grid;
+    gap: 2px;
+}
+
+.game-radar-head > span,
+.game-bindings-head > div > span {
+    font-size: .62rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+    opacity: .45;
+}
+
+.game-radar-chart {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#game-radar-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.game-radar-ring,
+.game-radar-axis {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: .15;
+}
+
+.game-radar-value {
+    fill:
+        rgba(95,163,77,.23);
+    stroke: currentColor;
+    stroke-width: 2;
+    opacity: .9;
+}
+
+.game-radar-label {
+    fill: currentColor;
+    font-size: 10px;
+    font-weight: 800;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    opacity: .72;
+}
+
+.game-radar-values {
+    display: grid;
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+    gap: 5px 8px;
+}
+
+.game-radar-values span {
+    display: flex;
+    justify-content:
+        space-between;
+    gap: 6px;
+    font-size: .65rem;
+    opacity: .68;
+}
+
+.game-radar-note {
+    margin: 10px 0 0;
+    font-size: .64rem;
+    line-height: 1.5;
+    opacity: .5;
+}
+
+.game-bindings-panel {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 2px solid
+        rgba(55,44,31,.12);
+}
+
+.game-bindings-head {
+    margin-bottom: 9px;
+    display: flex;
+    align-items: end;
+    justify-content:
+        space-between;
+    gap: 12px;
+}
+
+.game-bindings-head > div {
+    display: grid;
+    gap: 2px;
+}
+
+.game-bindings-head small {
+    font-size: .64rem;
+    opacity: .5;
+}
+
+.game-binding-row {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:
+        space-between;
+    gap: 12px;
+    border: 2px solid
+        rgba(55,44,31,.09);
+    border-radius: 8px;
+}
+
+.game-binding-row +
+.game-binding-row {
+    margin-top: 7px;
+}
+
+.game-binding-row.is-bound {
+    border-color:
+        rgba(95,163,77,.24);
+    background:
+        rgba(95,163,77,.06);
+}
+
+.game-binding-provider {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.game-binding-provider > i {
+    width: 27px;
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+.game-binding-provider > div {
+    display: grid;
+    gap: 1px;
+}
+
+.game-binding-status {
+    font-size: .64rem;
+    opacity: .53;
+}
+
+.game-binding-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.game-binding-primary,
+.game-binding-unlink {
+    min-height: 30px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 6px;
+    color: inherit;
+    font: inherit;
+    font-size: .66rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.game-binding-primary {
+    background:
+        rgba(55,44,31,.1);
+}
+
+.game-binding-unlink {
+    background: transparent;
+    opacity: .62;
+}
+
+.game-binding-unlink:disabled {
+    opacity: .25;
+    cursor: not-allowed;
+}
+
+.game-binding-unlink:hover:not(:disabled) {
+    background:
+        rgba(170,63,63,.08);
+    color: #a43d3d;
+    opacity: 1;
+}
+
+.game-launch-panel {
+    display: none !important;
+}
+
+html[data-theme="dark"]
+.game-radar-panel {
+    background:
+        rgba(10,14,12,.16);
+}
+
+@media (max-width: 820px) {
+    .game-profile-layout {
+        grid-template-columns:
+            1fr;
+    }
+
+    .game-radar-panel {
+        width: 100%;
+        max-width: 360px;
+        justify-self: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .game-binding-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .game-binding-actions {
+        width: 100%;
+    }
+
+    .game-binding-actions > button {
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   v39 — clearable fields + mini-game copy cleanup
+   ========================================================= */
+
+.game-card-top {
+    justify-content: flex-start;
+}
+
+.game-wallet-actions {
+    justify-content: flex-end;
+}
+
+/*
+   Text input / textarea clear button.
+   The button only appears when the field contains text.
+*/
+.clearable-field {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.clearable-field > input,
+.clearable-field > textarea {
+    width: 100%;
+    padding-right: 38px !important;
+}
+
+.clearable-field-button {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: 9px;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: currentColor;
+    font: inherit;
+    font-size: .72rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform:
+        translateY(-50%)
+        scale(.88);
+    transition:
+        opacity .14s ease,
+        transform .14s ease,
+        background .14s ease,
+        visibility .14s ease;
+}
+
+.clearable-field-button.is-visible {
+    opacity: .48;
+    visibility: visible;
+    pointer-events: auto;
+    transform:
+        translateY(-50%)
+        scale(1);
+}
+
+.clearable-field-button.is-visible:hover,
+.clearable-field-button.is-visible:focus-visible {
+    opacity: .9;
+    background:
+        rgba(55,44,31,.09);
+    outline: none;
+}
+
+.clearable-field > textarea +
+.clearable-field-button {
+    top: 13px;
+    transform: scale(.88);
+}
+
+.clearable-field > textarea +
+.clearable-field-button.is-visible {
+    transform: scale(1);
+}
+
+html[data-theme="dark"]
+.clearable-field-button.is-visible:hover,
+html[data-theme="dark"]
+.clearable-field-button.is-visible:focus-visible {
+    background:
+        rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   v40 — account info + radar layout
+   ========================================================= */
+
+.game-profile-layout {
+    display: block !important;
+}
+
+.game-profile-overview {
+    grid-template-columns:
+        128px
+        minmax(0, 1fr)
+        225px !important;
+    gap: 16px !important;
+    align-items: center;
+}
+
+.game-profile-summary {
+    max-width: 210px;
+    min-width: 0;
+}
+
+#game-profile-display-name {
+    display: block;
+    max-width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+.game-radar-panel {
+    width: 225px;
+    max-width: 100%;
+    padding: 11px;
+    align-self: center;
+}
+
+.game-radar-chart {
+    margin-top: 2px;
+}
+
+#game-radar-svg {
+    max-height: 205px;
+}
+
+@media (max-width: 820px) {
+    .game-profile-overview {
+        grid-template-columns:
+            125px
+            minmax(0, 1fr) !important;
+    }
+
+    .game-radar-panel {
+        grid-column: 1 / -1;
+        width: min(330px, 100%);
+        justify-self: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .game-profile-overview {
+        grid-template-columns:
+            1fr !important;
+    }
+
+    .game-profile-summary {
+        max-width: 100%;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .game-radar-panel {
+        grid-column: auto;
     }
 }

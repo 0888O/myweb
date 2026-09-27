@@ -3527,7 +3527,7 @@ body::before,
     content: "";
     position: absolute;
     width: 20px;
-    height: 16px;
+    height: 36px;
     left: -12px;
     top: 7px;
     background: rgba(255,255,255,var(--cloud-opacity));
@@ -6252,4 +6252,123 @@ body.is-game-modal-open .topbar {
         transform:
             translateY(-115%) !important;
     }
+}
+
+
+/* =========================================================
+   v43 — custom scrollbar
+   Minecraft / coffee-house inspired, restrained style
+   ========================================================= */
+
+/* Firefox */
+html {
+    scrollbar-width: thin;
+    scrollbar-color:
+        #8b7355
+        #d9ccb2;
+}
+
+/* Chromium / Edge / Safari */
+::-webkit-scrollbar {
+    width: 13px;
+    height: 13px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        linear-gradient(
+            180deg,
+            #d8c9aa 0%,
+            #c9b995 100%
+        );
+    border-left:
+        2px solid
+        rgba(70, 55, 39, .14);
+}
+
+::-webkit-scrollbar-thumb {
+    min-height: 48px;
+    border:
+        3px solid
+        #d2c39f;
+    border-radius: 7px;
+    background:
+        linear-gradient(
+            180deg,
+            #9a8261 0%,
+            #796346 100%
+        );
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255,255,255,.16);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        linear-gradient(
+            180deg,
+            #a58c69 0%,
+            #826a4b 100%
+        );
+}
+
+::-webkit-scrollbar-thumb:active {
+    background:
+        linear-gradient(
+            180deg,
+            #846d50 0%,
+            #68523a 100%
+        );
+}
+
+::-webkit-scrollbar-corner {
+    background:
+        #c9b995;
+}
+
+html[data-theme="dark"] {
+    scrollbar-color:
+        #6f6558
+        #262724;
+}
+
+html[data-theme="dark"]
+::-webkit-scrollbar-track {
+    background:
+        linear-gradient(
+            180deg,
+            #2d2f2b 0%,
+            #242522 100%
+        );
+    border-left:
+        2px solid
+        rgba(255,255,255,.05);
+}
+
+html[data-theme="dark"]
+::-webkit-scrollbar-thumb {
+    border-color:
+        #2a2b28;
+    background:
+        linear-gradient(
+            180deg,
+            #786e60 0%,
+            #5d554a 100%
+        );
+}
+
+html[data-theme="dark"]
+::-webkit-scrollbar-thumb:hover {
+    background:
+        linear-gradient(
+            180deg,
+            #887d6e 0%,
+            #696055 100%
+        );
+}
+
+html[data-theme="dark"]
+::-webkit-scrollbar-corner {
+    background:
+        #242522;
 }

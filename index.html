@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=42" rel="stylesheet"/>
+<link href="style.css?v=43" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -258,7 +258,7 @@
 </div>
 
 <div class="game-wallet-balance">
-<span>我的籌碼</span>
+<span>籌碼數量</span>
 <strong><i class="fa-solid fa-coins"></i> <span id="game-wallet-chips">--</span> 點</strong>
 </div>
 
@@ -414,7 +414,7 @@
 
 <button class="game-profile-save" id="game-profile-save" type="button">
 <i class="fa-solid fa-floppy-disk"></i>
-<span>儲存玩家資料</span>
+<span>儲存設定</span>
 </button>
 </div>
 </div>
@@ -4577,6 +4577,7 @@ function hideTopbarSoon(
         window.setTimeout(
             () => {
                 if (
+                    window.scrollY <= 8 ||
                     topbarElement
                         ?.matches(
                             ':hover'
@@ -4595,6 +4596,35 @@ function hideTopbarSoon(
             },
             delay
         );
+}
+
+
+function updateTopbarForScroll() {
+    if (
+        document.body.classList.contains(
+            'is-game-modal-open'
+        )
+    ) {
+        return;
+    }
+
+    if (
+        window.scrollY <= 8
+    ) {
+        showTopbar();
+        return;
+    }
+
+    if (
+        !topbarElement
+            ?.matches(':hover') &&
+        !topbarRevealZone
+            ?.matches(':hover')
+    ) {
+        hideTopbarSoon(
+            120
+        );
+    }
 }
 
 topbarRevealZone
@@ -4655,7 +4685,7 @@ document.addEventListener(
         if (
             event.pointerType ===
             'mouse' &&
-            event.clientY <= 14
+            event.clientY <= 36
         ) {
             showTopbar();
         }
@@ -4664,6 +4694,16 @@ document.addEventListener(
         passive: true
     }
 );
+
+window.addEventListener(
+    'scroll',
+    updateTopbarForScroll,
+    {
+        passive: true
+    }
+);
+
+updateTopbarForScroll();
 
 const savedTheme = localStorage.getItem('theme');
 const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

@@ -4636,3 +4636,774 @@ body[data-theme="dark"] .pixel-cloud::before {
             40vw
         );
 }
+
+
+/* =========================================================
+   v34 — developing mini-games + gallery lightbox
+   ========================================================= */
+
+.games-section {
+    position: relative;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.game-card {
+    min-width: 0;
+    min-height: 245px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.game-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.game-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 2px solid rgba(55, 44, 31, .18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .23);
+    font-size: 1.15rem;
+}
+
+.game-status {
+    padding: 5px 9px;
+    border: 2px solid rgba(74, 104, 57, .22);
+    border-radius: 6px;
+    background: rgba(111, 151, 82, .12);
+    font-size: .7rem;
+    font-weight: 900;
+}
+
+.game-card-copy {
+    flex: 1;
+}
+
+.game-kicker {
+    display: block;
+    margin-bottom: 5px;
+    font-size: .68rem;
+    font-weight: 900;
+    letter-spacing: .13em;
+    opacity: .5;
+}
+
+.game-card h3 {
+    margin: 0 0 9px;
+    font-size: 1.25rem;
+}
+
+.game-card p {
+    margin: 0;
+    max-width: 48ch;
+    line-height: 1.75;
+    opacity: .72;
+}
+
+.game-card-footer {
+    padding-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 2px solid rgba(55, 44, 31, .12);
+}
+
+.game-card-footer > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: .72rem;
+    font-weight: 800;
+    opacity: .58;
+}
+
+.game-dev-btn {
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 6px;
+    background: rgba(55, 44, 31, .11);
+    color: inherit;
+    font: inherit;
+    font-size: .72rem;
+    font-weight: 900;
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+html[data-theme="dark"] .game-icon {
+    background: rgba(20, 23, 19, .25);
+}
+
+.gallery-track img {
+    cursor: zoom-in;
+}
+
+.gallery-lightbox {
+    position: fixed;
+    z-index: 500;
+    inset: 0;
+    padding: 28px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    place-items: center;
+    background: rgba(10, 13, 15, .9);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity .22s ease,
+        visibility .22s ease;
+}
+
+.gallery-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.gallery-lightbox-stage {
+    width: min(1120px, 92vw);
+    height: min(76vh, 760px);
+    display: grid;
+    place-items: center;
+}
+
+.gallery-lightbox-stage img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 18px 70px rgba(0,0,0,.45);
+    opacity: 0;
+    transform:
+        translateY(12px)
+        scale(.975);
+    transition:
+        opacity .22s ease,
+        transform .28s
+            cubic-bezier(.22,.61,.36,1);
+}
+
+.gallery-lightbox.is-open
+.gallery-lightbox-stage img {
+    opacity: 1;
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.gallery-lightbox-close {
+    position: absolute;
+    z-index: 2;
+    top: 22px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 2px solid rgba(255,255,255,.13);
+    border-radius: 8px;
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    font-size: 1.15rem;
+    cursor: pointer;
+}
+
+.gallery-lightbox-close:hover {
+    background: rgba(255,255,255,.15);
+}
+
+.gallery-lightbox-caption {
+    min-height: 1.3em;
+    margin: 12px 0 0;
+    color: rgba(255,255,255,.72);
+    font-size: .78rem;
+    text-align: center;
+}
+
+body.is-lightbox-open {
+    overflow: hidden;
+}
+
+@media (max-width: 760px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-card {
+        min-height: 220px;
+    }
+
+    .gallery-lightbox {
+        padding: 18px;
+    }
+
+    .gallery-lightbox-stage {
+        width: 94vw;
+        height: 70vh;
+    }
+
+    .gallery-lightbox-close {
+        top: 14px;
+        right: 14px;
+    }
+}
+
+
+/* =========================================================
+   v35 — shared game account / wallet
+   ========================================================= */
+
+.game-wallet-bar {
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        auto;
+    align-items: center;
+    gap: 16px;
+}
+
+.game-wallet-identity {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.game-wallet-avatar,
+.game-profile-avatar {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    border: 2px solid rgba(55,44,31,.2);
+    background: rgba(255,255,255,.22);
+    font-weight: 900;
+}
+
+.game-wallet-avatar {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 7px;
+}
+
+.game-wallet-avatar img,
+.game-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.game-wallet-identity > div:last-child {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.game-wallet-label {
+    font-size: .68rem;
+    font-weight: 800;
+    opacity: .55;
+}
+
+#game-wallet-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.game-wallet-balance {
+    display: grid;
+    gap: 2px;
+    text-align: right;
+}
+
+.game-wallet-balance > span {
+    font-size: .66rem;
+    font-weight: 800;
+    opacity: .52;
+}
+
+.game-wallet-balance strong {
+    font-size: .94rem;
+    white-space: nowrap;
+}
+
+.game-wallet-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.game-wallet-daily,
+.game-wallet-account,
+.game-profile-save,
+.game-daily-btn,
+.game-auth-provider,
+.game-avatar-change,
+.game-avatar-reset,
+.game-logout-btn,
+.game-launch-btn {
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+}
+
+.game-wallet-daily,
+.game-wallet-account {
+    min-height: 36px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 6px;
+    font-size: .72rem;
+    font-weight: 900;
+}
+
+.game-wallet-daily {
+    background: rgba(116,153,82,.16);
+    color: inherit;
+}
+
+.game-wallet-account {
+    background: rgba(55,44,31,.1);
+    color: inherit;
+}
+
+.game-wallet-daily:disabled {
+    opacity: .48;
+    cursor: not-allowed;
+}
+
+.game-enter-btn {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    background: rgba(96,132,70,.17);
+}
+
+.game-enter-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(96,132,70,.25);
+}
+
+/* Account modal */
+
+.game-account-modal {
+    position: fixed;
+    z-index: 560;
+    inset: 0;
+    padding: 22px;
+    display: grid;
+    place-items: center;
+    background: rgba(12,15,17,.76);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity .22s ease,
+        visibility .22s ease;
+}
+
+.game-account-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.game-account-dialog {
+    position: relative;
+    width: min(660px, 96vw);
+    max-height: min(780px, 92vh);
+    overflow-y: auto;
+    padding: 26px;
+    transform:
+        translateY(14px)
+        scale(.985);
+    transition:
+        transform .28s
+            cubic-bezier(.22,.61,.36,1);
+}
+
+.game-account-modal.is-open
+.game-account-dialog {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.game-account-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 7px;
+    background: rgba(55,44,31,.09);
+    color: inherit;
+    cursor: pointer;
+}
+
+.game-account-head {
+    padding-right: 45px;
+}
+
+.game-account-head h2 {
+    margin: 5px 0 6px;
+    font-size: 1.45rem;
+}
+
+.game-account-head p {
+    margin: 0;
+    opacity: .66;
+}
+
+.game-auth-view,
+.game-profile-view {
+    margin-top: 22px;
+}
+
+.game-auth-reward {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border: 2px solid rgba(96,132,70,.2);
+    border-radius: 9px;
+    background: rgba(96,132,70,.09);
+}
+
+.game-auth-reward > i {
+    font-size: 1.45rem;
+}
+
+.game-auth-reward > div {
+    display: grid;
+    gap: 3px;
+}
+
+.game-auth-reward span {
+    font-size: .78rem;
+    opacity: .67;
+}
+
+.game-auth-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.game-auth-provider {
+    min-height: 48px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 900;
+}
+
+.game-auth-google {
+    background: #35393d;
+}
+
+.game-auth-discord {
+    background: #5865f2;
+}
+
+.game-auth-provider:hover {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+}
+
+.game-auth-note {
+    margin: 12px 0 0;
+    font-size: .74rem;
+    text-align: center;
+    opacity: .58;
+}
+
+/* Logged-in profile */
+
+.game-profile-overview {
+    display: grid;
+    grid-template-columns: 145px minmax(0,1fr);
+    gap: 20px;
+    align-items: center;
+}
+
+.game-profile-avatar-wrap {
+    display: grid;
+    justify-items: center;
+    gap: 7px;
+}
+
+.game-profile-avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 12px;
+    font-size: 2rem;
+}
+
+.game-avatar-change,
+.game-avatar-reset {
+    min-height: 30px;
+    padding: 0 9px;
+    border-radius: 6px;
+    background: rgba(55,44,31,.09);
+    color: inherit;
+    font-size: .68rem;
+    font-weight: 800;
+}
+
+.game-avatar-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.game-avatar-reset {
+    background: transparent;
+    opacity: .62;
+}
+
+.game-profile-summary {
+    min-width: 0;
+    display: grid;
+    gap: 5px;
+}
+
+.game-profile-summary > span,
+.game-profile-chips > span {
+    font-size: .7rem;
+    font-weight: 800;
+    opacity: .52;
+}
+
+#game-profile-display-name {
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+}
+
+.game-profile-chips {
+    margin-top: 8px;
+    display: grid;
+    gap: 3px;
+}
+
+.game-profile-chips strong {
+    font-size: 1.15rem;
+}
+
+.game-daily-btn {
+    width: fit-content;
+    min-height: 38px;
+    margin-top: 8px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 7px;
+    background: rgba(96,132,70,.18);
+    color: inherit;
+    font-size: .75rem;
+    font-weight: 900;
+}
+
+.game-daily-btn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.game-profile-form {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 2px solid rgba(55,44,31,.12);
+}
+
+.game-profile-form label {
+    display: grid;
+    gap: 7px;
+}
+
+.game-profile-form label > span {
+    font-size: .76rem;
+    font-weight: 900;
+}
+
+.game-profile-form input {
+    height: 42px;
+    padding: 0 12px;
+    border: 2px solid rgba(55,44,31,.22);
+    border-radius: 7px;
+    background: rgba(255,255,255,.34);
+    color: inherit;
+    font: inherit;
+    outline: none;
+}
+
+.game-profile-form input:focus {
+    border-color: rgba(88,131,66,.7);
+}
+
+.game-profile-form-actions {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#game-profile-status {
+    min-height: 1.3em;
+    margin: 0;
+    font-size: .72rem;
+    opacity: .7;
+}
+
+#game-profile-status[data-state="success"],
+#game-profile-status[data-state="error"] {
+    font-weight: 800;
+}
+
+.game-profile-save {
+    min-height: 38px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 7px;
+    background: rgba(96,132,70,.2);
+    color: inherit;
+    font-size: .74rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.game-launch-panel {
+    margin-top: 18px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    border: 2px solid rgba(55,44,31,.12);
+    border-radius: 8px;
+}
+
+.game-launch-panel > div {
+    display: grid;
+    gap: 3px;
+}
+
+.game-launch-panel span {
+    font-size: .68rem;
+    opacity: .55;
+}
+
+.game-launch-btn {
+    min-height: 38px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 7px;
+    background: rgba(55,44,31,.1);
+    color: inherit;
+    font-size: .72rem;
+    font-weight: 900;
+}
+
+.game-launch-btn:disabled {
+    opacity: .48;
+    cursor: not-allowed;
+}
+
+.game-logout-btn {
+    margin-top: 14px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: transparent;
+    color: inherit;
+    font-size: .7rem;
+    opacity: .58;
+}
+
+body.is-game-modal-open {
+    overflow: hidden;
+}
+
+html[data-theme="dark"] .game-wallet-avatar,
+html[data-theme="dark"] .game-profile-avatar,
+html[data-theme="dark"] .game-profile-form input {
+    background: rgba(18,22,19,.3);
+}
+
+@media (max-width: 760px) {
+    .game-wallet-bar {
+        grid-template-columns: 1fr auto;
+    }
+
+    .game-wallet-balance {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .game-wallet-actions {
+        grid-column: 1 / -1;
+    }
+
+    .game-wallet-actions > button {
+        flex: 1;
+    }
+
+    .game-profile-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .game-auth-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .game-profile-form-actions,
+    .game-launch-panel {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .game-profile-save,
+    .game-launch-btn {
+        justify-content: center;
+    }
+}

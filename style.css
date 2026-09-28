@@ -6883,3 +6883,104 @@ input:focus {
         width: 100%;
     }
 }
+
+
+/* =========================================================
+   v48 — persistent nickname editor state
+   ========================================================= */
+
+/*
+   Hover can preview the editor, but clicking the nickname now locks
+   the editor open with .is-editing until save, Esc, or outside click.
+*/
+.game-profile-name-edit.is-editing
+.game-profile-name-editor {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform:
+        translateY(0)
+        scale(1) !important;
+}
+
+.game-profile-name-edit.is-editing
+#game-profile-display-name {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Keep the parent hit-area stable while the absolute editor is open. */
+.game-profile-name-edit.is-editing {
+    min-height: 58px;
+}
+
+/* Prevent focus transitions inside the editor from collapsing it. */
+.game-profile-name-edit.is-editing
+.game-profile-nickname-field,
+.game-profile-name-edit.is-editing
+.game-profile-name-actions {
+    pointer-events: auto;
+}
+
+@media (max-width: 600px) {
+    .game-profile-name-edit.is-editing
+    .game-profile-name-editor {
+        transform:
+            translate(-50%, 0)
+            scale(1) !important;
+    }
+}
+
+
+/* =========================================================
+   v49 — lightweight Minecraft motion / visual polish
+   ========================================================= */
+
+a,button{-webkit-tap-highlight-color:transparent}
+.primary-btn,.secondary-btn,.icon-btn,.nav-link,.game-enter-btn,.game-wallet-account,.game-auth-provider,.game-profile-save,.game-binding-primary,.game-binding-unlink,.game-logout-btn{touch-action:manipulation}
+.primary-btn:active,.secondary-btn:active,.icon-btn:active,.nav-link:active,.game-enter-btn:active,.game-wallet-account:active,.game-auth-provider:active,.game-profile-save:active,.game-binding-primary:active,.game-binding-unlink:active,.game-logout-btn:active{transform:translateY(2px) scale(.985)!important;filter:brightness(.97)}
+
+/* Hero pixel diorama */
+.hero-panel{overflow:hidden}
+.hero-visual{position:relative;width:100%;min-height:238px;display:grid;place-items:center;margin-bottom:2px;border:3px solid rgba(55,44,31,.18);background:linear-gradient(180deg,rgba(132,202,240,.9) 0 60%,rgba(116,178,79,.85) 60% 100%);image-rendering:pixelated;overflow:hidden;contain:layout paint}
+.hero-visual::after{content:"";position:absolute;inset:auto 0 0;height:34%;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 26px,rgba(55,98,45,.12) 26px 30px)}
+.hero-visual-stage{--hero-pointer-x:0px;--hero-pointer-y:0px;--hero-rotate-x:0deg;--hero-rotate-y:0deg;position:relative;width:290px;height:205px;transform:translate3d(var(--hero-pointer-x),var(--hero-pointer-y),0) perspective(700px) rotateX(var(--hero-rotate-x)) rotateY(var(--hero-rotate-y));transform-style:preserve-3d;transition:transform .16s cubic-bezier(.22,.61,.36,1)}
+.hero-scene-sun{position:absolute;top:18px;right:25px;width:34px;height:34px;background:#f1d66b;box-shadow:0 0 0 5px rgba(255,242,160,.2)}
+.hero-scene-cloud{position:absolute;width:44px;height:12px;background:rgba(255,255,255,.88);box-shadow:12px -8px 0 rgba(255,255,255,.88),28px -4px 0 rgba(255,255,255,.88)}
+.hero-scene-cloud-one{top:42px;left:18px}.hero-scene-cloud-two{top:74px;right:42px;transform:scale(.72);opacity:.76}
+.hero-floating-island{position:absolute;left:50%;bottom:20px;width:218px;height:104px;transform:translateX(-50%) translateZ(18px)}
+.hero-island-grass{position:absolute;left:0;top:0;width:218px;height:34px;background:#72b84f;border:4px solid rgba(53,46,33,.42);box-shadow:inset 0 -8px 0 rgba(68,127,53,.4)}
+.hero-island-dirt{position:absolute;left:12px;top:34px;width:194px;height:58px;background:#8b5b37;border:4px solid rgba(53,46,33,.42);border-top:0;clip-path:polygon(0 0,100% 0,86% 100%,14% 100%);background-image:linear-gradient(90deg,transparent 0 24px,rgba(61,37,22,.16) 24px 29px),linear-gradient(transparent 0 22px,rgba(255,255,255,.06) 22px 26px)}
+.hero-mini-house{position:absolute;left:48px;bottom:78px;width:72px;height:56px;transform:translateZ(30px)}
+.hero-house-wall{position:absolute;left:6px;bottom:0;width:60px;height:42px;background:#b6814f;border:4px solid #453a2c}.hero-house-roof{position:absolute;z-index:2;left:0;top:-8px;width:72px;height:20px;background:#66503c;border:4px solid #453a2c}.hero-house-door{position:absolute;z-index:3;left:29px;bottom:4px;width:16px;height:26px;background:#5e4937;border:3px solid #453a2c}.hero-house-window{position:absolute;z-index:3;right:10px;bottom:20px;width:13px;height:13px;background:#8ed0e7;border:3px solid #453a2c}
+.hero-coffee{position:absolute;right:38px;bottom:78px;width:46px;height:48px;transform:translateZ(38px)}.hero-coffee-cup{position:absolute;left:5px;bottom:0;width:31px;height:28px;background:#e8dfcb;border:4px solid #453a2c}.hero-coffee-cup::after{content:"";position:absolute;right:-13px;top:4px;width:11px;height:12px;border:4px solid #453a2c;border-left:0}.hero-coffee-steam{position:absolute;width:5px;height:13px;background:rgba(255,255,255,.72)}.hero-coffee-steam-one{left:12px;top:0}.hero-coffee-steam-two{left:25px;top:-7px;height:17px;opacity:.6}
+.hero-08-block{position:absolute;z-index:4;left:12px;bottom:58px;width:48px;height:48px;display:grid;place-items:center;color:#fff;background:linear-gradient(180deg,#72b84f 0 25%,#8b5b37 25% 100%);border:4px solid #453a2c;font-size:.76rem;font-weight:900;transform:translateZ(44px) rotate(-4deg)}
+.hero-code-chip{position:absolute;z-index:5;min-width:34px;padding:5px 6px;border:3px solid #453a2c;background:rgba(244,239,221,.94);color:#4a4134;font-size:.55rem;font-weight:900;text-align:center;box-shadow:0 4px 0 rgba(55,44,31,.16)}.hero-code-chip-one{left:4px;top:94px}.hero-code-chip-two{right:5px;top:112px}.hero-code-chip-three{right:16px;bottom:17px}
+.rich-motion .hero-visual-stage{animation:hero-stage-idle 5.8s ease-in-out infinite}@keyframes hero-stage-idle{0%,100%{margin-top:0}50%{margin-top:-5px}}
+
+/* Minecraft floating dock */
+@media (hover:hover) and (pointer:fine){.topbar{border-radius:10px;box-shadow:0 8px 0 var(--panel-shadow),0 14px 34px rgba(48,39,27,.12)}.dock-item{--dock-scale:1;--dock-lift:0px;transform:translateY(var(--dock-lift)) scale(var(--dock-scale));transform-origin:center bottom;transition:transform .16s cubic-bezier(.22,.61,.36,1),background .15s ease,border-color .15s ease}.desktop-nav .nav-link{position:relative}.desktop-nav .nav-link::after{content:"";position:absolute;left:50%;bottom:2px;width:7px;height:4px;transform:translateX(-50%) scaleX(0);background:var(--grass);transition:transform .15s ease}.desktop-nav .nav-link.is-dock-active::after{transform:translateX(-50%) scaleX(1)}.desktop-nav .nav-link.is-dock-active{background:rgba(95,163,77,.08);border-color:rgba(55,44,31,.12)}}
+
+/* Game tables */
+.game-card{--game-tilt-x:0deg;--game-tilt-y:0deg;position:relative;overflow:hidden;transform:perspective(800px) rotateX(var(--game-tilt-x)) rotateY(var(--game-tilt-y));transform-style:preserve-3d;transition:transform .18s cubic-bezier(.22,.61,.36,1),box-shadow .18s ease;contain:layout paint}
+@media (hover:hover) and (pointer:fine){.game-card:hover{box-shadow:0 8px 0 var(--panel-shadow),0 18px 38px rgba(55,44,31,.12)}}
+.game-card-table{position:relative;height:104px;margin:-4px 0 0;border:3px solid rgba(55,44,31,.17);border-radius:9px;background:linear-gradient(180deg,rgba(62,120,62,.28),rgba(58,99,56,.18));overflow:hidden;transform:translateZ(18px)}
+.game-card-table::before{content:"";position:absolute;inset:0;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:18px 18px}
+.pixel-playing-card{position:absolute;width:52px;height:72px;padding:6px;border:3px solid #453a2c;border-radius:5px;background:#f7f0df;color:#34302a;box-shadow:0 4px 0 rgba(55,44,31,.18);font-weight:900;line-height:1;transform-origin:50% 90%;transition:transform .2s cubic-bezier(.22,.61,.36,1)}.playing-card-rank{display:block;font-size:.72rem}.playing-card-suit{position:absolute;right:6px;bottom:6px;font-size:1.15rem}.card-red{color:#b44d4d}.card-a{left:42px;top:15px;transform:rotate(-10deg)}.card-k{left:87px;top:11px;transform:rotate(4deg)}.card-back{right:44px;top:14px;display:grid;place-items:center;color:rgba(255,255,255,.9);background:repeating-linear-gradient(45deg,#5c7754 0 7px,#6e8a63 7px 14px);transform:rotate(9deg)}.card-back-mark{display:grid;place-items:center;width:28px;height:28px;border:3px solid rgba(255,255,255,.72);font-size:.55rem}
+.texas-hole-one{left:34px;top:15px;transform:rotate(-8deg)}.texas-hole-two{left:73px;top:12px;transform:rotate(5deg)}.texas-community{position:absolute;right:28px;top:20px;display:flex;gap:6px}.mini-card{position:relative;inset:auto;width:38px;height:55px;padding:5px;font-size:.6rem;box-shadow:0 3px 0 rgba(55,44,31,.15)}.mini-card b{position:absolute;right:4px;bottom:4px;font-size:.75rem}
+.game-table-chip{position:absolute;width:17px;height:17px;border:3px solid rgba(55,44,31,.5);border-radius:50%;background:#e2c45f;box-shadow:inset 0 0 0 3px rgba(255,255,255,.28)}.game-table-chip-one{right:18px;bottom:13px}.game-table-chip-two{right:35px;bottom:8px;background:#bc6c5e}.game-table-chip-three{right:51px;bottom:14px;background:#6e9b6b}
+@media (hover:hover) and (pointer:fine){.game-card:hover .card-a,.game-card:hover .texas-hole-one{transform:translateY(-4px) rotate(-12deg)}.game-card:hover .card-k,.game-card:hover .texas-hole-two{transform:translateY(-6px) rotate(7deg)}.game-card:hover .card-back{transform:translateY(-3px) rotate(12deg)}.game-card:hover .mini-card{transform:translateY(-3px)}}
+
+/* Dynamic radar */
+.game-radar-ring,.game-radar-axis{stroke-dasharray:230;stroke-dashoffset:0}.game-radar-only{overflow:visible}.game-radar-value{transform-origin:130px 120px;filter:drop-shadow(0 4px 5px rgba(55,44,31,.08))}.game-radar-dot{fill:var(--grass);stroke:var(--line);stroke-width:1.5}.game-account-modal.is-open .game-radar-ring,.game-account-modal.is-open .game-radar-axis{animation:radar-grid-in .45s ease both}.game-account-modal.is-open .game-radar-dot{animation:radar-dot-in .28s ease both}@keyframes radar-grid-in{from{opacity:0;stroke-dashoffset:80}to{opacity:.15;stroke-dashoffset:0}}@keyframes radar-dot-in{from{opacity:0}to{opacity:1}}
+
+/* Environment transitions */
+.environment-transition{position:absolute;z-index:2;left:50%;top:0;width:100vw;height:76px;transform:translate(-50%,-72%);pointer-events:none;overflow:hidden;opacity:.82}.environment-transition>span{position:absolute;bottom:0;width:22px;height:22px;opacity:0;transform:translateY(18px) rotate(8deg);transition:opacity .34s ease,transform .48s cubic-bezier(.22,.61,.36,1)}.environment-transition>span:nth-child(1){left:8%}.environment-transition>span:nth-child(2){left:24%;width:14px;height:14px}.environment-transition>span:nth-child(3){left:42%;width:18px;height:18px}.environment-transition>span:nth-child(4){left:61%;width:13px;height:13px}.environment-transition>span:nth-child(5){left:78%;width:19px;height:19px}.environment-transition>span:nth-child(6){left:92%;width:12px;height:12px}.grass-world .environment-transition>span{background:#70b04c;border:3px solid rgba(54,91,43,.32)}.dirt-world .environment-transition>span{background:#81583c;border:3px solid rgba(75,48,31,.38)}.world-zone.is-environment-active .environment-transition>span{opacity:.9;transform:translateY(0) rotate(0deg)}.world-zone.is-environment-active .environment-transition>span:nth-child(even){transition-delay:70ms}.world-zone.is-environment-active .environment-transition>span:nth-child(3n){transition-delay:120ms}
+
+/* Dark mode */
+html[data-theme="dark"] .hero-visual{background:linear-gradient(180deg,rgba(36,71,91,.95) 0 60%,rgba(65,109,57,.9) 60% 100%)}html[data-theme="dark"] .hero-code-chip{background:rgba(48,50,45,.95);color:#f0ebdd}html[data-theme="dark"] .game-card-table{background:linear-gradient(180deg,rgba(52,90,53,.32),rgba(29,51,31,.22))}
+
+/* Mobile / low-cost mode */
+@media (max-width:760px){.hero-visual{min-height:210px}.hero-visual-stage{transform:scale(.88)}.games-grid{gap:16px}.game-card{transform:none!important}.game-card-table{height:94px}.environment-transition{height:58px;opacity:.68}}
+@media (prefers-reduced-motion:reduce){.hero-visual-stage,.dock-item,.game-card,.pixel-playing-card,.mini-card,.environment-transition>span,.game-radar-ring,.game-radar-axis,.game-radar-dot{animation:none!important;transition:none!important}.game-card{transform:none!important}}
+@supports (content-visibility:auto){#server,#gallery,#goals,#guestbook{content-visibility:auto;contain-intrinsic-size:820px}}

@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=47" rel="stylesheet"/>
+<link href="style.css?v=49" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -100,7 +100,27 @@
 </div>
 </div>
 <aside aria-label="個人資訊摘要" class="hero-panel panel-block panel-stone">
-<div class="hero-avatar">08</div>
+<div class="hero-visual" id="hero-visual" aria-hidden="true">
+<div class="hero-visual-stage" id="hero-visual-stage">
+<span class="hero-scene-sun"></span>
+<span class="hero-scene-cloud hero-scene-cloud-one"></span>
+<span class="hero-scene-cloud hero-scene-cloud-two"></span>
+<div class="hero-floating-island">
+<div class="hero-island-grass"></div>
+<div class="hero-island-dirt"></div>
+<div class="hero-mini-house">
+<span class="hero-house-roof"></span><span class="hero-house-wall"></span><span class="hero-house-door"></span><span class="hero-house-window"></span>
+</div>
+<div class="hero-coffee">
+<span class="hero-coffee-cup"></span><span class="hero-coffee-steam hero-coffee-steam-one"></span><span class="hero-coffee-steam hero-coffee-steam-two"></span>
+</div>
+<div class="hero-08-block">08</div>
+</div>
+<span class="hero-code-chip hero-code-chip-one">&lt;/&gt;</span>
+<span class="hero-code-chip hero-code-chip-two">{ }</span>
+<span class="hero-code-chip hero-code-chip-three">MC</span>
+</div>
+</div>
 <div class="hero-panel-copy">
 <span class="hero-panel-label">08880 / KongBa</span>
 <strong class="hero-panel-title">Minecraft · Web · Learning</strong>
@@ -148,6 +168,7 @@
 
 </div>
 <div class="world-zone grass-world" id="grass-world">
+<div class="environment-transition environment-transition-grass" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 <div class="grass-horizon-decoration" id="grass-horizon-decoration" aria-hidden="true"></div>
 <section class="section server-section" id="server">
 <div class="section-heading">
@@ -278,6 +299,13 @@
 </span>
 </div>
 
+<div class="game-card-table blackjack-table" aria-hidden="true">
+<div class="pixel-playing-card card-a card-dark"><span class="playing-card-rank">A</span><span class="playing-card-suit">♠</span></div>
+<div class="pixel-playing-card card-k card-red"><span class="playing-card-rank">K</span><span class="playing-card-suit">♥</span></div>
+<div class="pixel-playing-card card-back"><span class="card-back-mark">08</span></div>
+<span class="game-table-chip game-table-chip-one"></span><span class="game-table-chip game-table-chip-two"></span>
+</div>
+
 <div class="game-card-copy">
 <span class="game-kicker">CARD GAME</span>
 <h3 class="blackjack-title">Blackjack</h3>
@@ -299,6 +327,19 @@
 <span class="game-icon" aria-hidden="true">
 <i class="fa-solid fa-diamond"></i>
 </span>
+</div>
+
+<div class="game-card-table texas-table" aria-hidden="true">
+<div class="texas-hole-cards">
+<div class="pixel-playing-card texas-hole-one card-dark"><span class="playing-card-rank">A</span><span class="playing-card-suit">♣</span></div>
+<div class="pixel-playing-card texas-hole-two card-red"><span class="playing-card-rank">Q</span><span class="playing-card-suit">♦</span></div>
+</div>
+<div class="texas-community">
+<div class="pixel-playing-card mini-card card-red"><span>10</span><b>♥</b></div>
+<div class="pixel-playing-card mini-card card-dark"><span>J</span><b>♠</b></div>
+<div class="pixel-playing-card mini-card card-red"><span>K</span><b>♦</b></div>
+</div>
+<span class="game-table-chip game-table-chip-one"></span><span class="game-table-chip game-table-chip-two"></span><span class="game-table-chip game-table-chip-three"></span>
 </div>
 
 <div class="game-card-copy">
@@ -323,6 +364,7 @@
 
 </div>
 <div class="world-zone dirt-world" id="dirt-world">
+<div class="environment-transition environment-transition-dirt" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
 
 <div class="game-account-modal" id="game-account-modal" aria-hidden="true">
@@ -414,6 +456,7 @@
 <g class="game-radar-grid"></g>
 <polygon id="game-radar-value" class="game-radar-value" points=""></polygon>
 <g class="game-radar-axes"></g>
+<g class="game-radar-dots"></g>
 <g class="game-radar-labels"></g>
 </svg>
 </div>
@@ -1524,6 +1567,11 @@ const gameProfileDisplayName =
         'game-profile-display-name'
     );
 
+const gameProfileNameEdit =
+    document.getElementById(
+        'game-profile-name-edit'
+    );
+
 const gameProfileChips =
     document.getElementById(
         'game-profile-chips'
@@ -1573,6 +1621,16 @@ const gameRadarLabels =
     document.querySelector(
         '.game-radar-labels'
     );
+
+const gameRadarDots =
+    document.querySelector(
+        '.game-radar-dots'
+    );
+
+let currentRadarValues =
+    [0, 0, 0, 0, 0];
+
+let radarAnimationFrame = 0;
 
 let currentGameProfile = null;
 let pendingAvatarData = undefined;
@@ -1933,58 +1991,116 @@ function initializeGameRadar() {
                     );
             }
         );
+
+    if (gameRadarDots) {
+        GAME_RADAR_KEYS.forEach((_, index) => {
+            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('r', '3.6');
+            dot.setAttribute('cx', '130');
+            dot.setAttribute('cy', '120');
+            dot.setAttribute('class', 'game-radar-dot');
+            dot.dataset.index = String(index);
+            gameRadarDots.appendChild(dot);
+        });
+    }
+
+}
+
+function radarPointForIndex(
+    value,
+    index
+) {
+    const angle =
+        -Math.PI / 2 +
+        index * Math.PI * 2 / 5;
+
+    const radius =
+        82 *
+        Math.max(
+            0,
+            Math.min(100, Number(value) || 0)
+        ) /
+        100;
+
+    return {
+        x: 130 + Math.cos(angle) * radius,
+        y: 120 + Math.sin(angle) * radius
+    };
+}
+
+function renderGameRadarFrame(
+    values
+) {
+    if (gameRadarValue) {
+        gameRadarValue.setAttribute(
+            'points',
+            getRadarPoints(values)
+        );
+    }
+
+    const dots =
+        Array.from(
+            gameRadarDots?.querySelectorAll('.game-radar-dot') || []
+        );
+
+    values.forEach((value, index) => {
+        const point = radarPointForIndex(value, index);
+        const dot = dots[index];
+        if (!dot) return;
+        dot.setAttribute('cx', point.x.toFixed(2));
+        dot.setAttribute('cy', point.y.toFixed(2));
+    });
 }
 
 function updateGameRadar(
     stats = {}
 ) {
-    const values =
-        GAME_RADAR_KEYS
-            .map(
-                ([key]) =>
-                    Math.max(
-                        0,
-                        Math.min(
-                            100,
-                            Number(
-                                stats?.[
-                                    key
-                                ] || 0
-                            )
-                        )
-                    )
-            );
-
-    if (gameRadarValue) {
-        gameRadarValue.setAttribute(
-            'points',
-            getRadarPoints(
-                values
+    const targetValues =
+        GAME_RADAR_KEYS.map(([key]) =>
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    Number(stats?.[key] || 0)
+                )
             )
         );
+
+    if (radarAnimationFrame) {
+        cancelAnimationFrame(radarAnimationFrame);
+        radarAnimationFrame = 0;
     }
 
-    GAME_RADAR_KEYS
-        .forEach(
-            (
-                [key],
-                index
-            ) => {
-                const target =
-                    document.querySelector(
-                        `[data-radar-value="${key}"]`
-                    );
+    const startValues = [...currentRadarValues];
 
-                if (target) {
-                    target.textContent =
-                        String(
-                            values[
-                                index
-                            ]
-                        );
-                }
-            }
+    if (reduceMotionQuery.matches) {
+        currentRadarValues = [...targetValues];
+        renderGameRadarFrame(targetValues);
+        return;
+    }
+
+    const startTime = performance.now();
+    const duration = 520;
+
+    const animate = now => {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const frameValues = targetValues.map((value, index) =>
+            startValues[index] + (value - startValues[index]) * eased
         );
+
+        renderGameRadarFrame(frameValues);
+
+        if (progress < 1) {
+            radarAnimationFrame = requestAnimationFrame(animate);
+            return;
+        }
+
+        currentRadarValues = [...targetValues];
+        radarAnimationFrame = 0;
+    };
+
+    radarAnimationFrame = requestAnimationFrame(animate);
 }
 
 function updateGameBindings(
@@ -2071,6 +2187,64 @@ function updateGameBindings(
         });
 }
 
+
+
+function openGameNicknameEditor() {
+    if (
+        !gameProfileNameEdit ||
+        !gameProfileNickname
+    ) {
+        return;
+    }
+
+    gameProfileNameEdit.classList.add(
+        'is-editing'
+    );
+
+    window.requestAnimationFrame(
+        () => {
+            gameProfileNickname.focus();
+
+            const valueLength =
+                gameProfileNickname
+                    .value
+                    .length;
+
+            gameProfileNickname
+                .setSelectionRange(
+                    valueLength,
+                    valueLength
+                );
+        }
+    );
+}
+
+function closeGameNicknameEditor(
+    restore = false
+) {
+    if (!gameProfileNameEdit) {
+        return;
+    }
+
+    if (
+        restore &&
+        gameProfileNickname
+    ) {
+        gameProfileNickname.value =
+            '';
+
+        gameProfileNickname.placeholder =
+            currentGameProfile
+                ?.nickname ||
+            '輸入暱稱';
+
+        updateGameNicknameCount();
+    }
+
+    gameProfileNameEdit.classList.remove(
+        'is-editing'
+    );
+}
 
 function updateGameNicknameCount() {
     if (
@@ -2970,6 +3144,8 @@ async function saveGameProfile() {
             '玩家資料已儲存。',
             'success'
         );
+
+        closeGameNicknameEditor();
     } catch (error) {
         setGameProfileStatus(
             error?.message ||
@@ -3074,6 +3250,31 @@ async function loadGameOnlineCounts() {
                 }
             );
     } catch {}
+}
+
+/* ===== v49 game-card play feel ===== */
+const interactiveGameCards = Array.from(document.querySelectorAll('[data-game-card]'));
+if (useRichPointerMotion) {
+    interactiveGameCards.forEach(card => {
+        let frame = 0, tiltX = 0, tiltY = 0;
+        const render = () => {
+            frame = 0;
+            card.style.setProperty('--game-tilt-x', `${tiltX.toFixed(2)}deg`);
+            card.style.setProperty('--game-tilt-y', `${tiltY.toFixed(2)}deg`);
+        };
+        card.addEventListener('pointermove', event => {
+            const rect = card.getBoundingClientRect();
+            const px = (event.clientX - rect.left) / Math.max(rect.width, 1);
+            const py = (event.clientY - rect.top) / Math.max(rect.height, 1);
+            tiltY = (px - .5) * 5;
+            tiltX = (.5 - py) * 4;
+            if (!frame) frame = requestAnimationFrame(render);
+        }, { passive: true });
+        card.addEventListener('pointerleave', () => {
+            tiltX = 0; tiltY = 0;
+            if (!frame) frame = requestAnimationFrame(render);
+        }, { passive: true });
+    });
 }
 
 document
@@ -3267,6 +3468,69 @@ gameAvatarReset
         }
     );
 
+gameProfileDisplayName
+    ?.addEventListener(
+        'click',
+        event => {
+            event.preventDefault();
+            openGameNicknameEditor();
+        }
+    );
+
+gameProfileDisplayName
+    ?.addEventListener(
+        'keydown',
+        event => {
+            if (
+                event.key ===
+                    'Enter' ||
+                event.key ===
+                    ' '
+            ) {
+                event.preventDefault();
+                openGameNicknameEditor();
+            }
+        }
+    );
+
+gameProfileNickname
+    ?.addEventListener(
+        'focus',
+        () => {
+            gameProfileNameEdit
+                ?.classList
+                .add(
+                    'is-editing'
+                );
+        }
+    );
+
+document.addEventListener(
+    'pointerdown',
+    event => {
+        if (
+            !gameProfileNameEdit
+                ?.classList
+                .contains(
+                    'is-editing'
+                )
+        ) {
+            return;
+        }
+
+        if (
+            gameProfileNameEdit
+                .contains(
+                    event.target
+                )
+        ) {
+            return;
+        }
+
+        closeGameNicknameEditor();
+    }
+);
+
 gameProfileNickname
     ?.addEventListener(
         'input',
@@ -3292,15 +3556,9 @@ gameProfileNickname
             ) {
                 event.preventDefault();
 
-                gameProfileNickname.value =
-                    '';
-
-                gameProfileNickname.placeholder =
-                    currentGameProfile
-                        ?.nickname ||
-                    '輸入暱稱';
-
-                updateGameNicknameCount();
+                closeGameNicknameEditor(
+                    true
+                );
 
                 gameProfileDisplayName
                     ?.focus();
@@ -3658,6 +3916,17 @@ const revealObserver = new IntersectionObserver(
 revealSections.forEach(section => {
     revealObserver.observe(section);
 });
+
+/* ---------- v49 lightweight environment transitions ---------- */
+const environmentZones = Array.from(document.querySelectorAll('.world-zone'));
+if ('IntersectionObserver' in window) {
+    const environmentObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.target.classList.toggle('is-environment-active', entry.isIntersecting);
+        });
+    }, { rootMargin: '-10% 0px -16% 0px', threshold: .08 });
+    environmentZones.forEach(zone => environmentObserver.observe(zone));
+}
 
 /* ---------- clickable floating pixel clouds ---------- */
 const skyWorld =
@@ -4579,6 +4848,14 @@ function initializeClearableFields() {
 initializeClearableFields();
 
 
+/* ===== v49 lightweight interaction quality ===== */
+const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+const interactionHardwareScore = Number(navigator.hardwareConcurrency || 4);
+const useRichPointerMotion = finePointerQuery.matches && !reduceMotionQuery.matches && interactionHardwareScore >= 4;
+document.documentElement.classList.toggle('rich-motion', useRichPointerMotion);
+document.documentElement.classList.toggle('reduced-motion', reduceMotionQuery.matches);
+
 /* ===== v42 topbar reveal on top-edge hover ===== */
 const topbarElement =
     document.querySelector(
@@ -4781,6 +5058,75 @@ window.addEventListener(
 
 syncTopbarSafeSpace();
 updateTopbarForScroll();
+
+/* ===== v49 floating dock proximity ===== */
+const dockInteractiveItems = Array.from(document.querySelectorAll('.topbar .brand, .topbar .nav-link, .topbar .spotify-controls > *, .topbar .icon-btn'));
+dockInteractiveItems.forEach(item => item.classList.add('dock-item'));
+let dockPointerFrame = 0;
+let dockPointerClientX = 0;
+function renderDockPointerMotion() {
+    dockPointerFrame = 0;
+    dockInteractiveItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const distance = Math.abs(dockPointerClientX - centerX);
+        const influence = Math.max(0, 1 - distance / 150);
+        item.style.setProperty('--dock-scale', (1 + influence * .075).toFixed(3));
+        item.style.setProperty('--dock-lift', `${(-influence * 4).toFixed(2)}px`);
+    });
+}
+if (useRichPointerMotion && topbarElement) {
+    topbarElement.addEventListener('pointermove', event => {
+        dockPointerClientX = event.clientX;
+        if (!dockPointerFrame) dockPointerFrame = requestAnimationFrame(renderDockPointerMotion);
+    }, { passive: true });
+    topbarElement.addEventListener('pointerleave', () => {
+        dockInteractiveItems.forEach(item => {
+            item.style.removeProperty('--dock-scale');
+            item.style.removeProperty('--dock-lift');
+        });
+    }, { passive: true });
+}
+const dockSectionLinks = Array.from(document.querySelectorAll('.desktop-nav .nav-link[href^="#"]'));
+const dockSectionTargets = dockSectionLinks.map(link => {
+    const id = link.getAttribute('href')?.slice(1);
+    return { link, section: id ? document.getElementById(id) : null };
+}).filter(item => item.section);
+if ('IntersectionObserver' in window) {
+    const dockSectionObserver = new IntersectionObserver(entries => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        dockSectionTargets.forEach(item => item.link.classList.toggle('is-dock-active', item.section === visible.target));
+    }, { rootMargin: '-28% 0px -55% 0px', threshold: [0, .2, .45, .7] });
+    dockSectionTargets.forEach(item => dockSectionObserver.observe(item.section));
+}
+
+/* ===== v49 pixel hero interaction ===== */
+const heroVisual = document.getElementById('hero-visual');
+const heroVisualStage = document.getElementById('hero-visual-stage');
+let heroPointerFrame = 0;
+let heroPointerX = 0;
+let heroPointerY = 0;
+function renderHeroPointerMotion() {
+    heroPointerFrame = 0;
+    if (!heroVisualStage) return;
+    heroVisualStage.style.setProperty('--hero-pointer-x', `${heroPointerX.toFixed(2)}px`);
+    heroVisualStage.style.setProperty('--hero-pointer-y', `${heroPointerY.toFixed(2)}px`);
+    heroVisualStage.style.setProperty('--hero-rotate-y', `${(heroPointerX * .055).toFixed(2)}deg`);
+    heroVisualStage.style.setProperty('--hero-rotate-x', `${(-heroPointerY * .045).toFixed(2)}deg`);
+}
+if (useRichPointerMotion && heroVisual && heroVisualStage) {
+    heroVisual.addEventListener('pointermove', event => {
+        const rect = heroVisual.getBoundingClientRect();
+        heroPointerX = (event.clientX - rect.left - rect.width / 2) / Math.max(rect.width, 1) * 24;
+        heroPointerY = (event.clientY - rect.top - rect.height / 2) / Math.max(rect.height, 1) * 18;
+        if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
+    }, { passive: true });
+    heroVisual.addEventListener('pointerleave', () => {
+        heroPointerX = 0; heroPointerY = 0;
+        if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
+    }, { passive: true });
+}
 
 const savedTheme = localStorage.getItem('theme');
 const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

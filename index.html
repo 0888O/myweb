@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=49" rel="stylesheet"/>
+<link href="style.css?v=50" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -625,6 +625,48 @@
 </footer>
 </main>
 <script>
+/* ===== v50 global interaction capability bootstrap ===== */
+const reduceMotionQuery =
+    window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+    );
+
+const finePointerQuery =
+    window.matchMedia(
+        '(hover: hover) and (pointer: fine)'
+    );
+
+const interactionHardwareScore =
+    Number(
+        navigator.hardwareConcurrency ||
+        4
+    );
+
+const useRichPointerMotion =
+    finePointerQuery.matches &&
+    !reduceMotionQuery.matches &&
+    interactionHardwareScore >= 4;
+
+document.documentElement
+    .classList
+    .toggle(
+        'rich-motion',
+        useRichPointerMotion
+    );
+
+document.documentElement
+    .classList
+    .toggle(
+        'reduced-motion',
+        reduceMotionQuery.matches
+    );
+
+document.documentElement
+    .classList
+    .add(
+        'js-ready'
+    );
+
 
 const content = {
     zh: {
@@ -2100,7 +2142,27 @@ function updateGameRadar(
         radarAnimationFrame = 0;
     };
 
-    radarAnimationFrame = requestAnimationFrame(animate);
+    try {
+        radarAnimationFrame =
+            requestAnimationFrame(
+                animate
+            );
+    } catch (error) {
+        currentRadarValues =
+            [...targetValues];
+
+        renderGameRadarFrame(
+            targetValues
+        );
+
+        radarAnimationFrame =
+            0;
+
+        console.warn(
+            'Radar animation disabled',
+            error
+        );
+    }
 }
 
 function updateGameBindings(
@@ -3252,29 +3314,106 @@ async function loadGameOnlineCounts() {
     } catch {}
 }
 
-/* ===== v49 game-card play feel ===== */
-const interactiveGameCards = Array.from(document.querySelectorAll('[data-game-card]'));
-if (useRichPointerMotion) {
-    interactiveGameCards.forEach(card => {
-        let frame = 0, tiltX = 0, tiltY = 0;
-        const render = () => {
-            frame = 0;
-            card.style.setProperty('--game-tilt-x', `${tiltX.toFixed(2)}deg`);
-            card.style.setProperty('--game-tilt-y', `${tiltY.toFixed(2)}deg`);
-        };
-        card.addEventListener('pointermove', event => {
-            const rect = card.getBoundingClientRect();
-            const px = (event.clientX - rect.left) / Math.max(rect.width, 1);
-            const py = (event.clientY - rect.top) / Math.max(rect.height, 1);
-            tiltY = (px - .5) * 5;
-            tiltX = (.5 - py) * 4;
-            if (!frame) frame = requestAnimationFrame(render);
-        }, { passive: true });
-        card.addEventListener('pointerleave', () => {
-            tiltX = 0; tiltY = 0;
-            if (!frame) frame = requestAnimationFrame(render);
-        }, { passive: true });
-    });
+/* ===== v50 safe game-card play feel ===== */
+try {
+    const interactiveGameCards =
+        Array.from(
+            document.querySelectorAll(
+                '[data-game-card]'
+            )
+        );
+
+    if (useRichPointerMotion) {
+        interactiveGameCards.forEach(
+            card => {
+                let frame = 0;
+                let tiltX = 0;
+                let tiltY = 0;
+
+                const render =
+                    () => {
+                        frame = 0;
+
+                        card.style.setProperty(
+                            '--game-tilt-x',
+                            `${tiltX.toFixed(2)}deg`
+                        );
+
+                        card.style.setProperty(
+                            '--game-tilt-y',
+                            `${tiltY.toFixed(2)}deg`
+                        );
+                    };
+
+                card.addEventListener(
+                    'pointermove',
+                    event => {
+                        const rect =
+                            card.getBoundingClientRect();
+
+                        const px =
+                            (
+                                event.clientX -
+                                rect.left
+                            ) /
+                            Math.max(
+                                rect.width,
+                                1
+                            );
+
+                        const py =
+                            (
+                                event.clientY -
+                                rect.top
+                            ) /
+                            Math.max(
+                                rect.height,
+                                1
+                            );
+
+                        tiltY =
+                            (px - .5) * 5;
+
+                        tiltX =
+                            (.5 - py) * 4;
+
+                        if (!frame) {
+                            frame =
+                                requestAnimationFrame(
+                                    render
+                                );
+                        }
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+                card.addEventListener(
+                    'pointerleave',
+                    () => {
+                        tiltX = 0;
+                        tiltY = 0;
+
+                        if (!frame) {
+                            frame =
+                                requestAnimationFrame(
+                                    render
+                                );
+                        }
+                    },
+                    {
+                        passive: true
+                    }
+                );
+            }
+        );
+    }
+} catch (error) {
+    console.warn(
+        'Game-card visual enhancement disabled',
+        error
+    );
 }
 
 document
@@ -4848,14 +4987,6 @@ function initializeClearableFields() {
 initializeClearableFields();
 
 
-/* ===== v49 lightweight interaction quality ===== */
-const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-const interactionHardwareScore = Number(navigator.hardwareConcurrency || 4);
-const useRichPointerMotion = finePointerQuery.matches && !reduceMotionQuery.matches && interactionHardwareScore >= 4;
-document.documentElement.classList.toggle('rich-motion', useRichPointerMotion);
-document.documentElement.classList.toggle('reduced-motion', reduceMotionQuery.matches);
-
 /* ===== v42 topbar reveal on top-edge hover ===== */
 const topbarElement =
     document.querySelector(
@@ -5059,73 +5190,87 @@ window.addEventListener(
 syncTopbarSafeSpace();
 updateTopbarForScroll();
 
-/* ===== v49 floating dock proximity ===== */
-const dockInteractiveItems = Array.from(document.querySelectorAll('.topbar .brand, .topbar .nav-link, .topbar .spotify-controls > *, .topbar .icon-btn'));
-dockInteractiveItems.forEach(item => item.classList.add('dock-item'));
-let dockPointerFrame = 0;
-let dockPointerClientX = 0;
-function renderDockPointerMotion() {
-    dockPointerFrame = 0;
-    dockInteractiveItems.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const distance = Math.abs(dockPointerClientX - centerX);
-        const influence = Math.max(0, 1 - distance / 150);
-        item.style.setProperty('--dock-scale', (1 + influence * .075).toFixed(3));
-        item.style.setProperty('--dock-lift', `${(-influence * 4).toFixed(2)}px`);
-    });
-}
-if (useRichPointerMotion && topbarElement) {
-    topbarElement.addEventListener('pointermove', event => {
-        dockPointerClientX = event.clientX;
-        if (!dockPointerFrame) dockPointerFrame = requestAnimationFrame(renderDockPointerMotion);
-    }, { passive: true });
-    topbarElement.addEventListener('pointerleave', () => {
+/* ===== v50 safe floating dock proximity ===== */
+try {
+    const dockInteractiveItems = Array.from(document.querySelectorAll('.topbar .brand, .topbar .nav-link, .topbar .spotify-controls > *, .topbar .icon-btn'));
+    dockInteractiveItems.forEach(item => item.classList.add('dock-item'));
+    let dockPointerFrame = 0;
+    let dockPointerClientX = 0;
+    function renderDockPointerMotion() {
+        dockPointerFrame = 0;
         dockInteractiveItems.forEach(item => {
-            item.style.removeProperty('--dock-scale');
-            item.style.removeProperty('--dock-lift');
+            const rect = item.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const distance = Math.abs(dockPointerClientX - centerX);
+            const influence = Math.max(0, 1 - distance / 150);
+            item.style.setProperty('--dock-scale', (1 + influence * .075).toFixed(3));
+            item.style.setProperty('--dock-lift', `${(-influence * 4).toFixed(2)}px`);
         });
-    }, { passive: true });
-}
-const dockSectionLinks = Array.from(document.querySelectorAll('.desktop-nav .nav-link[href^="#"]'));
-const dockSectionTargets = dockSectionLinks.map(link => {
-    const id = link.getAttribute('href')?.slice(1);
-    return { link, section: id ? document.getElementById(id) : null };
-}).filter(item => item.section);
-if ('IntersectionObserver' in window) {
-    const dockSectionObserver = new IntersectionObserver(entries => {
-        const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        dockSectionTargets.forEach(item => item.link.classList.toggle('is-dock-active', item.section === visible.target));
-    }, { rootMargin: '-28% 0px -55% 0px', threshold: [0, .2, .45, .7] });
-    dockSectionTargets.forEach(item => dockSectionObserver.observe(item.section));
+    }
+    if (useRichPointerMotion && topbarElement) {
+        topbarElement.addEventListener('pointermove', event => {
+            dockPointerClientX = event.clientX;
+            if (!dockPointerFrame) dockPointerFrame = requestAnimationFrame(renderDockPointerMotion);
+        }, { passive: true });
+        topbarElement.addEventListener('pointerleave', () => {
+            dockInteractiveItems.forEach(item => {
+                item.style.removeProperty('--dock-scale');
+                item.style.removeProperty('--dock-lift');
+            });
+        }, { passive: true });
+    }
+    const dockSectionLinks = Array.from(document.querySelectorAll('.desktop-nav .nav-link[href^="#"]'));
+    const dockSectionTargets = dockSectionLinks.map(link => {
+        const id = link.getAttribute('href')?.slice(1);
+        return { link, section: id ? document.getElementById(id) : null };
+    }).filter(item => item.section);
+    if ('IntersectionObserver' in window) {
+        const dockSectionObserver = new IntersectionObserver(entries => {
+            const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (!visible) return;
+            dockSectionTargets.forEach(item => item.link.classList.toggle('is-dock-active', item.section === visible.target));
+        }, { rootMargin: '-28% 0px -55% 0px', threshold: [0, .2, .45, .7] });
+        dockSectionTargets.forEach(item => dockSectionObserver.observe(item.section));
+    }
+} catch (error) {
+    console.warn(
+        'Floating dock enhancement disabled',
+        error
+    );
 }
 
-/* ===== v49 pixel hero interaction ===== */
-const heroVisual = document.getElementById('hero-visual');
-const heroVisualStage = document.getElementById('hero-visual-stage');
-let heroPointerFrame = 0;
-let heroPointerX = 0;
-let heroPointerY = 0;
-function renderHeroPointerMotion() {
-    heroPointerFrame = 0;
-    if (!heroVisualStage) return;
-    heroVisualStage.style.setProperty('--hero-pointer-x', `${heroPointerX.toFixed(2)}px`);
-    heroVisualStage.style.setProperty('--hero-pointer-y', `${heroPointerY.toFixed(2)}px`);
-    heroVisualStage.style.setProperty('--hero-rotate-y', `${(heroPointerX * .055).toFixed(2)}deg`);
-    heroVisualStage.style.setProperty('--hero-rotate-x', `${(-heroPointerY * .045).toFixed(2)}deg`);
-}
-if (useRichPointerMotion && heroVisual && heroVisualStage) {
-    heroVisual.addEventListener('pointermove', event => {
-        const rect = heroVisual.getBoundingClientRect();
-        heroPointerX = (event.clientX - rect.left - rect.width / 2) / Math.max(rect.width, 1) * 24;
-        heroPointerY = (event.clientY - rect.top - rect.height / 2) / Math.max(rect.height, 1) * 18;
-        if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
-    }, { passive: true });
-    heroVisual.addEventListener('pointerleave', () => {
-        heroPointerX = 0; heroPointerY = 0;
-        if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
-    }, { passive: true });
+/* ===== v50 safe pixel hero interaction ===== */
+try {
+    const heroVisual = document.getElementById('hero-visual');
+    const heroVisualStage = document.getElementById('hero-visual-stage');
+    let heroPointerFrame = 0;
+    let heroPointerX = 0;
+    let heroPointerY = 0;
+    function renderHeroPointerMotion() {
+        heroPointerFrame = 0;
+        if (!heroVisualStage) return;
+        heroVisualStage.style.setProperty('--hero-pointer-x', `${heroPointerX.toFixed(2)}px`);
+        heroVisualStage.style.setProperty('--hero-pointer-y', `${heroPointerY.toFixed(2)}px`);
+        heroVisualStage.style.setProperty('--hero-rotate-y', `${(heroPointerX * .055).toFixed(2)}deg`);
+        heroVisualStage.style.setProperty('--hero-rotate-x', `${(-heroPointerY * .045).toFixed(2)}deg`);
+    }
+    if (useRichPointerMotion && heroVisual && heroVisualStage) {
+        heroVisual.addEventListener('pointermove', event => {
+            const rect = heroVisual.getBoundingClientRect();
+            heroPointerX = (event.clientX - rect.left - rect.width / 2) / Math.max(rect.width, 1) * 24;
+            heroPointerY = (event.clientY - rect.top - rect.height / 2) / Math.max(rect.height, 1) * 18;
+            if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
+        }, { passive: true });
+        heroVisual.addEventListener('pointerleave', () => {
+            heroPointerX = 0; heroPointerY = 0;
+            if (!heroPointerFrame) heroPointerFrame = requestAnimationFrame(renderHeroPointerMotion);
+        }, { passive: true });
+    }
+} catch (error) {
+    console.warn(
+        'Hero visual enhancement disabled',
+        error
+    );
 }
 
 const savedTheme = localStorage.getItem('theme');

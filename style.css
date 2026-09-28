@@ -6984,3 +6984,47 @@ html[data-theme="dark"] .hero-visual{background:linear-gradient(180deg,rgba(36,7
 @media (max-width:760px){.hero-visual{min-height:210px}.hero-visual-stage{transform:scale(.88)}.games-grid{gap:16px}.game-card{transform:none!important}.game-card-table{height:94px}.environment-transition{height:58px;opacity:.68}}
 @media (prefers-reduced-motion:reduce){.hero-visual-stage,.dock-item,.game-card,.pixel-playing-card,.mini-card,.environment-transition>span,.game-radar-ring,.game-radar-axis,.game-radar-dot{animation:none!important;transition:none!important}.game-card{transform:none!important}}
 @supports (content-visibility:auto){#server,#gallery,#goals,#guestbook{content-visibility:auto;contain-intrinsic-size:820px}}
+
+
+/* =========================================================
+   v50 — resilience fixes
+   ========================================================= */
+
+/*
+   JS adds .js-ready immediately once the inline script starts.
+   Until then, keep the topbar visible so a later optional-effect
+   error can never leave navigation permanently hidden.
+*/
+@media (hover: hover) and (pointer: fine) {
+    html:not(.js-ready) .topbar {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform:
+            translate(
+                -50%,
+                0
+            )
+            scale(1) !important;
+    }
+}
+
+/* GPU-promote only the small elements that actually animate. */
+.rich-motion .hero-visual-stage,
+.rich-motion .game-card,
+.rich-motion .dock-item {
+    backface-visibility:
+        hidden;
+}
+
+/* Avoid forcing a transformed stacking context on mobile cards. */
+@media (max-width: 760px),
+       (hover: none),
+       (pointer: coarse) {
+    .game-card {
+        transform:
+            none !important;
+        transform-style:
+            flat !important;
+    }
+}

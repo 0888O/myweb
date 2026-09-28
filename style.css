@@ -7028,3 +7028,645 @@ html[data-theme="dark"] .hero-visual{background:linear-gradient(180deg,rgba(36,7
             flat !important;
     }
 }
+
+
+/* =========================================================
+   v51 — borderless Badlion-inspired dock indicator
+   + denser hero copy
+   ========================================================= */
+
+/* ---------- topbar: keep floating/reveal behavior, remove frame ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+    .topbar {
+        border: 0 !important;
+        border-radius: 10px;
+        box-shadow:
+            0 10px 26px
+            rgba(48, 39, 27, .14) !important;
+    }
+
+    .desktop-nav {
+        gap: 4px;
+    }
+
+    .desktop-nav .nav-link {
+        position: relative;
+        overflow: visible;
+        border: 0 !important;
+        background: transparent !important;
+        padding:
+            11px 13px
+            13px !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform-origin:
+            center center;
+    }
+
+    .desktop-nav .nav-link:hover,
+    .desktop-nav .nav-link:focus-visible,
+    .desktop-nav .nav-link.is-dock-active {
+        border: 0 !important;
+        background:
+            transparent !important;
+    }
+
+    /*
+       One indicator does both states:
+       hover -> short green line
+       active -> long green line
+    */
+    .desktop-nav .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 3px;
+        width: 14px;
+        height: 3px;
+        border-radius: 2px;
+        background:
+            var(--grass);
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            scaleX(.45);
+        transform-origin:
+            center;
+        transition:
+            width .22s
+                cubic-bezier(
+                    .22,.61,.36,1
+                ),
+            height .18s ease,
+            opacity .14s ease,
+            transform .22s
+                cubic-bezier(
+                    .22,.61,.36,1
+                );
+    }
+
+    .desktop-nav
+    .nav-link:hover::after,
+    .desktop-nav
+    .nav-link:focus-visible::after {
+        width: 14px;
+        height: 3px;
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            scaleX(1);
+    }
+
+    .desktop-nav
+    .nav-link.is-dock-active::after {
+        width:
+            calc(
+                100% - 18px
+            );
+        height: 4px;
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            scaleX(1);
+    }
+
+    .desktop-nav
+    .nav-link.is-dock-active {
+        color:
+            var(--text);
+    }
+}
+
+/* Touch topbar stays accessible; just remove its outer frame too. */
+@media (hover: none), (pointer: coarse) {
+    .topbar {
+        border: 0 !important;
+        box-shadow:
+            0 7px 18px
+            rgba(48, 39, 27, .12) !important;
+    }
+}
+
+/* ---------- hero copy: compact "current build" board ---------- */
+
+.hero-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.hero-status-board {
+    margin-top: 24px;
+    padding:
+        14px;
+    border:
+        2px solid
+        rgba(48, 39, 27, .16);
+    border-radius:
+        9px;
+    background:
+        rgba(255,255,255,.26);
+}
+
+.hero-status-heading {
+    display: flex;
+    align-items: center;
+    justify-content:
+        space-between;
+    gap: 12px;
+    margin-bottom:
+        11px;
+}
+
+.hero-status-heading-main,
+.hero-status-mode {
+    display: inline-flex;
+    align-items: center;
+}
+
+.hero-status-heading-main {
+    gap: 8px;
+    min-width: 0;
+    color:
+        var(--text);
+    font-size:
+        .78rem;
+    font-weight: 900;
+}
+
+.hero-status-heading-main i {
+    color:
+        var(--grass-2);
+}
+
+.hero-status-mode {
+    flex: 0 0 auto;
+    gap: 6px;
+    color:
+        var(--text-soft);
+    font-size:
+        .56rem;
+    font-weight: 900;
+    letter-spacing:
+        .08em;
+}
+
+.hero-status-mode-dot {
+    width: 7px;
+    height: 7px;
+    background:
+        var(--grass);
+    box-shadow:
+        0 0 0 2px
+        rgba(95,163,77,.12);
+}
+
+.hero-status-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 8px;
+}
+
+.hero-status-item {
+    position: relative;
+    display: grid;
+    grid-template-columns:
+        34px
+        minmax(0, 1fr)
+        auto;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    min-height: 74px;
+    padding:
+        10px;
+    color:
+        inherit;
+    text-decoration: none;
+    border:
+        2px solid
+        rgba(48,39,27,.12);
+    border-radius:
+        7px;
+    background:
+        rgba(255,255,255,.38);
+    transition:
+        transform .16s ease,
+        background .16s ease,
+        border-color .16s ease;
+}
+
+.hero-status-item-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    background:
+        linear-gradient(
+            180deg,
+            var(--grass)
+                0 26%,
+            var(--dirt)
+                26% 100%
+        );
+    border:
+        2px solid
+        rgba(48,39,27,.38);
+    color: #fff;
+    font-size:
+        .66rem;
+}
+
+.hero-status-item-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.25;
+}
+
+.hero-status-item-copy small {
+    color:
+        var(--grass-2);
+    font-size:
+        .5rem;
+    font-weight: 900;
+    letter-spacing:
+        .08em;
+}
+
+.hero-status-item-copy strong {
+    margin-top: 4px;
+    overflow: hidden;
+    color:
+        var(--text);
+    font-size:
+        .66rem;
+    font-weight: 900;
+    text-overflow:
+        ellipsis;
+    white-space:
+        nowrap;
+}
+
+.hero-status-item-copy > span {
+    margin-top: 4px;
+    overflow: hidden;
+    color:
+        var(--text-soft);
+    font-size:
+        .58rem;
+    font-weight: 700;
+    text-overflow:
+        ellipsis;
+    white-space:
+        nowrap;
+}
+
+.hero-status-arrow {
+    color:
+        var(--text-soft);
+    font-size:
+        .56rem;
+    opacity: .52;
+    transition:
+        transform .16s ease,
+        opacity .16s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hero-status-item:hover {
+        transform:
+            translateY(-2px);
+        border-color:
+            rgba(95,163,77,.34);
+        background:
+            rgba(255,255,255,.58);
+    }
+
+    .hero-status-item:hover
+    .hero-status-arrow {
+        opacity: 1;
+        transform:
+            translateX(2px);
+    }
+}
+
+.hero-status-item:active {
+    transform:
+        translateY(1px)
+        !important;
+}
+
+.hero-actions {
+    margin-top:
+        18px;
+}
+
+/* Dark theme */
+body[data-theme="dark"]
+.hero-status-board {
+    border-color:
+        rgba(255,255,255,.08);
+    background:
+        rgba(15,19,16,.16);
+}
+
+body[data-theme="dark"]
+.hero-status-item {
+    border-color:
+        rgba(255,255,255,.08);
+    background:
+        rgba(17,21,18,.28);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body[data-theme="dark"]
+    .hero-status-item:hover {
+        border-color:
+            rgba(112,176,76,.34);
+        background:
+            rgba(24,29,25,.48);
+    }
+}
+
+/* Keep the new hero density comfortable on narrow screens. */
+@media (max-width: 720px) {
+    .hero-status-board {
+        margin-top: 20px;
+        padding: 12px;
+    }
+
+    .hero-status-heading {
+        align-items:
+            flex-start;
+    }
+
+    .hero-status-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .hero-status-item {
+        min-height: 66px;
+    }
+
+    .hero-status-item-copy strong {
+        font-size:
+            .72rem;
+    }
+
+    .hero-status-item-copy > span {
+        font-size:
+            .62rem;
+    }
+}
+
+@media (max-width: 390px) {
+    .hero-status-mode {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   v52 — stronger game CTA + radar fix
+   ========================================================= */
+
+/* ---------- stronger game launch button ---------- */
+
+.game-card-footer {
+    align-items: center;
+}
+
+.game-enter-btn {
+    position: relative;
+    min-width: 148px;
+    min-height: 46px;
+    padding: 11px 18px !important;
+    border: 2px solid rgba(48, 39, 27, .44) !important;
+    border-radius: 7px !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            #79bb57 0%,
+            #659e49 100%
+        ) !important;
+
+    color: #fff !important;
+    font-size: .82rem !important;
+    font-weight: 900 !important;
+    letter-spacing: .02em;
+
+    opacity: 1 !important;
+    cursor: pointer !important;
+
+    box-shadow:
+        0 4px 0
+        rgba(54, 84, 42, .78),
+        inset 0 1px 0
+        rgba(255, 255, 255, .22);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+.game-enter-btn::after {
+    content: "›";
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    transform: translateY(-1px);
+    transition:
+        transform .15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .game-enter-btn:hover {
+        transform:
+            translateY(-2px) !important;
+
+        filter:
+            brightness(1.05);
+
+        box-shadow:
+            0 6px 0
+            rgba(54, 84, 42, .78),
+            inset 0 1px 0
+            rgba(255, 255, 255, .24);
+    }
+
+    .game-enter-btn:hover::after {
+        transform:
+            translate(3px, -1px);
+    }
+}
+
+.game-enter-btn:active {
+    transform:
+        translateY(2px)
+        scale(.99) !important;
+
+    box-shadow:
+        0 1px 0
+        rgba(54, 84, 42, .78),
+        inset 0 1px 0
+        rgba(255,255,255,.16) !important;
+}
+
+html[data-theme="dark"]
+.game-enter-btn {
+    border-color:
+        rgba(0,0,0,.48) !important;
+
+    background:
+        linear-gradient(
+            180deg,
+            #6ea84f 0%,
+            #598a40 100%
+        ) !important;
+}
+
+@media (max-width: 560px) {
+    .game-card-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .game-card-footer > span {
+        justify-content: flex-start;
+    }
+
+    .game-enter-btn {
+        width: 100%;
+        min-height: 48px;
+    }
+}
+
+/* ---------- radar: make every ring fully visible ---------- */
+
+/*
+   v49 used stroke-dasharray: 230 on the pentagon rings.
+   The outer pentagon perimeter is much longer than 230px,
+   so the browser rendered a large gap and the radar looked incomplete.
+*/
+.game-radar-ring,
+.game-radar-axis {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+}
+
+.game-radar-ring {
+    opacity: .17;
+}
+
+.game-radar-axis {
+    opacity: .13;
+}
+
+.game-radar-value {
+    stroke-width: 2.4 !important;
+    vector-effect:
+        non-scaling-stroke;
+}
+
+.game-radar-dot {
+    vector-effect:
+        non-scaling-stroke;
+}
+
+/* Use opacity/scale for intro instead of "drawing" a dashed polygon. */
+.game-account-modal.is-open
+.game-radar-ring {
+    animation:
+        radar-ring-pop
+        .36s
+        cubic-bezier(.16, 1, .3, 1)
+        both;
+}
+
+.game-account-modal.is-open
+.game-radar-axis {
+    animation:
+        radar-axis-in
+        .32s ease
+        both;
+}
+
+@keyframes radar-ring-pop {
+    from {
+        opacity: 0;
+        transform:
+            scale(.94);
+        transform-origin:
+            130px 120px;
+    }
+
+    to {
+        opacity: .17;
+        transform:
+            scale(1);
+        transform-origin:
+            130px 120px;
+    }
+}
+
+@keyframes radar-axis-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: .13;
+    }
+}
+
+/* Slightly more breathing room around labels. */
+.game-radar-only {
+    padding:
+        4px 8px 8px;
+}
+
+.game-radar-only
+#game-radar-svg {
+    width:
+        min(
+            350px,
+            100%
+        ) !important;
+    overflow: visible !important;
+}
+
+@media (max-width: 600px) {
+    .game-radar-only
+    #game-radar-svg {
+        width:
+            min(
+                330px,
+                100%
+            ) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-account-modal.is-open
+    .game-radar-ring,
+    .game-account-modal.is-open
+    .game-radar-axis {
+        animation:
+            none !important;
+    }
+}

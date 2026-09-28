@@ -11,7 +11,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
-<link href="style.css?v=50" rel="stylesheet"/>
+<link href="style.css?v=52" rel="stylesheet"/>
 </head>
 <body>
 <div class="topbar-reveal-zone" id="topbar-reveal-zone" aria-hidden="true"></div>
@@ -88,6 +88,59 @@
 <p class="intro-text">
                     もしもし ，我是08880，可以叫我控八或是零八。這裡除了記錄我學習網頁與程式的過程，也會放上我經營中的 Minecraft 伺服器，歡迎大家加入。
                 </p>
+
+<div class="hero-status-board">
+<div class="hero-status-heading">
+<span class="hero-status-heading-main">
+<i class="fa-solid fa-hammer" aria-hidden="true"></i>
+<span class="hero-status-title">目前正在做的事</span>
+</span>
+
+<span class="hero-status-mode">
+<span class="hero-status-mode-dot" aria-hidden="true"></span>
+<span class="hero-status-mode-text">BUILD MODE</span>
+</span>
+</div>
+
+<div class="hero-status-grid">
+<a class="hero-status-item" href="#about">
+<span class="hero-status-item-icon" aria-hidden="true">
+<i class="fa-solid fa-code"></i>
+</span>
+<span class="hero-status-item-copy">
+<small class="hero-status-code-label">LEARNING</small>
+<strong class="hero-status-code-main">Python · C++ · Java</strong>
+<span class="hero-status-code-sub">HTML · CSS</span>
+</span>
+<i class="fa-solid fa-chevron-right hero-status-arrow" aria-hidden="true"></i>
+</a>
+
+<a class="hero-status-item" href="#server">
+<span class="hero-status-item-icon" aria-hidden="true">
+<i class="fa-solid fa-cubes"></i>
+</span>
+<span class="hero-status-item-copy">
+<small class="hero-status-server-label">SERVER</small>
+<strong class="hero-status-server-main">茶咖暖居</strong>
+<span class="hero-status-server-sub">Minecraft 26.2</span>
+</span>
+<i class="fa-solid fa-chevron-right hero-status-arrow" aria-hidden="true"></i>
+</a>
+
+<a class="hero-status-item" href="#goals">
+<span class="hero-status-item-icon" aria-hidden="true">
+<i class="fa-solid fa-dice"></i>
+</span>
+<span class="hero-status-item-copy">
+<small class="hero-status-games-label">WEB GAMES</small>
+<strong class="hero-status-games-main">Blackjack · Texas</strong>
+<span class="hero-status-games-sub">開發中</span>
+</span>
+<i class="fa-solid fa-chevron-right hero-status-arrow" aria-hidden="true"></i>
+</a>
+</div>
+</div>
+
 <div class="hero-actions">
 <a class="primary-btn hero-server-btn" href="#server">
 <i class="fa-solid fa-cubes"></i>
@@ -684,6 +737,17 @@ const content = {
         heroServerBtn: "查看伺服器",
         heroSkillsBtn: "看看我在學什麼",
         heroPanelText: "努力學習中",
+        heroStatusTitle: "目前正在做的事",
+        heroStatusMode: "BUILD MODE",
+        heroStatusCodeLabel: "LEARNING",
+        heroStatusCodeMain: "Python · C++ · Java",
+        heroStatusCodeSub: "HTML · CSS",
+        heroStatusServerLabel: "SERVER",
+        heroStatusServerMain: "茶咖暖居",
+        heroStatusServerSub: "Minecraft 26.2",
+        heroStatusGamesLabel: "WEB GAMES",
+        heroStatusGamesMain: "Blackjack · Texas",
+        heroStatusGamesSub: "開發中",
         aboutEyebrow: "PLAYER INFO",
         aboutTitle: "關於我",
         aboutDescription: "平常會玩的遊戲、興趣，以及目前接觸到的技能。",
@@ -746,6 +810,17 @@ const content = {
         heroServerBtn: "View server",
         heroSkillsBtn: "See what I'm learning",
         heroPanelText: "Learning hard",
+        heroStatusTitle: "What I'm building",
+        heroStatusMode: "BUILD MODE",
+        heroStatusCodeLabel: "LEARNING",
+        heroStatusCodeMain: "Python · C++ · Java",
+        heroStatusCodeSub: "HTML · CSS",
+        heroStatusServerLabel: "SERVER",
+        heroStatusServerMain: "茶咖暖居",
+        heroStatusServerSub: "Minecraft 26.2",
+        heroStatusGamesLabel: "WEB GAMES",
+        heroStatusGamesMain: "Blackjack · Texas",
+        heroStatusGamesSub: "In development",
         aboutEyebrow: "PLAYER INFO",
         aboutTitle: "About me",
         aboutDescription: "Games I play, hobbies I enjoy, and skills I'm currently learning.",
@@ -831,6 +906,17 @@ function updateContent() {
     setText('.hero-server-btn span', t.heroServerBtn);
     setText('.hero-skills-btn span', t.heroSkillsBtn);
     setText('.hero-panel-text', t.heroPanelText);
+    setText('.hero-status-title', t.heroStatusTitle);
+    setText('.hero-status-mode-text', t.heroStatusMode);
+    setText('.hero-status-code-label', t.heroStatusCodeLabel);
+    setText('.hero-status-code-main', t.heroStatusCodeMain);
+    setText('.hero-status-code-sub', t.heroStatusCodeSub);
+    setText('.hero-status-server-label', t.heroStatusServerLabel);
+    setText('.hero-status-server-main', t.heroStatusServerMain);
+    setText('.hero-status-server-sub', t.heroStatusServerSub);
+    setText('.hero-status-games-label', t.heroStatusGamesLabel);
+    setText('.hero-status-games-main', t.heroStatusGamesMain);
+    setText('.hero-status-games-sub', t.heroStatusGamesSub);
 
     setText('.about-eyebrow', t.aboutEyebrow);
     setText('.about-title', t.aboutTitle);
@@ -1713,6 +1799,39 @@ function openGameAccount() {
     document.body.classList.add(
         'is-game-modal-open'
     );
+
+    /*
+       Replay the radar from the center when the account panel opens.
+       The profile may have loaded while the modal was hidden, so without
+       this the user can miss the animation entirely.
+    */
+    if (currentGameProfile) {
+        if (radarAnimationFrame) {
+            cancelAnimationFrame(
+                radarAnimationFrame
+            );
+
+            radarAnimationFrame =
+                0;
+        }
+
+        currentRadarValues =
+            [0, 0, 0, 0, 0];
+
+        renderGameRadarFrame(
+            currentRadarValues
+        );
+
+        requestAnimationFrame(
+            () => {
+                updateGameRadar(
+                    currentGameProfile
+                        ?.stats ||
+                    {}
+                );
+            }
+        );
+    }
 }
 
 function closeGameAccount() {
@@ -1903,6 +2022,14 @@ function initializeGameRadar() {
         !gameRadarLabels
     ) {
         return;
+    }
+
+    gameRadarGrid.replaceChildren();
+    gameRadarAxes.replaceChildren();
+    gameRadarLabels.replaceChildren();
+
+    if (gameRadarDots) {
+        gameRadarDots.replaceChildren();
     }
 
     [25, 50, 75, 100]
@@ -5219,18 +5346,136 @@ try {
             });
         }, { passive: true });
     }
-    const dockSectionLinks = Array.from(document.querySelectorAll('.desktop-nav .nav-link[href^="#"]'));
-    const dockSectionTargets = dockSectionLinks.map(link => {
-        const id = link.getAttribute('href')?.slice(1);
-        return { link, section: id ? document.getElementById(id) : null };
-    }).filter(item => item.section);
-    if ('IntersectionObserver' in window) {
-        const dockSectionObserver = new IntersectionObserver(entries => {
-            const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-            if (!visible) return;
-            dockSectionTargets.forEach(item => item.link.classList.toggle('is-dock-active', item.section === visible.target));
-        }, { rootMargin: '-28% 0px -55% 0px', threshold: [0, .2, .45, .7] });
-        dockSectionTargets.forEach(item => dockSectionObserver.observe(item.section));
+    const dockSectionLinks = Array.from(
+        document.querySelectorAll(
+            '.desktop-nav .nav-link[href^="#"]'
+        )
+    );
+
+    const dockSectionTargets =
+        dockSectionLinks
+            .map(
+                link => {
+                    const id =
+                        link
+                            .getAttribute(
+                                'href'
+                            )
+                            ?.slice(1);
+
+                    return {
+                        link,
+                        section:
+                            id
+                                ? document.getElementById(
+                                    id
+                                )
+                                : null
+                    };
+                }
+            )
+            .filter(
+                item =>
+                    item.section
+            );
+
+    function setDockActiveLink(
+        activeLink
+    ) {
+        dockSectionLinks
+            .forEach(
+                link => {
+                    const isActive =
+                        link ===
+                        activeLink;
+
+                    link.classList.toggle(
+                        'is-dock-active',
+                        isActive
+                    );
+
+                    if (isActive) {
+                        link.setAttribute(
+                            'aria-current',
+                            'location'
+                        );
+                    } else {
+                        link.removeAttribute(
+                            'aria-current'
+                        );
+                    }
+                }
+            );
+    }
+
+    dockSectionLinks
+        .forEach(
+            link => {
+                link.addEventListener(
+                    'click',
+                    () => {
+                        setDockActiveLink(
+                            link
+                        );
+                    }
+                );
+            }
+        );
+
+    if (
+        'IntersectionObserver'
+        in window
+    ) {
+        const dockSectionObserver =
+            new IntersectionObserver(
+                entries => {
+                    const visible =
+                        entries
+                            .filter(
+                                entry =>
+                                    entry.isIntersecting
+                            )
+                            .sort(
+                                (a, b) =>
+                                    b.intersectionRatio -
+                                    a.intersectionRatio
+                            )[0];
+
+                    if (!visible) {
+                        return;
+                    }
+
+                    const active =
+                        dockSectionTargets
+                            .find(
+                                item =>
+                                    item.section ===
+                                    visible.target
+                            );
+
+                    if (active) {
+                        setDockActiveLink(
+                            active.link
+                        );
+                    }
+                },
+                {
+                    rootMargin:
+                        '-24% 0px -58% 0px',
+                    threshold:
+                        [0, .15, .35, .6]
+                }
+            );
+
+        dockSectionTargets
+            .forEach(
+                item => {
+                    dockSectionObserver
+                        .observe(
+                            item.section
+                        );
+                }
+            );
     }
 } catch (error) {
     console.warn(
